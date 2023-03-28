@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
     android:orientation="horizontal">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="left"
         android:orientation="vertical">
 
@@ -16,16 +17,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/Jost"
-            android:maxEms="8"
+            android:maxEms="10"
             android:maxLines="2"
             android:text="this is a super lon gdescription and blabla"
-            android:textSize="20sp" />
+            android:textSize="16sp" />
 
         <include
             layout="@layout/tag_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp" />
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 
@@ -40,20 +40,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
+            android:layout_marginTop="10dp"
             android:fontFamily="@font/Jost"
             android:gravity="end"
             android:maxLines="1"
-            android:text="Dec 20 2022 at 19:55" />
+            android:text="Dec 20 2022 at 19:55"
+            android:textSize="10sp" />
 
         <TextView
             android:id="@+id/expense_status_home_TextView"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="bottom|end"
+            android:layout_marginBottom="10dp"
             android:fontFamily="@font/Jost"
             android:gravity="bottom"
             android:text="You borrowed $17"
-            android:textSize="20sp" />
+            android:textSize="16sp" />
 
     </LinearLayout>
 
