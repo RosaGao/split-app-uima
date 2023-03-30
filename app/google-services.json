@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "579762959750",
+    "project_id": "split-25930",
+    "storage_bucket": "split-25930.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:579762959750:android:e584b0b198409cddf8e807",
+        "android_client_info": {
+          "package_name": "com.example.split"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "579762959750-8gr0ibbg4d975ohjhn3h59d6f9tnu3pt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBR5pCNG9Gns4il55uc3g6KhqS7ypV37KA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "579762959750-8gr0ibbg4d975ohjhn3h59d6f9tnu3pt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
