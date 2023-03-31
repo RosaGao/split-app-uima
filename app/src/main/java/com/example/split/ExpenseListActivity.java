@@ -29,9 +29,6 @@ public class ExpenseListActivity extends AppCompatActivity {
 
     // TODO
 
-
-
-
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
         recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(this, allExpenses, false));
     }
