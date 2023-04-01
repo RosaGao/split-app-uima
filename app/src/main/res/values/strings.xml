@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Split</string>
     <string name="title_home">Home</string>
+    <string name="title_tag">Tags</string>
+    <string name="title_friends">Friends</string>
+    <string name="title_profile">Profile</string>
+
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="large_text">
@@ -92,4 +96,6 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
