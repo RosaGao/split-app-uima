@@ -1,4 +1,4 @@
-package com.example.split.ui.home;
+package com.example.split.ui;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,19 +11,19 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.split.R;
-import com.example.split.ui.home.HomeViewModel;
+import com.example.split.ui.tags.TagViewModel;
 
-public class HomeFragment extends Fragment {
+public class TagFragment extends Fragment {
 
-    private HomeViewModel homeViewModel;
+    private TagViewModel tagViewModel;
 
-    public HomeFragment() {
+    public TagFragment() {
         // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        return inflater.inflate(R.layout.fragment_tag, container, false);
     }
 
     @Override
@@ -31,13 +31,13 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // Initialize the ViewModel
-        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+        tagViewModel = new ViewModelProvider(this).get(TagViewModel.class);
 
         // Get the TextView from the layout
         TextView textView = view.findViewById(R.id.textView);
 
         // Observe the LiveData from the ViewModel and update the TextView
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        tagViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
