@@ -9,7 +9,7 @@
         android:id="@+id/split_method_chip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/Jost"
+        android:fontFamily="@font/jost"
         android:text="equal split"
         android:textColor="@color/black"
         android:textSize="20sp"
