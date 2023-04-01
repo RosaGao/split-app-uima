@@ -26,7 +26,7 @@
                 app:srcCompat="@drawable/darkangry_icon" />
 
             <TextView
-                android:id="@+id/user_name"
+                android:id="@+id/participant_name"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="3"
