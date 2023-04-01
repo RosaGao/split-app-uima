@@ -63,7 +63,7 @@ public class ExpenseListActivity extends AppCompatActivity {
         @Override
         public SimpleItemRecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.expense_list_content_home, parent, false);
+                    .inflate(R.layout.home_expense_list_content, parent, false);
             return new ViewHolder(view);
         }
 

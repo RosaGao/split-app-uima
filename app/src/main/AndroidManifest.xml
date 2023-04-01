@@ -12,10 +12,10 @@
         android:theme="@style/Theme.Split"
         tools:targetApi="31" >
         <activity
-            android:name=".Payer"
+            android:name=".SelectPayerActivity"
             android:exported="false" />
         <activity
-            android:name=".Participant"
+            android:name=".SelectParticipantsActivity"
             android:exported="false" />
         <activity
             android:name=".NewExpenseActivity"
