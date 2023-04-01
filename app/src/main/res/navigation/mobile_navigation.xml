@@ -12,19 +12,19 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_chat"
-        android:name="com.example.split.ui.tags.TagFragment"
+        android:id="@+id/navigation_tag"
+        android:name="com.example.split.ui.tags.TagFrament"
         android:label="@string/title_tag"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
-        android:id="@+id/navigation_profile"
-        android:name="com.example.split.ui.friend.FriendsFragment"
+        android:id="@+id/navigation_friend"
+        android:name="com.example.split.ui.friend.FriendFragment"
         android:label="@string/title_friends"
         tools:layout="@layout/fragment_friend" />
 
     <fragment
-        android:id="@+id/navigation_map"
+        android:id="@+id/navigation_profile"
         android:name="com.example.split.ui.profile.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
