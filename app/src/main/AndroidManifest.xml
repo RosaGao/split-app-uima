@@ -15,9 +15,6 @@
             android:name=".Payer"
             android:exported="false" />
         <activity
-            android:name=".SplitMethod"
-            android:exported="false" />
-        <activity
             android:name=".Participant"
             android:exported="false" />
         <activity

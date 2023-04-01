@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:elevation="10dp">
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/equal_split_method_chip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="10dp"
+        android:fontFamily="@font/Jost"
+        android:text="Equally"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:chipBackgroundColor="@color/darkblue"
+        app:chipCornerRadius="15dp"
+        app:chipEndPadding="10dp"
+        app:chipIcon="@drawable/whiteequalsplit"
+        app:chipMinHeight="50dp"
+        app:chipStartPadding="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.055"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.076" />
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/percentage_split_method_chip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="10dp"
+        android:fontFamily="@font/Jost"
+        android:text="Percent"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:chipBackgroundColor="@color/yellow"
+        app:chipCornerRadius="15dp"
+        app:chipEndPadding="10dp"
+        app:chipIcon="@drawable/blackpercentsplit"
+        app:chipMinHeight="50dp"
+        app:chipStartPadding="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.531"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.076" />
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/exact_split_method_chip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="10dp"
+        android:fontFamily="@font/Jost"
+        android:text="Exact"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:chipBackgroundColor="@color/darkblue"
+        app:chipCornerRadius="15dp"
+        app:chipEndPadding="10dp"
+        app:chipIcon="@drawable/exactsplit_icon"
+        app:chipMinHeight="50dp"
+        app:chipStartPadding="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.947"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.076" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="You are splitting by % for (total cost) dollars."
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/percentage_split_method_chip" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
