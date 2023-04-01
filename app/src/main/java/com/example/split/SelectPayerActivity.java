@@ -24,6 +24,5 @@ public class SelectPayerActivity extends AppCompatActivity {
 
         binding = ActivityNewExpensePayerBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
     }
 }
