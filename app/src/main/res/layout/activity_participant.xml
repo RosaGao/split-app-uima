@@ -9,7 +9,7 @@
     tools:context=".Participant">
 
     <SearchView
-        android:id="@+id/searchParticipants"
+        android:id="@+id/searchUsers"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:defaultQueryHint="Search by name or phone number"
@@ -27,7 +27,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.04"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchParticipants" />
+        app:layout_constraintTop_toBottomOf="@+id/searchUsers" />
 
     <TextView
         android:id="@+id/textView"
@@ -37,10 +37,10 @@
         android:layout_marginTop="17dp"
         android:text="Friends"
         app:layout_constraintStart_toEndOf="@+id/imageView5"
-        app:layout_constraintTop_toBottomOf="@+id/searchParticipants" />
+        app:layout_constraintTop_toBottomOf="@+id/searchUsers" />
 
     <ListView
-        android:id="@+id/mylist"
+        android:id="@+id/userlist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
