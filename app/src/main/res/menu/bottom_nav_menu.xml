@@ -12,12 +12,12 @@
         android:title="@string/title_tag" />
 
     <item
-        android:id="+id/navigation_friends"
+        android:id="@+id/navigation_friends"
         android:icon="@drawable/people"
         android:title="@string/title_friends" />
 
     <item
-        android:id="+id/navigation_profile"
+        android:id="@+id/navigation_profile"
         android:icon="@drawable/profile"
         android:title="@string/title_profile" />
 

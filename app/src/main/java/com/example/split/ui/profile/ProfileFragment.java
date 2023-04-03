@@ -34,7 +34,7 @@ public class ProfileFragment extends Fragment {
         profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
 
         // Get the TextView from the layout
-        TextView textView = view.findViewById(R.id.textView);
+        TextView textView = view.findViewById(R.id.text_chat);
 
         // Observe the LiveData from the ViewModel and update the TextView
         profileViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
