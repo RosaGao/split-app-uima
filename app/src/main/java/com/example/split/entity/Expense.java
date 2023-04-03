@@ -7,6 +7,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Expense {
+
+    String userId;
     private String description;
     private Date date;
     private float amount;
@@ -15,7 +17,8 @@ public class Expense {
     private Tag tag;
     private SplitMethod method;
 
-    public Expense() {
+    public Expense(String id) {
+        this.userId = id;
         this.participants = new HashSet<>();
     }
 
@@ -73,5 +76,9 @@ public class Expense {
 
     public String getDescription() {
         return description;
+    }
+
+    public String getUserId() {
+        return this.userId;
     }
 }
