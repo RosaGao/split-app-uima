@@ -1,34 +1,36 @@
-package com.example.split;
+package com.example.split.newExpense;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
+
+import com.example.split.R;
 import com.example.split.entity.User;
 
 import java.util.List;
 
-public class UsersAdapter extends ArrayAdapter<User> {
+public class ParticipantsAdapter extends ArrayAdapter<User> {
     int resource;
-    SelectParticipantsActivity activity;
+    SelectPayerActivity activity;
 
-
-    public UsersAdapter(Context ctx, int res, List<User> users) {
-        super(ctx, res, users);
+    public ParticipantsAdapter(Context ctx, int res, List<User> participants) {
+        super(ctx, res, participants);
         resource = res;
-        activity = (SelectParticipantsActivity) ctx;
+        activity = (SelectPayerActivity) ctx;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LinearLayout itemView;
-        User user = getItem(position);
+        User participant = getItem(position);
 
         if (convertView == null) {
             itemView = new LinearLayout(getContext());
@@ -40,14 +42,21 @@ public class UsersAdapter extends ArrayAdapter<User> {
         }
 
         TextView name = (TextView) itemView.findViewById(R.id.participant_name);
-        name.setText("Some name");
+        name.setText("Some selected participant name");
 
-        CheckBox selected = (CheckBox) itemView.findViewById(R.id.checkBox);
+        RadioButton selected = (RadioButton) itemView.findViewById(R.id.radioButton);
         selected.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    SelectParticipantsActivity.participants.add(user);
+                    if (NewExpenseActivity.payer == null)
+                        NewExpenseActivity.payer = participant;
+                    else
+                        Toast.makeText(activity.getApplicationContext(), "Can only choose one payer", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (NewExpenseActivity.payer == participant) {
+                        NewExpenseActivity.payer = null;
+                    }
                 }
             }
         });

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:isScrollContainer="true"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".SelectParticipantsActivity">
+    tools:context=".newExpense.SelectParticipantsActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"

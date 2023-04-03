@@ -1,10 +1,12 @@
 package com.example.split.entity;
 
 public class Tag {
+    private String userId;
     private String name;
     private int numExpenses;
 
-    public Tag(String name) {
+    public Tag(String id, String name) {
+        this.userId = id;
         this.name = name;
         this.numExpenses = 0;
     }
