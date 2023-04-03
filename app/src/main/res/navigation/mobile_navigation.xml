@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/navigation_tag"
-        android:name="com.example.split.ui.tags.TagFrament"
+        android:name="com.example.split.ui.tags.TagFragment"
         android:label="@string/title_tag"
         tools:layout="@layout/fragment_dashboard" />
 

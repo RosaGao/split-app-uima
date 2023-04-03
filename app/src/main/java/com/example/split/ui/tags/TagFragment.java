@@ -1,4 +1,4 @@
-package com.example.split.ui;
+package com.example.split.ui.tags;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -34,7 +34,7 @@ public class TagFragment extends Fragment {
         tagViewModel = new ViewModelProvider(this).get(TagViewModel.class);
 
         // Get the TextView from the layout
-        TextView textView = view.findViewById(R.id.textView);
+        TextView textView = view.findViewById(R.id.text_chat);
 
         // Observe the LiveData from the ViewModel and update the TextView
         tagViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
