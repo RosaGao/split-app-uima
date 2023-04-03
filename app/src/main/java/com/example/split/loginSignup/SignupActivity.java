@@ -69,7 +69,7 @@ public class SignupActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Save user information to the database
                             FirebaseUser user = mAuth.getCurrentUser();
-                            int phoneNumber = Integer.parseInt(phoneNumberEditText.getText().toString());
+                            String phoneNumber = phoneNumberEditText.getText().toString();
                             writeNewUser(user.getUid(), displayNameEditText.getText().toString(), email, phoneNumber, password);
 
                             // Go back to LoginActivity
@@ -84,7 +84,7 @@ public class SignupActivity extends AppCompatActivity {
                 });
     }
 
-    private void writeNewUser(String userId, String name, String email, int phoneNumber, String password) {
+    private void writeNewUser(String userId, String name, String email, String phoneNumber, String password) {
         User user = new User(name, email, phoneNumber, password);
         mDatabase.child("users").child(userId).setValue(user);
     }
