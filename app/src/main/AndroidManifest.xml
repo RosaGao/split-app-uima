@@ -34,9 +34,6 @@
             android:name=".newExpense.NewExpenseActivity"
             android:exported="false" />
         <activity
-            android:name=".loginSignup.WelcomeActivity"
-            android:exported="false" />
-        <activity
             android:name=".loginSignup.SignupActivity"
             android:exported="false"/>
         <activity
