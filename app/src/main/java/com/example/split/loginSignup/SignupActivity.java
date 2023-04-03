@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.example.split.R;
+import com.example.split.entity.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -68,7 +69,8 @@ public class SignupActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Save user information to the database
                             FirebaseUser user = mAuth.getCurrentUser();
-                            writeNewUser(user.getUid(), displayNameEditText.getText().toString(), email, phoneNumberEditText.getText().toString());
+                            int phoneNumber = Integer.parseInt(phoneNumberEditText.getText().toString());
+                            writeNewUser(user.getUid(), displayNameEditText.getText().toString(), email, phoneNumber, password);
 
                             // Go back to LoginActivity
                             Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
@@ -82,8 +84,8 @@ public class SignupActivity extends AppCompatActivity {
                 });
     }
 
-    private void writeNewUser(String userId, String name, String email, String phoneNumber) {
-        User user = new User(name, email, phoneNumber);
+    private void writeNewUser(String userId, String name, String email, int phoneNumber, String password) {
+        User user = new User(name, email, phoneNumber, password);
         mDatabase.child("users").child(userId).setValue(user);
     }
 
@@ -139,22 +141,5 @@ public class SignupActivity extends AppCompatActivity {
         }
 
         return valid;
-    }
-
-    // Create a User class to store user data
-    public static class User {
-        public String name;
-        public String email;
-        public String phoneNumber;
-
-        public User() {
-            // Default constructor required for calls to DataSnapshot.getValue(User.class)
-        }
-
-        public User(String name, String email, String phoneNumber) {
-            this.name = name;
-            this.email = email;
-            this.phoneNumber = phoneNumber;
-        }
     }
 }
