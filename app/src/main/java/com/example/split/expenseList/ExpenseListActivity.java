@@ -1,7 +1,8 @@
-package com.example.split;
+package com.example.split.expenseList;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,11 +12,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.split.R;
 import com.example.split.entity.Expense;
 import com.google.android.material.chip.Chip;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import androidx.recyclerview.widget.RecyclerView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ValueEventListener;
 
 
 import java.util.List;
@@ -24,10 +30,43 @@ public class ExpenseListActivity extends AppCompatActivity {
 
     private FirebaseDatabase db;
     private DatabaseReference dbRef;
+
+    private static String userId;
     private List<Expense> allExpenses;
     private SimpleItemRecyclerViewAdapter myAdapt;
 
-    // TODO
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.home_expense_list);
+
+        db = FirebaseDatabase.getInstance();
+        dbRef = db.getReference();
+        userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference expensesRef = dbRef.child("user-expenses").child(userId);
+
+        expensesRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                long count = snapshot.getChildrenCount();
+                Log.d("db expenses " + userId, "Children count: " + count);
+                Log.d("db expenses " + userId, "Expenses count: " + snapshot.child("user-expenses").getChildrenCount());
+
+                allExpenses.clear();
+                Iterable<DataSnapshot> expenses = snapshot.child("user-expenses").getChildren();
+                for (DataSnapshot expense : expenses) {
+                    allExpenses.add(expense.getValue(Expense.class));
+                }
+                myAdapt.notifyDataSetChanged();
+            }
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w("db expenses " + userId, "Failed to read value.", error.toException());
+            }
+        });
+
+    }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
         recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(this, allExpenses, false));
@@ -46,7 +85,7 @@ public class ExpenseListActivity extends AppCompatActivity {
 
                 Context context = view.getContext();
                 Intent intent = new Intent(context, ExpenseListActivity.class);
-//                intent.putExtra(ItemDetailFragment.ARG_ITEM_ID, item.getId());
+                intent.putExtra(ExpenseDetailActivity.USER_ID, item.getUserId());
                 context.startActivity(intent);
             }
         };

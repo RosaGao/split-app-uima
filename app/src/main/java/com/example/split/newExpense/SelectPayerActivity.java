@@ -1,12 +1,12 @@
-package com.example.split;
+package com.example.split.newExpense;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import com.example.split.R;
 import com.example.split.databinding.ActivityMainBinding;
 import com.example.split.databinding.ActivityNewExpensePayerBinding;
-import com.example.split.entity.User;
 
 public class SelectPayerActivity extends AppCompatActivity {
 

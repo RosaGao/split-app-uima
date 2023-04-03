@@ -12,13 +12,13 @@
         android:theme="@style/Theme.Split"
         tools:targetApi="31" >
         <activity
-            android:name=".SelectPayerActivity"
+            android:name=".newExpense.SelectPayerActivity"
             android:exported="false" />
         <activity
-            android:name=".SelectParticipantsActivity"
+            android:name=".newExpense.SelectParticipantsActivity"
             android:exported="false" />
         <activity
-            android:name=".NewExpenseActivity"
+            android:name=".newExpense.NewExpenseActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

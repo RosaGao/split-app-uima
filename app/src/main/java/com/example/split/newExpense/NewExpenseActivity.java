@@ -1,4 +1,4 @@
-package com.example.split;
+package com.example.split.newExpense;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+import com.example.split.R;
 import com.example.split.entity.User;
 
 public class NewExpenseActivity extends AppCompatActivity {
