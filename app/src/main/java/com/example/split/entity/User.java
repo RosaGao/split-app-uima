@@ -65,4 +65,7 @@ public class User {
 
     public void set_id(String userID) { this.userID = userID; }
     public String get_id() { return this.userID; }
+    public void setPassword(String password) { this.password = password; }
+    public String getPassword() { return this.password; }
+
 }
