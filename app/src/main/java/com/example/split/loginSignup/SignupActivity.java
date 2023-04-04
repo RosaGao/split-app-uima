@@ -67,12 +67,12 @@ public class SignupActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Save user information to the database
                             FirebaseUser user = mAuth.getCurrentUser();
                             String phoneNumber = phoneNumberEditText.getText().toString();
-                            writeNewUser(user.getUid(), displayNameEditText.getText().toString(), email, phoneNumber, password);
+                            String displayName = displayNameEditText.getText().toString();
+                            String userId = mDatabase.child("users").push().getKey(); // generate a unique userId
+                            writeNewUser(userId, displayName, email, phoneNumber, password);
 
-                            // Go back to LoginActivity
                             Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
                             startActivity(intent);
                             finish();
@@ -87,10 +87,9 @@ public class SignupActivity extends AppCompatActivity {
     private void writeNewUser(String userId, String name, String email, String phoneNumber, String password) {
         User user = new User(name, email, phoneNumber, password);
         user.set_id(userId);
-
         user.setPassword(password); // add the password to the User object
 
-        mDatabase.child("users").setValue(user);
+        mDatabase.child("users").child(userId).setValue(user); // add a child node for the new user
     }
 
     private boolean validateForm() {
