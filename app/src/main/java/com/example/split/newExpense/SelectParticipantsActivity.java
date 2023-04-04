@@ -18,7 +18,7 @@ public class SelectParticipantsActivity extends AppCompatActivity {
     private ActivityNewExpenseParticipantsBinding binding;
     public static ArrayList<User> users = new ArrayList<>();
     public static UsersAdapter adapter;
-    public static List<User> participants;
+    public static List<User> participants = new ArrayList<>();
 
 
 

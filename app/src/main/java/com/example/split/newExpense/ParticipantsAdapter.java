@@ -50,16 +50,16 @@ public class ParticipantsAdapter extends ArrayAdapter<User> {
         selected.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    if (NewExpenseActivity.payer == null)
-                        NewExpenseActivity.payer = participant;
-                    else
-                        Toast.makeText(activity.getApplicationContext(), "Can only choose one payer", Toast.LENGTH_SHORT).show();
-                } else {
-                    if (NewExpenseActivity.payer == participant) {
-                        NewExpenseActivity.payer = null;
-                    }
-                }
+//                if (isChecked) {
+//                    if (NewExpenseActivity.payer == null)
+//                        NewExpenseActivity.payer = participant;
+//                    else
+//                        Toast.makeText(activity.getApplicationContext(), "Can only choose one payer", Toast.LENGTH_SHORT).show();
+//                } else {
+//                    if (NewExpenseActivity.payer == participant) {
+//                        NewExpenseActivity.payer = null;
+//                    }
+//                }
             }
         });
 

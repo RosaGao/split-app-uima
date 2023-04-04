@@ -7,6 +7,7 @@ import android.os.Bundle;
 import com.example.split.R;
 import com.example.split.databinding.ActivityMainBinding;
 import com.example.split.databinding.ActivityNewExpensePayerBinding;
+import com.example.split.entity.User;
 import com.google.firebase.database.DatabaseReference;
 import com.example.split.newExpense.ParticipantsAdapter;
 
@@ -15,6 +16,8 @@ public class SelectPayerActivity extends AppCompatActivity {
 
     private ActivityNewExpensePayerBinding binding;
     public static ParticipantsAdapter adapter;
+
+    public static User payer = null;
 
 
     @Override
