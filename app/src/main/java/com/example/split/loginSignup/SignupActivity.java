@@ -87,7 +87,6 @@ public class SignupActivity extends AppCompatActivity {
     private void writeNewUser(String userId, String name, String email, String phoneNumber, String password) {
         User user = new User(name, email, phoneNumber, password);
         user.set_id(userId);
-        user.setPassword(password); // add the password to the User object
 
         mDatabase.child("users").child(userId).setValue(user); // add a child node for the new user
     }
