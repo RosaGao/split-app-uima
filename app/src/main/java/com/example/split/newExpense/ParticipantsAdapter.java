@@ -12,10 +12,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.example.split.NewExpenseActivity;
 import com.example.split.R;
 import com.example.split.entity.User;
 
 import java.util.List;
+
 
 public class ParticipantsAdapter extends ArrayAdapter<User> {
     int resource;
@@ -63,5 +65,4 @@ public class ParticipantsAdapter extends ArrayAdapter<User> {
 
         return itemView;
     }
-
 }

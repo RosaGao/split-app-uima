@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".newExpense.NewExpenseActivity">
+    tools:context="com.example.split.NewExpenseActivity">
 
     <EditText
         android:id="@+id/editDescription"
@@ -31,7 +31,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.15"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextNumberDecimal" />
+        app:layout_constraintTop_toBottomOf="@+id/editAmount" />
 
     <TextView
         android:id="@+id/textPayer"
@@ -43,7 +43,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.777"
         app:layout_constraintStart_toEndOf="@+id/textAddParticipants"
-        app:layout_constraintTop_toBottomOf="@+id/editTextNumberDecimal" />
+        app:layout_constraintTop_toBottomOf="@+id/editAmount" />
 
     <TextView
         android:id="@+id/textChooseTag"
@@ -84,7 +84,7 @@
         app:layout_constraintTop_toBottomOf="@+id/editDescription" />
 
     <EditText
-        android:id="@+id/editTextNumberDecimal"
+        android:id="@+id/editAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -126,7 +126,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
         android:src="@drawable/cost_icon"
-        app:layout_constraintEnd_toStartOf="@+id/editTextNumberDecimal"
+        app:layout_constraintEnd_toStartOf="@+id/editAmount"
         app:layout_constraintHorizontal_bias="0.559"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
@@ -135,10 +135,12 @@
         android:id="@+id/addParticipantsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="60dp"
         android:background="@android:color/transparent"
         android:src="@drawable/plus_button"
-        tools:layout_editor_absoluteX="152dp"
-        tools:layout_editor_absoluteY="308dp" />
+        app:layout_constraintStart_toEndOf="@+id/textAddParticipants"
+        app:layout_constraintTop_toBottomOf="@+id/editAmount" />
 
     <ImageButton
         android:id="@+id/imageButton2"

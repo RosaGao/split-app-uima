@@ -111,7 +111,7 @@ public class ExpenseListActivity extends AppCompatActivity {
             Log.d("in binder", myExpenses.get(position).toString());
 
             holder.description.setText(myExpenses.get(position).getDescription());
-            holder.tag.setText(myExpenses.get(position).getTag().getNumExpenses());
+//            holder.tag.setText(myExpenses.get(position).getTag().getNumExpenses());
             holder.date.setText(myExpenses.get(position).getDate().toString());
             holder.status.setText("You owe $123");
 

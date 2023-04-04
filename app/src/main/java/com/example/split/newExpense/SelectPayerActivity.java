@@ -7,8 +7,11 @@ import android.os.Bundle;
 import com.example.split.R;
 import com.example.split.databinding.ActivityMainBinding;
 import com.example.split.databinding.ActivityNewExpensePayerBinding;
+import com.google.firebase.database.DatabaseReference;
+import com.example.split.newExpense.ParticipantsAdapter;
 
 public class SelectPayerActivity extends AppCompatActivity {
+    private DatabaseReference mDatabase;
 
     private ActivityNewExpensePayerBinding binding;
     public static ParticipantsAdapter adapter;
