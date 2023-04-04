@@ -1,7 +1,9 @@
 package com.example.split.expenseList;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,9 +12,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.split.NewExpenseActivity;
 import com.example.split.R;
 import com.example.split.databinding.ActivityMainBinding;
 import com.example.split.entity.Expense;
@@ -35,14 +41,16 @@ import java.util.Date;
 import java.util.List;
 
 public class ExpenseListActivity extends AppCompatActivity {
+    private static final int LAUNCH_NEW_EXPENSE_REQUEST_CODE = 1000;
+
 
     private FirebaseDatabase db;
     private DatabaseReference dbRef;
     DatabaseReference userDataRef;
 
     private static String userId;
-    private List<Expense> allExpenses = new ArrayList<>();
-    private SimpleItemRecyclerViewAdapter myAdapt;
+    public List<Expense> allExpenses = new ArrayList<>();
+    public SimpleItemRecyclerViewAdapter myAdapt;
 
 
     @Override
@@ -65,10 +73,8 @@ public class ExpenseListActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 User user = snapshot.getValue(User.class);
-
                 if (user == null) {
-                    // User is null, error out
-                    //TODO login activity is user is null
+                    //TODO login activity if user is null
 
                     Log.e("expense list activity: ", "User " + userId + " is unexpectedly null");
                     Toast.makeText(getApplicationContext(),
@@ -87,26 +93,61 @@ public class ExpenseListActivity extends AppCompatActivity {
             }
         });
 
+
+
+
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.new_expense_fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // get details for a new Client, using dummy values for now
-                Expense newExpense = new Expense(userId, "description", new Date().toString(), "$100", new ArrayList<>(), new User("rosa", "email", "phone", "password"), new Tag("id", "tagname"), SplitMethod.EXACT);
-                allExpenses.add(newExpense);
-                myAdapt.notifyDataSetChanged();
+//                Expense newExpense = new Expense(userId, "description", new Date().toString(), "$100", new ArrayList<>(), new User("rosa", "email", "phone", "password"), new Tag("id", "tagname"), SplitMethod.EXACT);
+//                allExpenses.add(newExpense);
+//                myAdapt.notifyDataSetChanged();
+//
+//                String key = dbRef.child("expenses").push().getKey();
+//                newExpense.setExpenseId(key);
+//                dbRef.child("expenses").child(key).setValue(newExpense);
+//                dbRef.child("users").child(userId).child("expense_list").setValue(allExpenses);
+//
+//                Snackbar.make(view, "New Expense added", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
 
-                String key = dbRef.child("expenses").push().getKey();
-                newExpense.setExpenseId(key);
-                dbRef.child("expenses").child(key).setValue(newExpense);
-                dbRef.child("users").child(userId).child("expense_list").setValue(allExpenses);
-
-                Snackbar.make(view, "New Expense added", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent addNewExpense = new Intent(ExpenseListActivity.this, NewExpenseActivity.class);
+                addNewExpense.putExtra("userId", userId);
+                startActivityForResult(addNewExpense, LAUNCH_NEW_EXPENSE_REQUEST_CODE);
             }
         });
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+        if (requestCode == LAUNCH_NEW_EXPENSE_REQUEST_CODE) {
+            if(resultCode == Activity.RESULT_OK && data.getStringExtra("expenseId") != null){
+                String expenseId =data.getStringExtra("expenseId");
+                dbRef.child("expenses").child(expenseId).
+                        addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        Expense newExpense = snapshot.getValue(Expense.class);
+                        allExpenses.add(newExpense);
+                        myAdapt.notifyDataSetChanged();
+
+                        dbRef.child("users").child(userId).child("expense_list").setValue(allExpenses);
+                        Snackbar.make(getWindow().getDecorView().getRootView(), "New Expense added!", Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {}
+                });
+            } else {
+                Snackbar.make(getWindow().getDecorView().getRootView(), "Failed to create new expense!", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        }
     }
 
     public static class SimpleItemRecyclerViewAdapter
