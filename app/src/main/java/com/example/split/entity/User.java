@@ -1,5 +1,6 @@
 package com.example.split.entity;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -16,7 +17,7 @@ public class User {
     private Map<String, Integer> friends;         // User, amount owed (should be equal magnitude between friends)
     private Set<String> pending_incoming;         // Incoming friend requests
     private Set<String> pending_outgoing;         // Outgoing friend requests
-    private List<String> expense_list;         // List of expenses
+    private List<Expense> expense_list;         // List of expenses
 
     public User(String name, String email, String phone, String password) {
         this.name = name;
@@ -26,6 +27,7 @@ public class User {
         this.friends = new HashMap<String, Integer>();
         this.pending_incoming = new HashSet<String>();
         this.pending_outgoing = new HashSet<String>();
+        this.expense_list = new ArrayList<>();
     }
 
     public String get_name() { return this.name; }
@@ -56,11 +58,15 @@ public class User {
         return this.friends.getOrDefault(user, 0);
     }
 
-    public void add_expense(String expense) { expense_list.add(expense); }
+    public void add_expense(Expense expense) { expense_list.add(expense); }
     public void remove_expense (Expense expense) {
         if (expense_list.contains(expense)) {
             expense_list.remove(expense);
         }
+    }
+
+    public List<Expense> get_expenses() {
+        return this.expense_list;
     }
 
     public void set_id(String userID) { this.userID = userID; }

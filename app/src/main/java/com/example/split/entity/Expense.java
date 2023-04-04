@@ -2,9 +2,11 @@ package com.example.split.entity;
 
 import com.example.split.entity.Tag;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -14,29 +16,29 @@ public class Expense {
     private String description;
     private String date;
     private String amount;
-    private String[] participants;
-    private String payerId;
-    private String tagId;
+    private List<User> participants = new ArrayList<>();
+    private User payer;
+    private Tag tag;
     private SplitMethod method;
 
     private String expenseId;
 
-    public Expense(String userId, String description, String date, String amount, String[] participants, String payerId, String tagId, SplitMethod method) {
+    public Expense(String userId, String description, String date, String amount, List<User> participants, User payer, Tag tag, SplitMethod method) {
         this.userId = userId;
         this.description = description;
         this.date = date;
         this.amount = amount;
-        this.tagId = tagId;
-        this.participants = participants;
-        this.payerId = payerId;
+        this.tag = tag;
+        this.participants.addAll(participants);
+        this.payer = payer;
         this.method = method;
     }
 
     public void setExpenseId(String expenseId) {
         this.expenseId = expenseId;
     }
-    public String getTag() {
-        return tagId;
+    public Tag getTag() {
+        return tag;
     }
 
     public SplitMethod getMethod() {
@@ -59,21 +61,20 @@ public class Expense {
         return this.userId;
     }
 
-    public String[] getParticipants() {return this.participants;}
+    public List<User> getParticipants() {return this.participants;}
 
-    public Map<String, Object> toMap() {
-        HashMap<String, Object> result = new HashMap<>();
-
-        result.put("userId", userId);
-        result.put("description", description);
-        result.put("date", date);
-        result.put("amount", amount);
-        result.put("tagId", tagId);
-        result.put("participants", participants);
-        result.put("payerId", payerId);
-        result.put("method", method);
-        result.put("expenseId", expenseId);
-
-        return result;
-    }
+//    public Map<String, Object> toMap() {
+//        HashMap<String, Object> result = new HashMap<>();
+//
+//        result.put("userId", userId);
+//        result.put("description", description);
+//        result.put("date", date);
+//        result.put("amount", amount);
+//        result.put("tag", tag);
+//        result.put("participants", participants);
+//        result.put("payer", payer);
+//        result.put("method", method);
+//
+//        return result;
+//    }
 }
