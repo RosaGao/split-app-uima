@@ -86,7 +86,8 @@ public class SignupActivity extends AppCompatActivity {
 
     private void writeNewUser(String userId, String name, String email, String phoneNumber, String password) {
         User user = new User(name, email, phoneNumber, password);
-        mDatabase.child("users").child(userId).setValue(user);
+        user.set_id(userId);
+        mDatabase.child("users").setValue(user);
     }
 
     private boolean validateForm() {
