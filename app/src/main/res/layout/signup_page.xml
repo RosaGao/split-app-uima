@@ -1,69 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
     tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/sign_up_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sign Up"
+        android:textSize="24sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="16dp"
+        />
 
     <EditText
         android:id="@+id/email_address"
         android:layout_width="0dp"
+        android:paddingTop="40dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Email Address"
+        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/sign_up_text"
+        android:layout_marginTop="16dp"
+        />
 
     <EditText
         android:id="@+id/phone_number"
         android:layout_width="0dp"
+        android:paddingTop="40dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Phone Number"
+        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email_address" />
+        app:layout_constraintTop_toBottomOf="@+id/email_address"
+        android:layout_marginTop="16dp"
+        />
 
     <EditText
         android:id="@+id/password"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:paddingTop="40dp"
         android:hint="Password"
+        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/phone_number" />
+        app:layout_constraintTop_toBottomOf="@+id/phone_number"
+        android:layout_marginTop="16dp"
+        />
 
     <EditText
         android:id="@+id/confirm_password"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:paddingTop="40dp"
         android:hint="Confirm Password"
+        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password" />
+        app:layout_constraintTop_toBottomOf="@+id/password"
+        android:layout_marginTop="16dp"
+        />
 
     <EditText
         android:id="@+id/display_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:paddingTop="40dp"
         android:hint="Display Name"
+        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/confirm_password" />
+        app:layout_constraintTop_toBottomOf="@+id/confirm_password"
+        android:layout_marginTop="16dp"
+        />
 
     <Button
         android:id="@+id/finished_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="157dp"
+        android:layout_height="85dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/green"
         android:text="Finished"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/display_name" />
+        app:layout_constraintTop_toBottomOf="@+id/display_name"
+
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+
+
