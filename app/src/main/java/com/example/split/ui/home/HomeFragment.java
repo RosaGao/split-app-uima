@@ -11,15 +11,9 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.split.R;
-import com.example.split.ui.home.HomeViewModel;
+import com.example.split.expenseList.ExpenseListActivity;
 
 public class HomeFragment extends Fragment {
-
-    private HomeViewModel homeViewModel;
-
-    public HomeFragment() {
-        // Required empty public constructor
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

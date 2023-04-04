@@ -8,13 +8,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.split.R;
+import com.example.split.databinding.ActivityMainBinding;
 import com.example.split.entity.Expense;
+import com.example.split.entity.SplitMethod;
+import com.example.split.entity.Tag;
+import com.example.split.entity.User;
 import com.google.android.material.chip.Chip;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,39 +30,53 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ValueEventListener;
 
-
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ExpenseListActivity extends AppCompatActivity {
 
     private FirebaseDatabase db;
     private DatabaseReference dbRef;
+    DatabaseReference userDataRef;
 
     private static String userId;
-    private List<Expense> allExpenses;
+    private List<Expense> allExpenses = new ArrayList<>();
     private SimpleItemRecyclerViewAdapter myAdapt;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.home_expense_list);
+        setContentView(R.layout.fragment_home);
 
         db = FirebaseDatabase.getInstance();
         dbRef = db.getReference();
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        DatabaseReference expensesRef = dbRef.child("user-expenses").child(userId);
+        userDataRef = dbRef.child(userId);
+        Log.v("user id", userId);
 
-        expensesRef.addValueEventListener(new ValueEventListener() {
+        RecyclerView recyclerView = findViewById(R.id.expense_list_home);
+        assert recyclerView != null;
+        myAdapt = new SimpleItemRecyclerViewAdapter(this, allExpenses, false);
+        recyclerView.setAdapter(myAdapt);
+
+        userDataRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                long count = snapshot.getChildrenCount();
-                Log.d("db expenses " + userId, "Children count: " + count);
-                Log.d("db expenses " + userId, "Expenses count: " + snapshot.child("user-expenses").getChildrenCount());
+                User user = snapshot.getValue(User.class);
 
-                allExpenses.clear();
-                Iterable<DataSnapshot> expenses = snapshot.child("user-expenses").getChildren();
-                for (DataSnapshot expense : expenses) {
-                    allExpenses.add(expense.getValue(Expense.class));
+                if (user == null) {
+                    // User is null, error out
+                    //TODO login activity is user is null
+
+                    Log.e("expense list activity: ", "User " + userId + " is unexpectedly null");
+                    Toast.makeText(getApplicationContext(),
+                            "Error: could not fetch user.",
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    allExpenses.clear();
+                    allExpenses.addAll(user.get_expenses());
                 }
                 myAdapt.notifyDataSetChanged();
             }
@@ -66,17 +87,33 @@ public class ExpenseListActivity extends AppCompatActivity {
             }
         });
 
-    }
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.new_expense_fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // get details for a new Client, using dummy values for now
+                Expense newExpense = new Expense(userId, "description", new Date().toString(), "$100", new ArrayList<>(), new User("rosa", "email", "phone", "password"), new Tag("id", "tagname"), SplitMethod.EXACT);
+                allExpenses.add(newExpense);
+                myAdapt.notifyDataSetChanged();
 
-    private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(this, allExpenses, false));
+                String key = dbRef.child("expenses").push().getKey();
+                newExpense.setExpenseId(key);
+                dbRef.child("expenses").child(key).setValue(newExpense);
+                dbRef.child("users").child(userId).child("expense_list").setValue(allExpenses);
+
+                Snackbar.make(view, "New Expense added", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+
+
     }
 
     public static class SimpleItemRecyclerViewAdapter
             extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
 
         private ExpenseListActivity myParentActivity;
-        private List<Expense> myExpenses;
+        private List<Expense> myExpenses = new ArrayList<>();
 
         private final View.OnClickListener myOnClickListener = new View.OnClickListener() {
             @Override
@@ -84,7 +121,7 @@ public class ExpenseListActivity extends AppCompatActivity {
                 Expense item = (Expense) view.getTag();
 
                 Context context = view.getContext();
-                Intent intent = new Intent(context, ExpenseListActivity.class);
+                Intent intent = new Intent(context, ExpenseDetailActivity.class);
                 intent.putExtra(ExpenseDetailActivity.USER_ID, item.getUserId());
                 context.startActivity(intent);
             }

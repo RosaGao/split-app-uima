@@ -19,6 +19,7 @@ import com.example.split.MainActivity;
 import com.example.split.R;
 import com.example.split.entity.Expense;
 import com.example.split.entity.SplitMethod;
+import com.example.split.entity.Tag;
 import com.example.split.entity.User;
 import com.example.split.newExpense.SelectParticipantsActivity;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,6 +31,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class NewExpenseActivity extends AppCompatActivity {
@@ -81,9 +83,6 @@ public class NewExpenseActivity extends AppCompatActivity {
             }
         });
 
-
-
-
         addParticipantsButton = (ImageButton) findViewById(R.id.addParticipantsButton);
         addParticipantsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,7 +133,7 @@ public class NewExpenseActivity extends AppCompatActivity {
                 } else {
                     // Write new post
                     String[] array={"123","234","345","345"};
-                    writeNewExpense(userId, editDescription.getText().toString(), editDate.getText().toString(), editAmount.getText().toString(), "payerID", array, "tagId", SplitMethod.EQUAL);
+//                    writeNewExpense(userId, editDescription.getText().toString(), editDate.getText().toString(), editAmount.getText().toString(), null, array, "tagId", SplitMethod.EQUAL);
                 }
 
                 finish();
@@ -147,14 +146,14 @@ public class NewExpenseActivity extends AppCompatActivity {
         });
     }
 
-    private void writeNewExpense(String userId, String description, String date, String amount, String payerId, String[] participantIds, String tagId, SplitMethod method) {
+    private void writeNewExpense(String userId, String description, String date, String amount, User payer, List<User> participantIds, Tag tag, SplitMethod method) {
         String key = mDatabase.child("expenses").push().getKey();
-        Expense newExpense = new Expense(userId, description, date, amount, participantIds, payerId, tagId, method);
+        Expense newExpense = new Expense(userId, description, date, amount, participantIds, payer, tag, method);
         newExpense.setExpenseId(key);
-        Map<String, Object> expenseValues = newExpense.toMap();
+//        Map<String, Object> expenseValues = newExpense.toMap();
 
         Map<String, Object> childUpdates = new HashMap<>();
-        childUpdates.put("/expenses/" + key, expenseValues);
+//        childUpdates.put("/expenses/" + key, expenseValues);
 //        childUpdates.put("/user/" + userId + "/" + key, postValues);
 
 
