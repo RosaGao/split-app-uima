@@ -16,7 +16,12 @@
             android:value="6Lfqa1clAAAAAD3y-rr2hQ_3a7KRY-nkkccOYoLL" />
         <activity
             android:name=".loginSignup.LoginActivity"
-            />
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".newExpense.SelectPayerActivity"
             android:exported="false" />
@@ -29,6 +34,8 @@
             android:exported="false" />
         <activity
             android:name=".loginSignup.SignupActivity"
+            android:label="@string/signup_page_name"
+            android:gravity="center"
             android:exported="false"/>
         <activity
             android:name=".expenseList.ExpenseListActivity"
@@ -39,10 +46,6 @@
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
 </application>

@@ -1,6 +1,8 @@
 package com.example.split.loginSignup;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -33,7 +35,6 @@ public class SignupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signup_page);
-
         // Initialize FirebaseAuth and DatabaseReference
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -44,7 +45,7 @@ public class SignupActivity extends AppCompatActivity {
         passwordEditText = findViewById(R.id.password);
         confirmPasswordEditText = findViewById(R.id.confirm_password);
         displayNameEditText = findViewById(R.id.display_name);
-        finishedButton = findViewById(R.id.finished_button);
+        finishedButton = findViewById(R.id.finish_button);
 
         finishedButton.setOnClickListener(new View.OnClickListener() {
             @Override
