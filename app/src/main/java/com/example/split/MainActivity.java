@@ -2,6 +2,8 @@ package com.example.split;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.example.split.expenseList.ExpenseListActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -34,6 +36,24 @@ public class MainActivity extends AppCompatActivity {
 
         Intent mainToExpenseList = new Intent(MainActivity.this, ExpenseListActivity.class);
         startActivity(mainToExpenseList);
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_logout) {
+            Intent intent = new Intent(MainActivity.this, com.example.split.loginSignup.LoginActivity.class);
+            startActivity(intent);
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }
