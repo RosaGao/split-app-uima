@@ -68,26 +68,33 @@ public class SignupActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            // Sign in success
                             FirebaseUser user = mAuth.getCurrentUser();
                             String phoneNumber = phoneNumberEditText.getText().toString();
                             String displayName = displayNameEditText.getText().toString();
-                            String userId = mDatabase.child("users").push().getKey(); // generate a unique userId
+                            String userId = user.getUid(); // Use the user's uid as userId
                             writeNewUser(userId, displayName, email, phoneNumber, password);
 
                             Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
                             startActivity(intent);
                             finish();
                         } else {
-                            Toast.makeText(SignupActivity.this, "Sign Up Failed",
-                                    Toast.LENGTH_SHORT).show();
+                            // If sign in fails, display a message to the user.
+                            Exception exception = task.getException();
+                            String message = "Sign Up Failed.";
+                            if (exception != null && exception.getMessage() != null) {
+                                message = exception.getMessage();
+                            }
+                            Toast.makeText(SignupActivity.this, message, Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
+
     }
 
     private void writeNewUser(String userId, String name, String email, String phoneNumber, String password) {
         User user = new User(name, email, phoneNumber, password);
-        user.setid(userId);
+        user.set_id(userId);
 
         mDatabase.child("users").child(userId).setValue(user);
     }

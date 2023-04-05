@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference dbRef;
     DatabaseReference userDataRef;
 
-    private static String userId = "-NS8f-zxx_es6cxmsEdh" ;
+    private static String userId ;
     public static User currentUser = null;
     public List<Expense> allExpenses = new ArrayList<>();
     public SimpleItemRecyclerViewAdapter myAdapt;

@@ -71,7 +71,7 @@ public class User {
         return this.expense_list;
     }
 
-    public void setid(String userID) { this.userID = userID; }
+    public void set_id(String userID) { this.userID = userID; }
     public String get_id() { return this.userID; }
 
 }
