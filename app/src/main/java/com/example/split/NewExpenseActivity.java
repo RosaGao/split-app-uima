@@ -1,10 +1,7 @@
 package com.example.split;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.menu.MenuBuilder;
-import androidx.navigation.fragment.NavHostFragment;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
@@ -20,31 +17,18 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.Toolbar;
 
-import com.example.split.MainActivity;
-import com.example.split.R;
 import com.example.split.entity.Expense;
 import com.example.split.entity.SplitMethod;
 import com.example.split.entity.Tag;
 import com.example.split.entity.User;
-import com.example.split.expenseList.ExpenseListActivity;
 import com.example.split.newExpense.SelectParticipantsActivity;
 import com.example.split.newExpense.SelectPayerActivity;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class NewExpenseActivity extends AppCompatActivity {
 
@@ -76,10 +60,11 @@ public class NewExpenseActivity extends AppCompatActivity {
         userId = getIntent().getStringExtra("userId");
 
         if (userId == null) {
+            Log.v("userId", "null user id");
             Snackbar.make(getWindow().getDecorView().getRootView()
                             , "Unexpected auth error! Please try again", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-            finish();
+            return;
         }
 
         editDescription = findViewById(R.id.editDescription);

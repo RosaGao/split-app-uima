@@ -31,11 +31,6 @@
             android:name=".loginSignup.SignupActivity"
             android:exported="false"/>
         <activity
-            android:name=".expenseList.ExpenseListActivity"
-            android:theme="@style/Theme.Split.NoActionBar"
-            android:exported="false"
-        />
-        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name">

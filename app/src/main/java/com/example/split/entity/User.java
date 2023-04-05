@@ -20,6 +20,7 @@ public class User {
     private List<Expense> expense_list;         // List of expenses
 
     public User() {}
+
     public User(String name, String email, String phone, String password) {
         this.name = name;
         this.email = email;
