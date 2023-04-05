@@ -63,18 +63,20 @@ public class Expense {
 
     public List<User> getParticipants() {return this.participants;}
 
-//    public Map<String, Object> toMap() {
-//        HashMap<String, Object> result = new HashMap<>();
-//
-//        result.put("userId", userId);
-//        result.put("description", description);
-//        result.put("date", date);
-//        result.put("amount", amount);
-//        result.put("tag", tag);
-//        result.put("participants", participants);
-//        result.put("payer", payer);
-//        result.put("method", method);
-//
-//        return result;
-//    }
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+
+        result.put("userId", userId);
+        result.put("description", description);
+        result.put("date", date);
+        result.put("amount", amount);
+        result.put("tag", tag);
+        result.put("participants", participants);
+        result.put("payer", payer);
+        result.put("method", method);
+        result.put("expenseId", expenseId);
+
+
+        return result;
+    }
 }

@@ -197,9 +197,11 @@ public class NewExpenseActivity extends AppCompatActivity {
                 SelectParticipantsActivity.participants,
                 SelectPayerActivity.payer, tag, method);
 
+
         String key = mDatabase.child("expenses").push().getKey();
         newExpense.setExpenseId(key);
         mDatabase.child("expenses").child(key).setValue(newExpense);
+
 
         Snackbar.make(getWindow().getDecorView().getRootView(), "New Expense added", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();

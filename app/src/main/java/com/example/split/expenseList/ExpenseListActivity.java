@@ -49,6 +49,7 @@ public class ExpenseListActivity extends AppCompatActivity {
     DatabaseReference userDataRef;
 
     private static String userId;
+    public static User currentUser = null;
     public List<Expense> allExpenses = new ArrayList<>();
     public SimpleItemRecyclerViewAdapter myAdapt;
 
@@ -60,9 +61,10 @@ public class ExpenseListActivity extends AppCompatActivity {
 
         db = FirebaseDatabase.getInstance();
         dbRef = db.getReference();
-        userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        userDataRef = dbRef.child(userId);
-        Log.v("user id", userId);
+//        userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        userId = "-NS8bmz3QW7hrO4oeQhA";
+        userDataRef = dbRef.child("users").child(userId);
+        Log.v("user data ref", "user data ref created for " + userId);
 
         RecyclerView recyclerView = findViewById(R.id.expense_list_home);
         assert recyclerView != null;
@@ -81,10 +83,16 @@ public class ExpenseListActivity extends AppCompatActivity {
                             "Error: could not fetch user.",
                             Toast.LENGTH_SHORT).show();
                 } else {
-                    allExpenses.clear();
-                    allExpenses.addAll(user.get_expenses());
+//                    allExpenses.clear();
+//
+//                    Log.v("user name", String.valueOf(user.name));
+//                    Log.v("user email", String.valueOf(user.email));
+//                    Log.v("user phone", String.valueOf(user.phone));
+//
+//                    Log.v("user expenses", String.valueOf(user.get_expenses().size()));
+//                    allExpenses.addAll(user.get_expenses());
+
                 }
-                myAdapt.notifyDataSetChanged();
             }
             @Override
             public void onCancelled(DatabaseError error) {
@@ -95,25 +103,10 @@ public class ExpenseListActivity extends AppCompatActivity {
 
 
 
-
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.new_expense_fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // get details for a new Client, using dummy values for now
-//                Expense newExpense = new Expense(userId, "description", new Date().toString(), "$100", new ArrayList<>(), new User("rosa", "email", "phone", "password"), new Tag("id", "tagname"), SplitMethod.EXACT);
-//                allExpenses.add(newExpense);
-//                myAdapt.notifyDataSetChanged();
-//
-//                String key = dbRef.child("expenses").push().getKey();
-//                newExpense.setExpenseId(key);
-//                dbRef.child("expenses").child(key).setValue(newExpense);
-//                dbRef.child("users").child(userId).child("expense_list").setValue(allExpenses);
-//
-//                Snackbar.make(view, "New Expense added", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-
                 Intent addNewExpense = new Intent(ExpenseListActivity.this, NewExpenseActivity.class);
                 addNewExpense.putExtra("userId", userId);
                 startActivityForResult(addNewExpense, LAUNCH_NEW_EXPENSE_REQUEST_CODE);
@@ -128,8 +121,8 @@ public class ExpenseListActivity extends AppCompatActivity {
         if (requestCode == LAUNCH_NEW_EXPENSE_REQUEST_CODE) {
             if(resultCode == Activity.RESULT_OK && data.getStringExtra("expenseId") != null){
                 String expenseId =data.getStringExtra("expenseId");
-                dbRef.child("expenses").child(expenseId).
-                        addListenerForSingleValueEvent(new ValueEventListener() {
+                dbRef.child("expenses")
+                        .child(expenseId).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         Expense newExpense = snapshot.getValue(Expense.class);
