@@ -17,7 +17,7 @@ public class User {
     private Map<String, Integer> friends;         // User, amount owed (should be equal magnitude between friends)
     private Set<String> pending_incoming;         // Incoming friend requests
     private Set<String> pending_outgoing;         // Outgoing friend requests
-    private List<Expense> expense_list;         // List of expenses
+    private List<Expense> expenseList;         // List of expenses
 
     public User() {}
 
@@ -29,12 +29,12 @@ public class User {
         this.friends = new HashMap<String, Integer>();
         this.pending_incoming = new HashSet<String>();
         this.pending_outgoing = new HashSet<String>();
-        this.expense_list = new ArrayList<>();
+        this.expenseList = new ArrayList<>();
     }
 
-    public String get_name() { return this.name; }
-    public String get_email() { return this.email; }
-    public String get_phone() { return this.phone; }
+    public String getName() { return name; }
+    public String getEmail() { return email; }
+    public String getPhone() { return phone; }
     public void edit_name(String name) { this.name = name; }
     public void edit_email(String email) { this.email = email; }
     public void edit_phone(String phone) { this.phone = phone; }
@@ -61,20 +61,20 @@ public class User {
     }
 
     public void add_expense(Expense expense) {
-        expense_list.add(expense);
+        expenseList.add(expense);
     }
     public void remove_expense (Expense expense) {
-        if (expense_list.contains(expense)) {
-            expense_list.remove(expense);
+        if (expenseList.contains(expense)) {
+            expenseList.remove(expense);
         }
     }
 
-    public List<Expense> get_expenses() {
-        return this.expense_list;
+    public List<Expense> getExpenseList() {
+        return expenseList;
     }
 
-    public void set_id(String userID) { this.userID = userID; }
-    public String get_id() { return this.userID; }
+    public void setUserId(String userID) { this.userID = userID; }
+    public String getUserId() { return userID; }
 
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
@@ -84,7 +84,7 @@ public class User {
         result.put("password", password);
         result.put("phone", phone);
         result.put("friends", friends);
-        result.put("expense_list", expense_list);
+        result.put("expense_list", expenseList);
 
         return result;
     }

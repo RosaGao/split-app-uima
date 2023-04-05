@@ -12,7 +12,7 @@ import java.util.Set;
 
 public class Expense {
 
-    String userId;
+    private String userId;
     private String description;
     private String date;
     private String amount;
@@ -22,6 +22,8 @@ public class Expense {
     private SplitMethod method;
 
     private String expenseId;
+
+    public Expense() {}
 
     public Expense(String userId, String description, String date, String amount, List<User> participants, User payer, Tag tag, SplitMethod method) {
         this.userId = userId;
@@ -34,8 +36,12 @@ public class Expense {
         this.method = method;
     }
 
-    public void setExpenseId(String expenseId) {
-        this.expenseId = expenseId;
+    public void setExpenseId(String id) {
+        expenseId = id;
+    }
+
+    public String getExpenseId() {
+        return expenseId;
     }
     public Tag getTag() {
         return tag;
@@ -75,7 +81,6 @@ public class Expense {
         result.put("payer", payer);
         result.put("method", method);
         result.put("expenseId", expenseId);
-
 
         return result;
     }

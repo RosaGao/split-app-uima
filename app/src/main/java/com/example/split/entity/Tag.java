@@ -5,6 +5,8 @@ public class Tag {
     private String name;
     private int numExpenses;
 
+    public Tag() {}
+
     public Tag(String id, String name) {
         this.userId = id;
         this.name = name;
