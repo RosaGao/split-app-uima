@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.google.firebase.auth.FirebaseAuth;
 
 import com.example.split.entity.Expense;
 import com.example.split.entity.User;
@@ -49,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference dbRef;
     DatabaseReference userDataRef;
 
-    private static String userId;
+    private static String userId = "-NS8f-zxx_es6cxmsEdh" ;
     public static User currentUser = null;
     public List<Expense> allExpenses = new ArrayList<>();
     public SimpleItemRecyclerViewAdapter myAdapt;
@@ -238,6 +239,10 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_logout) {
+            // Sign out the user
+            FirebaseAuth.getInstance().signOut();
+
+            // Navigate to LoginActivity
             Intent intent = new Intent(MainActivity.this, com.example.split.loginSignup.LoginActivity.class);
             startActivity(intent);
             finish();
