@@ -65,8 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
         db = FirebaseDatabase.getInstance();
         dbRef = db.getReference();
-//        userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        userId = "-NS8bmz3QW7hrO4oeQhA";
+        userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         userDataRef = dbRef.child("users").child(userId);
         Log.v("user data ref", "user data ref created for " + userId);
 
@@ -105,7 +104,8 @@ public class MainActivity extends AppCompatActivity {
 //
 //                    Log.v("user expenses", String.valueOf(user.get_expenses().size()));
 //                    allExpenses.addAll(user.get_expenses());
-
+                    currentUser = user;
+                    allExpenses = user.get_expenses();
                 }
             }
             @Override

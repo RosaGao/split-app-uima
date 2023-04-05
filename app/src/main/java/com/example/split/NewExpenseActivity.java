@@ -187,6 +187,7 @@ public class NewExpenseActivity extends AppCompatActivity {
         newExpense.setExpenseId(key);
         mDatabase.child("expenses").child(key).setValue(newExpense);
 
+//        MainActivity.currentUser.add_expense(newExpense);
 
         Snackbar.make(getWindow().getDecorView().getRootView(), "New Expense added", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();

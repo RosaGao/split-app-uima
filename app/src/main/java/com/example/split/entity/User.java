@@ -60,7 +60,9 @@ public class User {
         return this.friends.getOrDefault(user, 0);
     }
 
-    public void add_expense(Expense expense) { expense_list.add(expense); }
+    public void add_expense(Expense expense) {
+        expense_list.add(expense);
+    }
     public void remove_expense (Expense expense) {
         if (expense_list.contains(expense)) {
             expense_list.remove(expense);
@@ -73,5 +75,18 @@ public class User {
 
     public void set_id(String userID) { this.userID = userID; }
     public String get_id() { return this.userID; }
+
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("userId", userID);
+        result.put("name", name);
+        result.put("email", email);
+        result.put("password", password);
+        result.put("phone", phone);
+        result.put("friends", friends);
+        result.put("expense_list", expense_list);
+
+        return result;
+    }
 
 }
