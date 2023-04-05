@@ -35,7 +35,6 @@
         <activity
             android:name=".loginSignup.SignupActivity"
             android:label="@string/signup_page_name"
-            android:gravity="center"
             android:exported="false"/>
         <activity
             android:name=".MainActivity"
