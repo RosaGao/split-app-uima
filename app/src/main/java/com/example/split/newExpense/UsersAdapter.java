@@ -10,21 +10,28 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import com.example.split.R;
 import com.example.split.entity.User;
-import com.example.split.newExpense.SelectParticipantsActivity;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UsersAdapter extends ArrayAdapter<User> {
     int resource;
     SelectParticipantsActivity activity;
 
-
-    public UsersAdapter(Context ctx, int res, List<User> users) {
-        super(ctx, res, users);
+    public UsersAdapter(Context ctx, int res) {
+        super(ctx, res, new ArrayList<>());
         resource = res;
         activity = (SelectParticipantsActivity) ctx;
+        fetchUsers();
     }
 
     @Override
@@ -42,7 +49,7 @@ public class UsersAdapter extends ArrayAdapter<User> {
         }
 
         TextView name = (TextView) itemView.findViewById(R.id.participant_name);
-        name.setText("Some name");
+        name.setText(user.get_name());
 
         CheckBox selected = (CheckBox) itemView.findViewById(R.id.checkBox);
         selected.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -57,4 +64,30 @@ public class UsersAdapter extends ArrayAdapter<User> {
         return itemView;
     }
 
+    private void fetchUsers() {
+        Query query = FirebaseDatabase.getInstance().getReference("<YOUR_USERS_NODE>");
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<User> users = new ArrayList<>();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    User user = snapshot.getValue(User.class);
+                    users.add(user);
+                }
+                updateUsers(users);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle error here
+            }
+        });
+    }
+
+
+    private void updateUsers(List<User> users) {
+        clear();
+        addAll(users);
+        notifyDataSetChanged();
+    }
 }
