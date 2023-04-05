@@ -27,7 +27,7 @@ public class SelectParticipantsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_expense_participants);
 
-        adapter = new UsersAdapter(this, R.layout.activity_new_expense_participants, users);
+        adapter = new UsersAdapter(this, R.layout.activity_new_expense_participants);
         participants = new ArrayList<>();
 
 

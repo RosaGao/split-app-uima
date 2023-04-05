@@ -10,8 +10,9 @@
     <color name="white">#FFFFFFFF</color>
     <color name="yellow">#FFAA2B</color>
     <color name="red">#F15555</color>
-    <color name="blueborder">#345C84</color>
-    <color name="darkblue">#273242</color>
+    <color name="appbar_blue">#345C84</color>
+    <color name="dark_blue">#273242</color>
+    <color name="tag_orange">#FF5B39</color>
 
 
 
