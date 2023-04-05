@@ -49,7 +49,7 @@ public class UsersAdapter extends ArrayAdapter<User> {
         }
 
         TextView name = (TextView) itemView.findViewById(R.id.participant_name);
-        name.setText(user.get_name());
+        name.setText(user.getName());
 
         CheckBox selected = (CheckBox) itemView.findViewById(R.id.checkBox);
         selected.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

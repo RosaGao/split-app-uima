@@ -17,7 +17,7 @@
         <activity
             android:name=".loginSignup.LoginActivity"
             android:exported="false"
-            android:parentActivityName=".MainActivity">
+            >
         </activity>
         <activity
             android:name=".newExpense.SelectPayerActivity"

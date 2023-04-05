@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.menu.MenuBuilder;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -34,6 +35,7 @@ public class NewExpenseActivity extends AppCompatActivity {
 
     private DatabaseReference mDatabase;
     private String userId;
+    private String newExpenseId;
     private static final String REQUIRED = "Required";
 
     EditText editDescription;
@@ -125,24 +127,24 @@ public class NewExpenseActivity extends AppCompatActivity {
     }
 
 
-    private void createNewExpense() {
+    private boolean createNewExpense() {
         String description = editDescription.getText().toString();
         String date = editDate.getText().toString();
         String amount = editAmount.getText().toString();
 
         if (TextUtils.isEmpty(description)) {
             editDescription.setError(REQUIRED);
-            return;
+            return false;
         }
 
         if (TextUtils.isEmpty(date)) {
             editDate.setError(REQUIRED);
-            return;
+            return false;
         }
 
         if (TextUtils.isEmpty(amount)) {
             editDate.setError(REQUIRED);
-            return;
+            return false;
         }
 
         tag = new Tag("tag_id", "some new tag");
@@ -150,7 +152,7 @@ public class NewExpenseActivity extends AppCompatActivity {
             Snackbar.make(getWindow().getDecorView().getRootView()
                             , "Must choose a tag!", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
-            return;
+            return false;
         }
 
         User newUser = new User("new user", "email", "phone", "pass");
@@ -159,7 +161,7 @@ public class NewExpenseActivity extends AppCompatActivity {
             Snackbar.make(getWindow().getDecorView().getRootView()
                             , "Must select participants!", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
-            return;
+            return false;
         }
 
         SelectPayerActivity.payer = newUser;
@@ -167,7 +169,7 @@ public class NewExpenseActivity extends AppCompatActivity {
             Snackbar.make(getWindow().getDecorView().getRootView()
                             , "Must select a payer!", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
-            return;
+            return false;
         }
 
         method = SplitMethod.EQUAL;
@@ -175,7 +177,7 @@ public class NewExpenseActivity extends AppCompatActivity {
             Snackbar.make(getWindow().getDecorView().getRootView()
                             , "Must choose a split method!", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
-            return;
+            return false;
         }
 
         Expense newExpense = new Expense(userId, description, date, amount,
@@ -183,14 +185,16 @@ public class NewExpenseActivity extends AppCompatActivity {
                 SelectPayerActivity.payer, tag, method);
 
 
-        String key = mDatabase.child("expenses").push().getKey();
-        newExpense.setExpenseId(key);
-        mDatabase.child("expenses").child(key).setValue(newExpense);
-
-//        MainActivity.currentUser.add_expense(newExpense);
+        newExpenseId = mDatabase.child("expenses").push().getKey();
+        newExpense.setExpenseId(newExpenseId);
+        mDatabase.child("expenses").child(newExpenseId).setValue(newExpense);
 
         Snackbar.make(getWindow().getDecorView().getRootView(), "New Expense added", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();
+
+        MainActivity.allExpenses.add(newExpense);
+
+        return true;
     }
 
     @SuppressLint("RestrictedApi")
@@ -209,10 +213,13 @@ public class NewExpenseActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // action with ID action_settings was selected
-        if (item.getItemId() == R.id.check_image_button) {
-            createNewExpense();
+        if (item.getItemId() == R.id.check_image_button && createNewExpense()) {
+            Intent sentResultToMain = new Intent(NewExpenseActivity.this, MainActivity.class);
+            setResult(Activity.RESULT_OK, sentResultToMain);
+            finish();
+            return true;
         }
 
-        return true;
+        return false;
     }
 }
