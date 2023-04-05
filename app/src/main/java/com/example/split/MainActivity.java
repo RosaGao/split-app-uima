@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.split.loginSignup.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 import com.example.split.entity.Expense;
@@ -38,7 +40,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -52,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static String userId ;
     public static User currentUser = null;
-    public List<Expense> allExpenses = new ArrayList<>();
+    public static List<Expense> allExpenses = new ArrayList<>();
     public SimpleItemRecyclerViewAdapter myAdapt;
 
     @Override
@@ -65,9 +69,15 @@ public class MainActivity extends AppCompatActivity {
 
         db = FirebaseDatabase.getInstance();
         dbRef = db.getReference();
+
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
+            return;
+        }
+
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         userDataRef = dbRef.child("users").child(userId);
-        Log.v("user data ref", "user data ref created for " + userId);
 
         RecyclerView recyclerView = findViewById(R.id.expense_list_home);
         assert recyclerView != null;
@@ -89,23 +99,24 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot snapshot) {
                 User user = snapshot.getValue(User.class);
                 if (user == null) {
-                    //TODO login activity if user is null
-
                     Log.e("expense list activity: ", "User " + userId + " is unexpectedly null");
-                    Toast.makeText(getApplicationContext(),
-                            "Error: could not fetch user.",
-                            Toast.LENGTH_SHORT).show();
                 } else {
-//                    allExpenses.clear();
-//
-//                    Log.v("user name", String.valueOf(user.name));
-//                    Log.v("user email", String.valueOf(user.email));
-//                    Log.v("user phone", String.valueOf(user.phone));
-//
-//                    Log.v("user expenses", String.valueOf(user.get_expenses().size()));
-//                    allExpenses.addAll(user.get_expenses());
+                    Log.v("user name", String.valueOf(user.getName()));
+                    Log.v("user email", String.valueOf(user.getEmail()));
+
+                    if (user.getExpenseList() == null) {
+                        findViewById(R.id.emptyHomeView).setVisibility(View.VISIBLE);
+                        Log.v("user expenses", "no expenses yet");
+                        return;
+                    }
+
+
+                    findViewById(R.id.emptyHomeView).setVisibility(View.INVISIBLE);
+                    allExpenses.clear();
+                    allExpenses.addAll(user.getExpenseList());
+                    myAdapt.notifyDataSetChanged();
                     currentUser = user;
-                    allExpenses = user.get_expenses();
+                    Log.v("user expenses", String.valueOf(allExpenses.size()));
                 }
             }
             @Override
@@ -120,7 +131,6 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.v("new expense fab", "click");
                 Intent addNewExpense = new Intent(MainActivity.this, NewExpenseActivity.class);
                 addNewExpense.putExtra("userId", userId);
                 startActivityForResult(addNewExpense, LAUNCH_NEW_EXPENSE_REQUEST_CODE);
@@ -133,28 +143,17 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == LAUNCH_NEW_EXPENSE_REQUEST_CODE) {
-            if(resultCode == Activity.RESULT_OK && data.getStringExtra("expenseId") != null){
-                String expenseId =data.getStringExtra("expenseId");
-                dbRef.child("expenses")
-                        .child(expenseId).addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                Expense newExpense = snapshot.getValue(Expense.class);
-                                allExpenses.add(newExpense);
-                                myAdapt.notifyDataSetChanged();
+            if (resultCode == Activity.RESULT_OK) {
+                String expenseId = data.getStringExtra("expenseId");
+                myAdapt.notifyDataSetChanged();
 
-                                dbRef.child("users").child(userId).child("expense_list").setValue(allExpenses);
-                                Snackbar.make(getWindow().getDecorView().getRootView(), "New Expense added!", Snackbar.LENGTH_LONG)
-                                        .setAction("Action", null).show();
-                            }
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {}
-                        });
+                Map<String, Object> childUpdates = new HashMap<>();
+                childUpdates.put("/users/" + userId + "/expenseList", allExpenses);
+                dbRef.updateChildren(childUpdates);
             }
-            else {
-                Snackbar.make(getWindow().getDecorView().getRootView(), "Failed to create new expense!", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
+        } else {
+            Snackbar.make(getWindow().getDecorView().getRootView(), "Failed to create new expense!", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
         }
     }
 
@@ -250,5 +249,6 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 
 }
