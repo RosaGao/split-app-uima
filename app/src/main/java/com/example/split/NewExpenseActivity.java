@@ -1,5 +1,6 @@
 package com.example.split;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.menu.MenuBuilder;
 
@@ -21,6 +22,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import com.example.split.entity.Expense;
 import com.example.split.entity.SplitMethod;
@@ -59,8 +61,16 @@ public class NewExpenseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_expense);
-        setSupportActionBar(findViewById(R.id.newExpenseToolbar));
+        androidx.appcompat.widget.Toolbar toolBar = findViewById(R.id.newExpenseToolbar);
+        setSupportActionBar(toolBar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        toolBar.setNavigationIcon(R.drawable.baseline_arrow_back_24);
+        toolBar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -155,7 +165,6 @@ public class NewExpenseActivity extends AppCompatActivity {
         });
 
         chooseMethodButton.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 //
