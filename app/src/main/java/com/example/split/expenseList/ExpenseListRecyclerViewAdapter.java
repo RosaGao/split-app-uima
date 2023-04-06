@@ -72,7 +72,9 @@ public class ExpenseListRecyclerViewAdapter
         }
 
 
-        holder.itemView.setTag(myExpenses.get(position).getTag().getName());
+        Log.v("tag name", myExpenses.get(position).getTag().getName());
+        holder.tag.setText(myExpenses.get(position).getTag().getName());
+
         holder.itemView.setOnClickListener(myOnClickListener);
     }
 

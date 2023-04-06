@@ -135,11 +135,11 @@ public class NewExpenseActivity extends AppCompatActivity {
         }
 
         tagChip.setOnClickListener(new View.OnClickListener() {
-            final Tag[] tags = new Tag[]{new Tag("id1", "tag 1"),
-                    new Tag("id2", "tag 2"), new Tag("id3", "tag 3"),
-                    new Tag("id2", "tag 4"), new Tag("id2", "tag 5")};
+            final Tag[] tags = new Tag[]{new Tag("id1", "food"),
+                    new Tag("id2", "travel"), new Tag("id3", "groceries"),
+                    new Tag("id2", "utilities"), new Tag("id2", "business")};
 
-            final String[] tagNames = new String[]{"tag 1", "tag 2", "tag 3", "tag 4", "tag 5"};
+            final String[] tagNames = new String[]{"food", "travel", "groceries", "utilities", "business"};
 
             @Override
             public void onClick(View v) {
@@ -193,7 +193,6 @@ public class NewExpenseActivity extends AppCompatActivity {
             return false;
         }
 
-        tag = new Tag("tag_id", "some new tag");
         if (tag == null) {
             Snackbar.make(getWindow().getDecorView().getRootView()
                             , "Must choose a tag!", Snackbar.LENGTH_LONG)
