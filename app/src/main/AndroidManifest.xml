@@ -20,6 +20,7 @@
             android:value="6Lfqa1clAAAAAD3y-rr2hQ_3a7KRY-nkkccOYoLL" />
         <activity
             android:name=".loginSignup.LoginActivity"
+            android:label=""
             android:exported="true"
             >
             <intent-filter>
