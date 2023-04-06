@@ -25,6 +25,7 @@ import com.example.split.entity.Tag;
 import com.example.split.entity.User;
 import com.example.split.newExpense.SelectParticipantsActivity;
 import com.example.split.newExpense.SelectPayerActivity;
+import com.example.split.ui.home.HomeFragment;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -192,7 +193,7 @@ public class NewExpenseActivity extends AppCompatActivity {
         Snackbar.make(getWindow().getDecorView().getRootView(), "New Expense added", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();
 
-        MainActivity.allExpenses.add(newExpense);
+        HomeFragment.allExpenses.add(newExpense);
 
         return true;
     }
@@ -214,8 +215,8 @@ public class NewExpenseActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // action with ID action_settings was selected
         if (item.getItemId() == R.id.check_image_button && createNewExpense()) {
-            Intent sentResultToMain = new Intent(NewExpenseActivity.this, MainActivity.class);
-            setResult(Activity.RESULT_OK, sentResultToMain);
+            Intent sentResultToHome = new Intent(NewExpenseActivity.this, HomeFragment.class);
+            setResult(Activity.RESULT_OK, sentResultToHome);
             finish();
             return true;
         }
