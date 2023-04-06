@@ -18,15 +18,10 @@
         <meta-data
             android:name="com.google.firebase.auth.recaptcha.SITE_KEY"
             android:value="6Lfqa1clAAAAAD3y-rr2hQ_3a7KRY-nkkccOYoLL" />
-
         <activity
             android:name=".loginSignup.LoginActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:exported="false"
+            >
         </activity>
         <activity
             android:name=".newExpense.SelectPayerActivity"
@@ -35,15 +30,23 @@
             android:name=".newExpense.SelectParticipantsActivity"
             android:exported="false" />
         <activity
-            android:name=".newExpense.NewExpenseActivity"
+            android:name=".NewExpenseActivity"
+            android:theme="@style/Theme.Split.NoActionBar"
             android:exported="false" />
         <activity
             android:name=".loginSignup.SignupActivity"
-            android:exported="false" />
+            android:label="@string/signup_page_name"
+            android:exported="false"/>
         <activity
             android:name=".MainActivity"
-            android:exported="false"
-            android:label="@string/app_name" />
-    </application>
+            android:exported="true"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+</application>
 
 </manifest>

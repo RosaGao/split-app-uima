@@ -2,62 +2,47 @@ package com.example.split.entity;
 
 import com.example.split.entity.Tag;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class Expense {
 
-    String userId;
+    private String userId;
     private String description;
-    private Date date;
-    private float amount;
-    private Set<User> participants;
+    private String date;
+    private String amount;
+    private List<User> participants = new ArrayList<>();
     private User payer;
     private Tag tag;
     private SplitMethod method;
 
-    public Expense(String id) {
-        this.userId = id;
-        this.participants = new HashSet<>();
-    }
+    private String expenseId;
 
-    public void setDescription(String des) {
-        this.description = des;
-    }
+    public Expense() {}
 
-    public void setDate(Date d) {
-        this.date = d;
-    }
-
-    public void setAmount(float amt) {
-        this.amount = amt;
-    }
-
-    public void addParticipant(User user) {
-        this.participants.add(user);
-    }
-
-    public void setPayer(User user) {
-        this.payer = user;
-    }
-
-    public void setSplitMethod(SplitMethod m) {
-        this.method = m;
-    }
-
-    public void setTag(Tag tag) {
+    public Expense(String userId, String description, String date, String amount, List<User> participants, User payer, Tag tag, SplitMethod method) {
+        this.userId = userId;
+        this.description = description;
+        this.date = date;
+        this.amount = amount;
         this.tag = tag;
+        this.participants.addAll(participants);
+        this.payer = payer;
+        this.method = method;
     }
 
-    public Set<User> getParticipants() {
-        return participants;
+    public void setExpenseId(String id) {
+        expenseId = id;
     }
 
-    public User getPayer() {
-        return payer;
+    public String getExpenseId() {
+        return expenseId;
     }
-
     public Tag getTag() {
         return tag;
     }
@@ -66,11 +51,11 @@ public class Expense {
         return method;
     }
 
-    public float getAmount() {
+    public String getAmount() {
         return amount;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
@@ -80,5 +65,23 @@ public class Expense {
 
     public String getUserId() {
         return this.userId;
+    }
+
+    public List<User> getParticipants() {return this.participants;}
+
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+
+        result.put("userId", userId);
+        result.put("description", description);
+        result.put("date", date);
+        result.put("amount", amount);
+        result.put("tag", tag);
+        result.put("participants", participants);
+        result.put("payer", payer);
+        result.put("method", method);
+        result.put("expenseId", expenseId);
+
+        return result;
     }
 }

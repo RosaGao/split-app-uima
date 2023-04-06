@@ -1,31 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-
-
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/home_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context="com.example.split.MainActivity">
+
+    <!--    <com.google.android.material.appbar.AppBarLayout-->
+    <!--        android:id="@+id/home_appbar_layout"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content">-->
+
+    <!--        <androidx.appcompat.widget.Toolbar-->
+    <!--            android:id="@+id/home_toolbar"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_gravity="center"-->
+    <!--            android:gravity="center"-->
+    <!--            app:subtitleTextColor="@color/white"-->
+    <!--            app:title="$plit"-->
+    <!--            app:titleTextAppearance="@style/TextAppearance.AppCompat.Display1"-->
+    <!--            app:titleTextColor="@color/white" />-->
 
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/home_appbar_layout"
+    <!--    </com.google.android.material.appbar.AppBarLayout>-->
+
+    <TextView
+        android:id="@+id/emptyHomeView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/home_toolbar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            app:subtitleTextColor="@color/white"
-            app:title="$plit"
-            app:titleTextAppearance="@style/TextAppearance.AppCompat.Display1"
-            app:titleTextColor="@color/white" />
-
-
-    </com.google.android.material.appbar.AppBarLayout>
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:text="No Expenses"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:visibility="invisible" />
 
     <FrameLayout
         android:id="@+id/frameLayout"
@@ -33,21 +44,17 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textSize="20sp" />
-
         <include layout="@layout/home_expense_list" />
     </FrameLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/new_expense_fab"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:layout_gravity="bottom|end"
+        android:layout_marginEnd="100dp"
+        android:layout_marginBottom="100dp"
+        android:contentDescription="Add New Expense"
         app:srcCompat="@android:drawable/ic_input_add" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

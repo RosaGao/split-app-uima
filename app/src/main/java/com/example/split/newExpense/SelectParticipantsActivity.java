@@ -18,7 +18,7 @@ public class SelectParticipantsActivity extends AppCompatActivity {
     private ActivityNewExpenseParticipantsBinding binding;
     public static ArrayList<User> users = new ArrayList<>();
     public static UsersAdapter adapter;
-    public static List<User> participants;
+    public static List<User> participants = new ArrayList<>();
 
 
 
@@ -27,7 +27,7 @@ public class SelectParticipantsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_expense_participants);
 
-        adapter = new UsersAdapter(this, R.layout.activity_new_expense_participants, users);
+        adapter = new UsersAdapter(this, R.layout.activity_new_expense_participants);
         participants = new ArrayList<>();
 
 

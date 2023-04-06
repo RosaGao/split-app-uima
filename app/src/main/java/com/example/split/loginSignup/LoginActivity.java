@@ -96,30 +96,6 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-    private void signUp() {
-        Log.d(TAG, "signUp");
-        if (!validateForm()) {
-            return;
-        }
-
-        String email = fieldEmail.getText().toString();
-        String password = fieldPassword.getText().toString();
-
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(TAG, "createUser:onComplete:" + task.isSuccessful());
-
-                        if (task.isSuccessful()) {
-                            onAuthSuccess(task.getResult().getUser());
-                        } else {
-                            Toast.makeText(LoginActivity.this, "Sign Up Failed",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-    }
 
     private void onAuthSuccess(FirebaseUser user) {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);

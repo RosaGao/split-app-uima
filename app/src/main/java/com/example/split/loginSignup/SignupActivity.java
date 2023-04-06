@@ -1,6 +1,8 @@
 package com.example.split.loginSignup;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -33,7 +35,6 @@ public class SignupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signup_page);
-
         // Initialize FirebaseAuth and DatabaseReference
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -44,7 +45,7 @@ public class SignupActivity extends AppCompatActivity {
         passwordEditText = findViewById(R.id.password);
         confirmPasswordEditText = findViewById(R.id.confirm_password);
         displayNameEditText = findViewById(R.id.display_name);
-        finishedButton = findViewById(R.id.finished_button);
+        finishedButton = findViewById(R.id.finish_button);
 
         finishedButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,29 +68,34 @@ public class SignupActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            // Sign in success
                             FirebaseUser user = mAuth.getCurrentUser();
                             String phoneNumber = phoneNumberEditText.getText().toString();
                             String displayName = displayNameEditText.getText().toString();
-                            String userId = mDatabase.child("users").push().getKey(); // generate a unique userId
+                            String userId = user.getUid(); // Use the user's uid as userId
                             writeNewUser(userId, displayName, email, phoneNumber, password);
 
                             Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
                             startActivity(intent);
                             finish();
                         } else {
-                            Toast.makeText(SignupActivity.this, "Sign Up Failed",
-                                    Toast.LENGTH_SHORT).show();
+                            // If sign in fails, display a message to the user.
+                            Exception exception = task.getException();
+                            String message = "Sign Up Failed.";
+                            if (exception != null && exception.getMessage() != null) {
+                                message = exception.getMessage();
+                            }
+                            Toast.makeText(SignupActivity.this, message, Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
+
     }
 
     private void writeNewUser(String userId, String name, String email, String phoneNumber, String password) {
         User user = new User(name, email, phoneNumber, password);
-        user.set_id(userId);
-        user.setPassword(password); // add the password to the User object
-
-        mDatabase.child("users").child(userId).setValue(user); // add a child node for the new user
+        user.setUserId(userId);
+        mDatabase.child("users").child(userId).updateChildren(user.toMap());
     }
 
     private boolean validateForm() {
