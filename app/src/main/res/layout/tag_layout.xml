@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:text="tag name"
         android:textSize="12sp"
-        app:chipBackgroundColor="@android:color/holo_blue_bright"
+        app:chipBackgroundColor="@color/tag_orange"
         app:chipIcon="@drawable/tags"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

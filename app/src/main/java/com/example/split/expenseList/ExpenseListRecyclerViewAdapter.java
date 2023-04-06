@@ -17,6 +17,7 @@ import com.example.split.ui.home.HomeFragment;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class ExpenseListRecyclerViewAdapter
         extends RecyclerView.Adapter<ExpenseViewHolder> {
@@ -29,10 +30,10 @@ public class ExpenseListRecyclerViewAdapter
         public void onClick(View view) {
             Expense item = (Expense) view.getTag();
 
-            Context context = view.getContext();
-            Intent intent = new Intent(context, ExpenseDetailActivity.class);
-            intent.putExtra(ExpenseDetailActivity.USER_ID, item.getUserId());
-            context.startActivity(intent);
+//            Context context = view.getContext();
+//            Intent intent = new Intent(context, ExpenseDetailActivity.class);
+//            intent.putExtra(ExpenseDetailActivity.USER_ID, item.getUserId());
+//            context.startActivity(intent);
         }
     };
 
@@ -54,14 +55,24 @@ public class ExpenseListRecyclerViewAdapter
 
     @Override
     public void onBindViewHolder(@NonNull ExpenseViewHolder holder, int position) {
+        Random randomValue = new Random();
+
         Log.d("in binder", myExpenses.get(position).toString());
 
         holder.description.setText(myExpenses.get(position).getDescription());
 //            holder.tag.setText(myExpenses.get(position).getTag().getNumExpenses());
-        holder.date.setText(myExpenses.get(position).getDate().toString());
-        holder.status.setText("You owe $123");
+        holder.date.setText(myExpenses.get(position).getDate());
 
-        holder.itemView.setTag(myExpenses.get(position));
+        if (randomValue.nextInt(10) < 5) {
+            holder.status.setText("You borrowed $123");
+            holder.status.setTextColor(holder.status.getResources().getColor(R.color.red));
+        } else {
+            holder.status.setText("You are owed $123");
+            holder.status.setTextColor(holder.status.getResources().getColor(R.color.green));
+        }
+
+
+        holder.itemView.setTag(myExpenses.get(position).getTag().getName());
         holder.itemView.setOnClickListener(myOnClickListener);
     }
 

@@ -5,8 +5,11 @@ import androidx.appcompat.view.menu.MenuBuilder;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -26,6 +29,7 @@ import com.example.split.entity.User;
 import com.example.split.newExpense.SelectParticipantsActivity;
 import com.example.split.newExpense.SelectPayerActivity;
 import com.example.split.ui.home.HomeFragment;
+import com.google.android.material.chip.Chip;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -44,7 +48,7 @@ public class NewExpenseActivity extends AppCompatActivity {
     EditText editAmount;
 
     ImageButton addParticipantsButton;
-    ImageButton chooseTagButton;
+    Chip tagChip;
     ImageButton chooseMethodButton;
 
     public static Tag tag = null;
@@ -62,6 +66,8 @@ public class NewExpenseActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         userId = getIntent().getStringExtra("userId");
 
+        tag = null;
+
         if (userId == null) {
             Log.v("userId", "null user id");
             Snackbar.make(getWindow().getDecorView().getRootView()
@@ -75,7 +81,7 @@ public class NewExpenseActivity extends AppCompatActivity {
         editAmount = findViewById(R.id.editAmount);
 
         addParticipantsButton = (ImageButton) findViewById(R.id.addParticipantsButton);
-        chooseTagButton = findViewById(R.id.chooseTagButton);
+        tagChip = findViewById(R.id.chooseTagButton).findViewById(R.id.tag_layout);
         chooseMethodButton = findViewById(R.id.chooseMethodButton);
 
         editDate.setOnClickListener(new View.OnClickListener() {
@@ -111,10 +117,40 @@ public class NewExpenseActivity extends AppCompatActivity {
             }
         });
 
-        chooseTagButton.setOnClickListener(new View.OnClickListener() {
+
+        if (tag == null) {
+            Log.v("tag", "null tag");
+            tagChip.setChipBackgroundColor(ColorStateList.valueOf(getResources().getColor(R.color.transparent)));
+            tagChip.setText("");
+        }
+
+        tagChip.setOnClickListener(new View.OnClickListener() {
+            final Tag[] tags = new Tag[]{new Tag("id1", "tag 1"),
+                    new Tag("id2", "tag 2"), new Tag("id3", "tag 3"),
+                    new Tag("id2", "tag 4"), new Tag("id2", "tag 5")};
+
+            final String[] tagNames = new String[]{"tag 1", "tag 2", "tag 3", "tag 4", "tag 5"};
+
             @Override
             public void onClick(View v) {
-                //
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(NewExpenseActivity.this);
+                alertDialog.setIcon(R.drawable.tags);
+                alertDialog.setTitle("Tags");
+                alertDialog.setItems(tagNames, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        tag = tags[which];
+                        tagChip.setChipBackgroundColor(ColorStateList.valueOf(getResources().getColor(R.color.tag_orange)));
+                        tagChip.setText(tag.getName());
+                    }
+                });
+
+                // set the negative button if the user is not interested to select or change already selected item
+                alertDialog.setNegativeButton("Cancel", (dialog, which) -> {
+                });
+
+                // create and build the AlertDialog instance with the AlertDialog builder instance
+                AlertDialog customAlertDialog = alertDialog.create();
+                customAlertDialog.show();
             }
         });
 
