@@ -15,13 +15,13 @@ public class SplitMethodActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_split_method);
 
-        Button btnequally = findViewById(R.id.btnEqually);
-        btnequally.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-
-           }
-        });
+//        Button btnequally = findViewById(R.id.btnEqually);
+//        btnequally.setOnClickListener(new View.OnClickListener() {
+//           @Override
+//           public void onClick(View view) {
+//
+//           }
+//        });
 
         // change content of text view (way of split)
         // participant list ? with adapters . change content in same way as text view, as long as same list of users
