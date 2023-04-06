@@ -58,6 +58,7 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.new_expense_fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

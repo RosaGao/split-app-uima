@@ -30,7 +30,15 @@ public class FriendFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Initialize the ViewModel
+        TextView textView = view.findViewById(R.id.text_chat);
+
+        // Observe the LiveData from the ViewModel and update the TextView
+        friendsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {
+                textView.setText(s);
+            }
+        });
 
     }
 }
