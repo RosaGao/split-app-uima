@@ -28,28 +28,28 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
         android:padding="5dp">
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/exact_split_method_chip"
+            android:id="@+id/equal_split_method_chip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:elevation="10dp"
-            android:text="Exact"
-            android:textColor="@color/white"
+            android:text="Equally"
+            android:textColor="@color/black"
             android:textSize="20sp"
-            app:chipBackgroundColor="@color/dark_blue"
+            app:chipBackgroundColor="@color/yellow"
             app:chipCornerRadius="15dp"
             app:chipEndPadding="10dp"
-            app:chipIcon="@drawable/exactsplit_icon"
+            app:chipIcon="@drawable/equalsplit_icon"
             app:chipMinHeight="50dp"
             app:chipStartPadding="10dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.947"
+            app:layout_constraintHorizontal_bias="0.045"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/app_bar" />
 
@@ -74,29 +74,39 @@
             app:layout_constraintTop_toBottomOf="@+id/app_bar" />
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/equal_split_method_chip"
+            android:id="@+id/exact_split_method_chip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:elevation="10dp"
-            android:text="Equally"
+            android:text="Exact"
             android:textColor="@color/white"
             android:textSize="20sp"
             app:chipBackgroundColor="@color/dark_blue"
             app:chipCornerRadius="15dp"
             app:chipEndPadding="10dp"
-            app:chipIcon="@drawable/whiteequalsplit"
+            app:chipIcon="@drawable/exactsplit_icon"
             app:chipMinHeight="50dp"
             app:chipStartPadding="10dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.045"
+            app:layout_constraintHorizontal_bias="0.947"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/app_bar" />
+
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/splittingTextView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="20dp"
+            android:text="You are splitting by equal number for (total cost) dollars."
+            android:textAlignment="center" />
+    </LinearLayout>
 
 </LinearLayout>
