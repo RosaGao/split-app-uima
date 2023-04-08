@@ -30,6 +30,7 @@ import com.example.split.entity.Tag;
 import com.example.split.entity.User;
 import com.example.split.newExpense.SelectParticipantsActivity;
 import com.example.split.newExpense.SelectPayerActivity;
+import com.example.split.newExpense.SplitMethodActivity;
 import com.example.split.ui.home.HomeFragment;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.snackbar.Snackbar;
@@ -167,7 +168,8 @@ public class NewExpenseActivity extends AppCompatActivity {
         chooseMethodButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //
+                Intent splitmethodAct = new Intent(NewExpenseActivity.this, SplitMethodActivity.class);
+                startActivity(splitmethodAct);
             }
         });
     }

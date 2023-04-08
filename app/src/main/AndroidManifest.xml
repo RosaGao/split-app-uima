@@ -29,6 +29,9 @@
             android:name=".newExpense.SelectParticipantsActivity"
             android:exported="false" />
         <activity
+            android:name=".newExpense.SplitMethodActivity"
+            android:exported="false" />
+        <activity
             android:name=".NewExpenseActivity"
             android:theme="@style/Theme.Split.NoActionBar"
             android:exported="false" />
