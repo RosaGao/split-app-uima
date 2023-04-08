@@ -24,6 +24,7 @@
         </activity>
         <activity
             android:name=".newExpense.SelectPayerActivity"
+            android:theme="@style/Theme.Split.NoActionBar"
             android:exported="false" />
         <activity
             android:name=".newExpense.SelectParticipantsActivity"
