@@ -65,7 +65,7 @@ public class UsersAdapter extends ArrayAdapter<User> {
     }
 
     private void fetchUsers() {
-        Query query = FirebaseDatabase.getInstance().getReference("<YOUR_USERS_NODE>");
+        Query query = FirebaseDatabase.getInstance().getReference("users");
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
