@@ -65,7 +65,7 @@
         app:layout_constraintTop_toBottomOf="@+id/searchUsers" />
 
     <ListView
-        android:id="@+id/userlist"
+        android:id="@+id/splitparticipantlist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"

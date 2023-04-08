@@ -100,12 +100,26 @@
         android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/splittingTextView"
+            android:id="@+id/splitTextView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:paddingTop="20dp"
             android:text="You are splitting by equal number for (total cost) dollars."
             android:textAlignment="center" />
+
+        <ListView
+            android:id="@+id/splitparticipantlist"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="15dp"
+            android:isScrollContainer="true"
+            android:scrollbarAlwaysDrawVerticalTrack="true"
+            android:scrollbars="vertical"
+            android:soundEffectsEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView5" />
+
     </LinearLayout>
 
 </LinearLayout>
