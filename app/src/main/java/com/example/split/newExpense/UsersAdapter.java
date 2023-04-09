@@ -39,7 +39,6 @@ public class UsersAdapter extends ArrayAdapter<User> {
     public View getView(int position, View convertView, ViewGroup parent) {
         LinearLayout itemView;
         User user = getItem(position);
-        Log.v("inside users adapter", "jere");
 
         if (convertView == null) {
             itemView = new LinearLayout(getContext());
@@ -57,6 +56,10 @@ public class UsersAdapter extends ArrayAdapter<User> {
         selected.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (!isChecked && SelectParticipantsActivity.participants.contains(user)) {
+                    SelectParticipantsActivity.participants.remove(user);
+                }
+
                 if (isChecked) {
                     SelectParticipantsActivity.participants.add(user);
                 }

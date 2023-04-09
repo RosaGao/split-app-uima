@@ -35,7 +35,9 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class NewExpenseActivity extends AppCompatActivity {
 
@@ -54,6 +56,9 @@ public class NewExpenseActivity extends AppCompatActivity {
 
     public static Tag tag = null;
     public static SplitMethod method = null;
+
+    public static List<User> finalParticipants = new ArrayList<>();
+    public static List<User> payer = null;
 
 
     @Override

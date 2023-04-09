@@ -22,7 +22,10 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -69,6 +72,13 @@ public class SelectParticipantsActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.check_image_button) {
+
+            for (User user: participants) {
+                Log.v("participant", user.getName());
+            }
+            NewExpenseActivity.finalParticipants.clear();
+            NewExpenseActivity.finalParticipants.addAll(participants);
+
             Intent goToSelectPayer = new Intent(SelectParticipantsActivity.this, SelectPayerActivity.class);
             startActivity(goToSelectPayer);
             return true;

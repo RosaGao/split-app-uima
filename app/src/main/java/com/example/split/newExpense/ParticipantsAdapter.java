@@ -44,7 +44,7 @@ public class ParticipantsAdapter extends ArrayAdapter<User> {
         }
 
         TextView name = (TextView) itemView.findViewById(R.id.participant_name);
-        name.setText("Some selected participant name");
+        name.setText(participant.getName());
 
         RadioButton selected = (RadioButton) itemView.findViewById(R.id.radioButton);
         selected.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
