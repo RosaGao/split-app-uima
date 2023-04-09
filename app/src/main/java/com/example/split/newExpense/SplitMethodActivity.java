@@ -7,6 +7,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +25,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class SplitMethodActivity extends AppCompatActivity {
 
@@ -91,6 +93,7 @@ public class SplitMethodActivity extends AppCompatActivity {
             public void onClick(View view) {
                 method = SplitMethod.PERCENT;
                 adapter.notifyDataSetChanged();
+
                 chipEqually.setChipBackgroundColor(ColorStateList.valueOf(dark_blue));
                 chipEqually.setTextColor(Color.WHITE);
                 chipEqually.setChipIconResource(R.drawable.whiteequalsplit);
@@ -149,6 +152,24 @@ public class SplitMethodActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.check_image_button) {
             View v;
 
+            Log.v("split method", String.valueOf(method));
+
+            if (method == SplitMethod.EQUAL) {
+                int num = participantsToSplit.size();
+                double value = Double.parseDouble(amount) / num;
+                for (User participant: participantsToSplit) {
+                    NewExpenseActivity.result.put(participant, value);
+                }
+                NewExpenseActivity.method = method;
+
+                for (User participant: participantsToSplit) {
+                    Log.v("result", participant.getName() + " " +  NewExpenseActivity.result.get(participant));
+                }
+
+                finish();
+                return true;
+            }
+
             List<Double> inputs = new ArrayList<>();
             double total = 0;
 
@@ -164,8 +185,10 @@ public class SplitMethodActivity extends AppCompatActivity {
                     edittext.setError("Required");
                     return false;
                 }
+
                 try {
                     double value = Double.parseDouble(input);
+                    Log.v("input", input);
                     inputs.add(Double.valueOf(input));
                     total += value;
                 } catch (Exception e) {
@@ -176,16 +199,18 @@ public class SplitMethodActivity extends AppCompatActivity {
                 }
             }
 
-            if (NewExpenseActivity.method == SplitMethod.PERCENT && total != 100) {
+            Log.v("total", Double.toString(total));
+
+            if (method == SplitMethod.PERCENT && total != 100) {
                 Snackbar.make(getWindow().getDecorView().getRootView()
                                 , "Oops! The percents don't add up to 100%. ", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
                 return false;
             }
 
-            if (NewExpenseActivity.method == SplitMethod.EQUAL && total != Double.parseDouble(amount)) {
+            if (method == SplitMethod.EXACT && total != Double.parseDouble(amount)) {
                 Snackbar.make(getWindow().getDecorView().getRootView()
-                                , "Oops! The amounts don't add up to " + amount, Snackbar.LENGTH_LONG)
+                                , "Oops! The exact amounts don't add up to " + amount, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
                 return false;
             }
@@ -198,15 +223,21 @@ public class SplitMethodActivity extends AppCompatActivity {
                 User participant = participantsToSplit.get(i);
                 Double input = inputs.get(i);
 
-                if (NewExpenseActivity.method == SplitMethod.EQUAL) {
-                    NewExpenseActivity.result.put(participant, splitAmount / numParticipants);
-                } else if (NewExpenseActivity.method == SplitMethod.PERCENT) {
+                if (method == SplitMethod.PERCENT) {
                     NewExpenseActivity.result.put(participant, splitAmount * input / 100);
-                } else if (NewExpenseActivity.method == SplitMethod.EXACT) {
+                } else if (method == SplitMethod.EXACT) {
                     NewExpenseActivity.result.put(participant, input);
                 }
             }
 
+
+            for (User participant: participantsToSplit) {
+                Log.v("result", participant.getName() + " " +  NewExpenseActivity.result.get(participant));
+            }
+
+
+            NewExpenseActivity.method = method;
+            finish();
             return true;
         }
         return super.onOptionsItemSelected(item);

@@ -1,5 +1,6 @@
 package com.example.split.newExpense;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,6 +43,7 @@ public class SplitMethodParticipantAdapter extends ArrayAdapter<User> {
         this.participantsToSplit = participantsToSplit;
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LinearLayout itemView;
@@ -76,8 +78,11 @@ public class SplitMethodParticipantAdapter extends ArrayAdapter<User> {
             Double each = Double.parseDouble(SplitMethodActivity.amount) / participantsToSplit.size();
             edit.setText(each.toString());
             edit.setFocusable(false);
+            edit.setFocusableInTouchMode(false);
         } else {
+            edit.setText("");
             edit.setFocusable(true);
+            edit.setFocusableInTouchMode(true);
         }
 
         return itemView;
