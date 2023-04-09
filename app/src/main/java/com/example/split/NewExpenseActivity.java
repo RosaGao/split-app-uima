@@ -74,6 +74,12 @@ public class NewExpenseActivity extends AppCompatActivity {
         setSupportActionBar(toolBar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         toolBar.setNavigationIcon(R.drawable.baseline_arrow_back_24);
+
+        tag = null;
+        method = null;
+        finalPayer = null;
+        finalParticipants = new ArrayList<>();
+        result = new HashMap<>();
         toolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,7 +91,6 @@ public class NewExpenseActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         userId = getIntent().getStringExtra("userId");
 
-        tag = null;
 
         if (userId == null) {
             Log.v("userId", "null user id");
@@ -227,9 +232,9 @@ public class NewExpenseActivity extends AppCompatActivity {
         if (method  == SplitMethod.EQUAL) {
             chooseMethodButton.setImageResource(R.drawable.equalsplit_icon);
         } else if (method == SplitMethod.PERCENT) {
-            chooseMethodButton.setImageResource(R.drawable.percentsplit_icon);
+            chooseMethodButton.setImageResource(R.drawable.blackpercentsplit);
         } else if (method == SplitMethod.EXACT) {
-            chooseMethodButton.setImageResource(R.drawable.exactsplit_icon);
+            chooseMethodButton.setImageResource(R.drawable.blackexactsplit);
         }
     }
 
@@ -318,6 +323,12 @@ public class NewExpenseActivity extends AppCompatActivity {
                 .setAction("Action", null).show();
 
         HomeFragment.allExpenses.add(newExpense);
+
+        NewExpenseActivity.finalParticipants = new ArrayList<>();
+        NewExpenseActivity.finalPayer = null;
+        NewExpenseActivity.method = null;
+        NewExpenseActivity.tag = null;
+        result = new HashMap<>();
 
         return true;
     }

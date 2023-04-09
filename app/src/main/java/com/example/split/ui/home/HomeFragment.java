@@ -70,6 +70,7 @@ public class HomeFragment extends Fragment {
         });
 
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        Log.v("userid", userId);
         userDataRef = dbRef.child("users").child(userId);
 
         RecyclerView recyclerView = view.findViewById(R.id.expense_list_home);

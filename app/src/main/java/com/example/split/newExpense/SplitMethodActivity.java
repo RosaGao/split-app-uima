@@ -66,6 +66,8 @@ public class SplitMethodActivity extends AppCompatActivity {
         int dark_blue = getApplicationContext().getResources().getColor(R.color.dark_blue);
 
         amount = getIntent().getStringExtra("amount");
+        splittingText.setText("You are splitting by equal number for " + amount + " dollars.");
+
 
         chipEqually.setOnClickListener( new View.OnClickListener() {
             @Override
@@ -133,7 +135,7 @@ public class SplitMethodActivity extends AppCompatActivity {
         });
 
 
-        participantsToSplit.remove(NewExpenseActivity.finalPayer);
+//        participantsToSplit.remove(NewExpenseActivity.finalPayer);
         adapter = new SplitMethodParticipantAdapter(this, R.layout.activity_split_method_participant_layout, participantsToSplit);
         binding.userslist.setAdapter(adapter);
         adapter.notifyDataSetChanged();
