@@ -21,9 +21,19 @@
             android:layout_gravity="center"
             android:gravity="center"
             app:subtitleTextColor="@color/white"
-            app:title="Select Payer"
-            app:titleTextAppearance="@style/TextAppearance.AppCompat.Display1"
-            app:titleTextColor="@color/white" />
+            app:titleTextColor="@color/white" >
+
+            <TextView
+                android:id="@+id/newExpenseTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="Select Payer"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+        </androidx.appcompat.widget.Toolbar>
 
 
     </com.google.android.material.appbar.AppBarLayout>
