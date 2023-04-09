@@ -20,9 +20,9 @@ import com.google.firebase.database.DatabaseReference;
 
 public class SelectPayerActivity extends AppCompatActivity {
     private ActivityNewExpensePayerBinding binding;
-    public static ParticipantsAdapter adapter;
+    public ParticipantsAdapter adapter;
 
-    public static User payer = null;
+//    public static User payer = null;
 
 
     @Override
@@ -40,6 +40,7 @@ public class SelectPayerActivity extends AppCompatActivity {
         toolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                NewExpenseActivity.finalPayer = null;
                 finish();
             }
         });
@@ -55,7 +56,7 @@ public class SelectPayerActivity extends AppCompatActivity {
     }
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.check_image_button) {
-            if (NewExpenseActivity.payer == null) {
+            if (NewExpenseActivity.finalPayer == null) {
                 Snackbar.make(getWindow().getDecorView().getRootView()
                                 , "Must select a payer!", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
@@ -64,7 +65,7 @@ public class SelectPayerActivity extends AppCompatActivity {
             for (User participant: NewExpenseActivity.finalParticipants) {
                 Log.v("participant:", participant.getName());
             }
-            Log.v("payer", NewExpenseActivity.payer.getName());
+            Log.v("payer", NewExpenseActivity.finalPayer.getName());
             SelectParticipantsActivity.instance.finish(); // finish calling activity as well, i.e. pop two activities from stack
             finish();
             return true;

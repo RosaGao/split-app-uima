@@ -15,6 +15,7 @@ import com.example.split.databinding.ActivityMainBinding;
 import com.example.split.databinding.ActivityNewExpenseParticipantsBinding;
 import com.example.split.entity.User;
 import com.example.split.ui.home.HomeFragment;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -56,6 +57,7 @@ public class SelectParticipantsActivity extends AppCompatActivity {
         toolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                participants.clear();
                 finish();
             }
         });
@@ -75,6 +77,12 @@ public class SelectParticipantsActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.check_image_button) {
+            if (participants.size() == 0) {
+                Snackbar.make(getWindow().getDecorView().getRootView()
+                                , "Must select at least one participant!", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                return false;
+            }
             NewExpenseActivity.finalParticipants.clear();
             NewExpenseActivity.finalParticipants.addAll(participants);
 

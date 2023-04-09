@@ -58,7 +58,7 @@ public class NewExpenseActivity extends AppCompatActivity {
     public static SplitMethod method = null;
 
     public static List<User> finalParticipants = new ArrayList<>();
-    public static User payer = null;
+    public static User finalPayer = null;
 
 
     @Override
@@ -207,17 +207,14 @@ public class NewExpenseActivity extends AppCompatActivity {
             return false;
         }
 
-        User newUser = new User("new user", "email", "phone", "pass");
-        SelectParticipantsActivity.participants.add(new User("new user", "email", "phone", "pass"));
-        if (SelectParticipantsActivity.participants.size() == 0) {
+        if (finalParticipants.size() == 0) {
             Snackbar.make(getWindow().getDecorView().getRootView()
                             , "Must select participants!", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
             return false;
         }
 
-        SelectPayerActivity.payer = newUser;
-        if (SelectPayerActivity.payer == null) {
+        if (finalPayer == null) {
             Snackbar.make(getWindow().getDecorView().getRootView()
                             , "Must select a payer!", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
@@ -233,8 +230,8 @@ public class NewExpenseActivity extends AppCompatActivity {
         }
 
         Expense newExpense = new Expense(userId, description, date, amount,
-                SelectParticipantsActivity.participants,
-                SelectPayerActivity.payer, tag, method);
+                finalParticipants,
+                finalPayer, tag, method);
 
 
         newExpenseId = mDatabase.child("expenses").push().getKey();
