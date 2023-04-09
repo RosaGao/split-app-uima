@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -9,117 +10,134 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_conversion_absoluteHeight="56dp"
+        tools:layout_conversion_absoluteWidth="411dp">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:id="@+id/newExpenseToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:gravity="center"
             app:subtitleTextColor="@color/white"
-            app:title="$plit Method"
-            app:titleTextAppearance="@style/TextAppearance.AppCompat.Display1"
-            app:titleTextColor="@color/white" />
+            app:titleTextAppearance="@style/TextAppearance.AppCompat.Large"
+            app:titleTextColor="@color/white"
+            tools:layout_conversion_absoluteHeight="56dp"
+            tools:layout_conversion_absoluteWidth="129dp"
+            tools:layout_editor_absoluteX="141dp"
+            tools:layout_editor_absoluteY="0dp">
+
+            <TextView
+                android:id="@+id/newExpenseTitle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="$plit Method"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                tools:layout_conversion_absoluteHeight="27dp"
+                tools:layout_conversion_absoluteWidth="113dp"
+                tools:layout_editor_absoluteX="157dp"
+                tools:layout_editor_absoluteY="14dp" />
+
+        </androidx.appcompat.widget.Toolbar>
 
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/equal_split_method_chip"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal">
+        android:layout_marginTop="20dp"
+        android:elevation="10dp"
+        android:text="Equally"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:chipBackgroundColor="@color/yellow"
+        app:chipCornerRadius="15dp"
+        app:chipEndPadding="10dp"
+        app:chipIcon="@drawable/equalsplit_icon"
+        app:chipMinHeight="50dp"
+        app:chipStartPadding="10dp"
+        app:layout_constraintEnd_toStartOf="@+id/percentage_split_method_chip"
+        app:layout_constraintTop_toBottomOf="@+id/app_bar"
+        tools:layout_conversion_absoluteHeight="50dp"
+        tools:layout_conversion_absoluteWidth="125dp" />
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/equal_split_method_chip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:elevation="10dp"
-            android:text="Equally"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            app:chipBackgroundColor="@color/yellow"
-            app:chipCornerRadius="15dp"
-            app:chipEndPadding="10dp"
-            app:chipIcon="@drawable/equalsplit_icon"
-            app:chipMinHeight="50dp"
-            app:chipStartPadding="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.045"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/app_bar" />
+    <com.google.android.material.chip.Chip
+        android:id="@+id/percentage_split_method_chip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:elevation="10dp"
+        android:text="Percent"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:chipBackgroundColor="@color/dark_blue"
+        app:chipCornerRadius="15dp"
+        app:chipEndPadding="10dp"
+        app:chipIcon="@drawable/percentsplit_icon"
+        app:chipMinHeight="50dp"
+        app:chipStartPadding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/app_bar"
+        tools:layout_conversion_absoluteHeight="50dp"
+        tools:layout_conversion_absoluteWidth="129dp" />
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/percentage_split_method_chip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:elevation="10dp"
-            android:text="Percent"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            app:chipBackgroundColor="@color/dark_blue"
-            app:chipCornerRadius="15dp"
-            app:chipEndPadding="10dp"
-            app:chipIcon="@drawable/percentsplit_icon"
-            app:chipMinHeight="50dp"
-            app:chipStartPadding="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.521"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/app_bar" />
+    <com.google.android.material.chip.Chip
+        android:id="@+id/exact_split_method_chip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:elevation="10dp"
+        android:text="Exact"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:chipBackgroundColor="@color/dark_blue"
+        app:chipCornerRadius="15dp"
+        app:chipEndPadding="10dp"
+        app:chipIcon="@drawable/exactsplit_icon"
+        app:chipMinHeight="50dp"
+        app:chipStartPadding="10dp"
+        app:layout_constraintStart_toEndOf="@+id/percentage_split_method_chip"
+        app:layout_constraintTop_toBottomOf="@+id/app_bar"
+        tools:layout_conversion_absoluteHeight="50dp"
+        tools:layout_conversion_absoluteWidth="109dp" />
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/exact_split_method_chip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:elevation="10dp"
-            android:text="Exact"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            app:chipBackgroundColor="@color/dark_blue"
-            app:chipCornerRadius="15dp"
-            app:chipEndPadding="10dp"
-            app:chipIcon="@drawable/exactsplit_icon"
-            app:chipMinHeight="50dp"
-            app:chipStartPadding="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.947"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/app_bar" />
 
-    </LinearLayout>
+    <TextView
+        android:id="@+id/splitTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:text="You are splitting by equal number for (total cost) dollars."
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/percentage_split_method_chip"
+        tools:layout_conversion_absoluteHeight="40dp"
+        tools:layout_conversion_absoluteWidth="411dp" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical" >
+    <ListView
+        android:id="@+id/userslist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:isScrollContainer="true"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:scrollbars="vertical"
+        android:soundEffectsEnabled="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/splitTextView"
+        tools:layout_conversion_absoluteHeight="555dp"
+        tools:layout_conversion_absoluteWidth="411dp" />
 
-        <TextView
-            android:id="@+id/splitTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="20dp"
-            android:text="You are splitting by equal number for (total cost) dollars."
-            android:textAlignment="center" />
-
-        <ListView
-            android:id="@+id/userslist"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="15dp"
-            android:isScrollContainer="true"
-            android:scrollbarAlwaysDrawVerticalTrack="true"
-            android:scrollbars="vertical"
-            android:soundEffectsEnabled="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView5" />
-
-    </LinearLayout>
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
