@@ -192,20 +192,24 @@
                 app:layout_constraintTop_toBottomOf="@+id/textChooseTag" />
 
             <ImageView
-                android:id="@+id/imageView4"
+                android:id="@+id/participantsIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:src="@drawable/angry_icon"
+                app:layout_constraintEnd_toEndOf="@+id/textAddParticipants"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/textAddParticipants"
                 app:layout_constraintTop_toBottomOf="@+id/textAddParticipants" />
 
             <ImageView
-                android:id="@+id/imageView6"
+                android:id="@+id/payerIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:src="@drawable/happy_icon"
+                app:layout_constraintEnd_toEndOf="@+id/textPayer"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/textPayer"
                 app:layout_constraintTop_toBottomOf="@+id/textPayer" />
 

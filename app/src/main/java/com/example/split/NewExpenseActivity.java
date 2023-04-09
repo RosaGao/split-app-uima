@@ -20,6 +20,7 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.split.entity.Expense;
@@ -204,8 +205,56 @@ public class NewExpenseActivity extends AppCompatActivity {
         });
 
         SelectParticipantsActivity.fetchUsers();
+
+
     }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (finalParticipants.size() > 0) {
+            ImageView img = findViewById(R.id.participantsIcon);
+            img.setImageResource(R.drawable.baseline_check_circle_24);
+        }
+
+        if (finalPayer != null) {
+            ImageView img = findViewById(R.id.payerIcon);
+            img.setImageResource(R.drawable.baseline_check_circle_24);
+        }
+
+        if (method  == SplitMethod.EQUAL) {
+            chooseMethodButton.setImageResource(R.drawable.equalsplit_icon);
+        } else if (method == SplitMethod.PERCENT) {
+            chooseMethodButton.setImageResource(R.drawable.percentsplit_icon);
+        } else if (method == SplitMethod.EXACT) {
+            chooseMethodButton.setImageResource(R.drawable.exactsplit_icon);
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if (finalParticipants.size() > 0) {
+            ImageView img = findViewById(R.id.participantsIcon);
+            img.setImageResource(R.drawable.baseline_check_circle_24);
+        }
+
+        if (finalPayer != null) {
+            ImageView img = findViewById(R.id.payerIcon);
+            img.setImageResource(R.drawable.baseline_check_circle_24);
+        }
+
+        if (method  == SplitMethod.EQUAL) {
+            chooseMethodButton.setImageResource(R.drawable.equalsplit_icon);
+        } else if (method == SplitMethod.PERCENT) {
+            chooseMethodButton.setImageResource(R.drawable.blackpercentsplit);
+        } else if (method == SplitMethod.EXACT) {
+            chooseMethodButton.setImageResource(R.drawable.blackexactsplit);
+        }
+    }
 
     private boolean createNewExpense() {
         String description = editDescription.getText().toString();
