@@ -74,6 +74,12 @@ public class NewExpenseActivity extends AppCompatActivity {
         setSupportActionBar(toolBar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         toolBar.setNavigationIcon(R.drawable.baseline_arrow_back_24);
+
+        tag = null;
+        method = null;
+        finalPayer = null;
+        finalParticipants = new ArrayList<>();
+        result = new HashMap<>();
         toolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,7 +91,6 @@ public class NewExpenseActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         userId = getIntent().getStringExtra("userId");
 
-        tag = null;
 
         if (userId == null) {
             Log.v("userId", "null user id");
