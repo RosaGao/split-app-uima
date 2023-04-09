@@ -17,4 +17,6 @@ No more arguing! Hassle-free experience! Enjoy your time out! Feel like a boss! 
 Test Users
 - email: ygao112@jhu.edu
   password: 123123
+- email: kyang53@jhu.edu
+  password: 123123
 
