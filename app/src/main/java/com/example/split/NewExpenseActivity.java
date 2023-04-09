@@ -37,7 +37,9 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class NewExpenseActivity extends AppCompatActivity {
 
@@ -59,6 +61,8 @@ public class NewExpenseActivity extends AppCompatActivity {
 
     public static List<User> finalParticipants = new ArrayList<>();
     public static User finalPayer = null;
+
+    public static Map<User, Double> result = new HashMap<>();
 
 
     @Override
@@ -171,8 +175,31 @@ public class NewExpenseActivity extends AppCompatActivity {
         chooseMethodButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent splitmethodAct = new Intent(NewExpenseActivity.this, SplitMethodActivity.class);
-                startActivity(splitmethodAct);
+                String amount = editAmount.getText().toString();
+                if (TextUtils.isEmpty(amount)) {
+                    Snackbar.make(getWindow().getDecorView().getRootView()
+                                    , "Must enter a split amount to proceed!", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                    return;
+                }
+
+                if (finalParticipants.size() == 0) {
+                    Snackbar.make(getWindow().getDecorView().getRootView()
+                                    , "Must select participants to proceed!", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                    return;
+                }
+
+                if (finalPayer == null) {
+                    Snackbar.make(getWindow().getDecorView().getRootView()
+                                    , "Must select a payer to proceed!", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                    return;
+                }
+
+                Intent splitMethodAct = new Intent(NewExpenseActivity.this, SplitMethodActivity.class);
+                splitMethodAct.putExtra("amount", amount);
+                startActivity(splitMethodAct);
             }
         });
 
