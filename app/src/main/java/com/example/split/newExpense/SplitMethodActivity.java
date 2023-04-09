@@ -133,7 +133,7 @@ public class SplitMethodActivity extends AppCompatActivity {
         });
 
 
-        participantsToSplit.remove(NewExpenseActivity.finalPayer);
+//        participantsToSplit.remove(NewExpenseActivity.finalPayer);
         adapter = new SplitMethodParticipantAdapter(this, R.layout.activity_split_method_participant_layout, participantsToSplit);
         binding.userslist.setAdapter(adapter);
         adapter.notifyDataSetChanged();

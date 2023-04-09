@@ -37,7 +37,7 @@ public class SelectParticipantsActivity extends AppCompatActivity {
     private ActivityNewExpenseParticipantsBinding binding;
     public static ArrayList<User> users = new ArrayList<>();
     public static UsersAdapter adapter;
-    public static List<User> participants = new ArrayList<>();
+    public static List<User> participants;
     public static SelectParticipantsActivity instance = null;
 
 
@@ -48,6 +48,8 @@ public class SelectParticipantsActivity extends AppCompatActivity {
 
         binding = ActivityNewExpenseParticipantsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        participants = new ArrayList<>();
 
 
         androidx.appcompat.widget.Toolbar toolBar = findViewById(R.id.newExpenseToolbar);
@@ -83,8 +85,10 @@ public class SelectParticipantsActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
                 return false;
             }
+
+            Set<User> set = new LinkedHashSet<>(participants);
             NewExpenseActivity.finalParticipants.clear();
-            NewExpenseActivity.finalParticipants.addAll(participants);
+            NewExpenseActivity.finalParticipants.addAll(set);
 
             Intent goToSelectPayer = new Intent(SelectParticipantsActivity.this, SelectPayerActivity.class);
             startActivity(goToSelectPayer);

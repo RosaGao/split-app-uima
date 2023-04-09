@@ -1,5 +1,7 @@
 package com.example.split.newExpense;
 
+import static java.lang.Math.round;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -26,6 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Text;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,10 +61,6 @@ public class SplitMethodParticipantAdapter extends ArrayAdapter<User> {
             itemView = (LinearLayout) convertView;
         }
 
-        if (participant == NewExpenseActivity.finalPayer) {
-            return itemView;
-        }
-
         TextView nameView = (TextView) itemView.findViewById(R.id.user_name);
         nameView.setText(participant.getName());
 
@@ -76,7 +75,8 @@ public class SplitMethodParticipantAdapter extends ArrayAdapter<User> {
 
         if (SplitMethodActivity.method == SplitMethod.EQUAL) {
             Double each = Double.parseDouble(SplitMethodActivity.amount) / participantsToSplit.size();
-            edit.setText(each.toString());
+            DecimalFormat df = new DecimalFormat("#.##");
+            edit.setText(df.format(each));
             edit.setFocusable(false);
             edit.setFocusableInTouchMode(false);
         } else {

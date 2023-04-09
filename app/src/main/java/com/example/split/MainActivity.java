@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.split.expenseList.ExpenseListRecyclerViewAdapter;
 import com.example.split.loginSignup.LoginActivity;
+import com.example.split.ui.home.HomeFragment;
 import com.google.firebase.auth.FirebaseAuth;
 
 import com.example.split.entity.Expense;
@@ -97,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_logout) {
             // Sign out the user
             FirebaseAuth.getInstance().signOut();
+            HomeFragment.allExpenses.clear();
 
             // Navigate to LoginActivity
             Intent intent = new Intent(MainActivity.this, com.example.split.loginSignup.LoginActivity.class);

@@ -53,7 +53,7 @@ public class ParticipantsAdapter extends ArrayAdapter<User> {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    if (NewExpenseActivity.finalPayer == null) {
+                    if (NewExpenseActivity.finalPayer == null || prevSelected == null) {
                         NewExpenseActivity.finalPayer = participant;
                         prevSelected = buttonView;
                     }

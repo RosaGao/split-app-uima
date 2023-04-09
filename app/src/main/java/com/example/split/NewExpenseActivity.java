@@ -227,9 +227,9 @@ public class NewExpenseActivity extends AppCompatActivity {
         if (method  == SplitMethod.EQUAL) {
             chooseMethodButton.setImageResource(R.drawable.equalsplit_icon);
         } else if (method == SplitMethod.PERCENT) {
-            chooseMethodButton.setImageResource(R.drawable.percentsplit_icon);
+            chooseMethodButton.setImageResource(R.drawable.blackpercentsplit);
         } else if (method == SplitMethod.EXACT) {
-            chooseMethodButton.setImageResource(R.drawable.exactsplit_icon);
+            chooseMethodButton.setImageResource(R.drawable.blackexactsplit);
         }
     }
 
