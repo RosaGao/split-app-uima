@@ -58,7 +58,7 @@ public class NewExpenseActivity extends AppCompatActivity {
     public static SplitMethod method = null;
 
     public static List<User> finalParticipants = new ArrayList<>();
-    public static List<User> payer = null;
+    public static User payer = null;
 
 
     @Override
