@@ -1,6 +1,7 @@
 package com.example.split.newExpense;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,16 +29,17 @@ public class UsersAdapter extends ArrayAdapter<User> {
     SelectParticipantsActivity activity;
 
     public UsersAdapter(Context ctx, int res) {
-        super(ctx, res, new ArrayList<>());
+        super(ctx, res, SelectParticipantsActivity.users);
+        Log.v("num users in constructor", String.valueOf(SelectParticipantsActivity.users.size()));
         resource = res;
         activity = (SelectParticipantsActivity) ctx;
-        fetchUsers();
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LinearLayout itemView;
         User user = getItem(position);
+        Log.v("inside users adapter", "jere");
 
         if (convertView == null) {
             itemView = new LinearLayout(getContext());
@@ -62,32 +64,5 @@ public class UsersAdapter extends ArrayAdapter<User> {
         });
 
         return itemView;
-    }
-
-    private void fetchUsers() {
-        Query query = FirebaseDatabase.getInstance().getReference("users");
-        query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                List<User> users = new ArrayList<>();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    User user = snapshot.getValue(User.class);
-                    users.add(user);
-                }
-                updateUsers(users);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Handle error here
-            }
-        });
-    }
-
-
-    private void updateUsers(List<User> users) {
-        clear();
-        addAll(users);
-        notifyDataSetChanged();
     }
 }

@@ -1,6 +1,5 @@
 package com.example.split;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.menu.MenuBuilder;
 
@@ -22,7 +21,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
 import com.example.split.entity.Expense;
 import com.example.split.entity.SplitMethod;
@@ -172,6 +170,8 @@ public class NewExpenseActivity extends AppCompatActivity {
                 startActivity(splitmethodAct);
             }
         });
+
+        SelectParticipantsActivity.fetchUsers();
     }
 
 

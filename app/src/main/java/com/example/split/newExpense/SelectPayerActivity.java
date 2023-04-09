@@ -10,15 +10,9 @@ import android.view.Menu;
 
 import com.example.split.NewExpenseActivity;
 import com.example.split.R;
-import com.example.split.databinding.ActivityMainBinding;
-import com.example.split.databinding.ActivityNewExpenseBinding;
-import com.example.split.databinding.ActivityNewExpenseParticipantsBinding;
 import com.example.split.databinding.ActivityNewExpensePayerBinding;
 import com.example.split.entity.User;
 import com.google.firebase.database.DatabaseReference;
-import com.example.split.newExpense.ParticipantsAdapter;
-
-import java.util.ArrayList;
 
 public class SelectPayerActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
@@ -34,8 +28,6 @@ public class SelectPayerActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_expense);
-        binding = ActivityNewExpensePayerBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
         androidx.appcompat.widget.Toolbar toolBar = findViewById(R.id.newExpenseToolbar);
         setSupportActionBar(toolBar);
 
