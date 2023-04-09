@@ -324,6 +324,12 @@ public class NewExpenseActivity extends AppCompatActivity {
 
         HomeFragment.allExpenses.add(newExpense);
 
+        NewExpenseActivity.finalParticipants = new ArrayList<>();
+        NewExpenseActivity.finalPayer = null;
+        NewExpenseActivity.method = null;
+        NewExpenseActivity.tag = null;
+        result = new HashMap<>();
+
         return true;
     }
 
