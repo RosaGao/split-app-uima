@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.Menu;
 import android.view.View;
@@ -14,11 +15,10 @@ import com.example.split.R;
 import com.example.split.databinding.ActivityNewExpenseParticipantsBinding;
 import com.example.split.databinding.ActivityNewExpensePayerBinding;
 import com.example.split.entity.User;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DatabaseReference;
 
 public class SelectPayerActivity extends AppCompatActivity {
-    private DatabaseReference mDatabase;
-
     private ActivityNewExpensePayerBinding binding;
     public static ParticipantsAdapter adapter;
 
@@ -44,6 +44,9 @@ public class SelectPayerActivity extends AppCompatActivity {
             }
         });
 
+        adapter = new ParticipantsAdapter(this, R.layout.activity_new_expense_select_payer_layout, NewExpenseActivity.finalParticipants);
+        binding.participantlist.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -52,8 +55,18 @@ public class SelectPayerActivity extends AppCompatActivity {
     }
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.check_image_button) {
-            Intent goToSelectPayer = new Intent(SelectPayerActivity.this, NewExpenseActivity.class);
-            startActivity(goToSelectPayer);
+            if (NewExpenseActivity.payer == null) {
+                Snackbar.make(getWindow().getDecorView().getRootView()
+                                , "Must select a payer!", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                return false;
+            }
+            for (User participant: NewExpenseActivity.finalParticipants) {
+                Log.v("participant:", participant.getName());
+            }
+            Log.v("payer", NewExpenseActivity.payer.getName());
+            SelectParticipantsActivity.instance.finish(); // finish calling activity as well, i.e. pop two activities from stack
+            finish();
             return true;
         }
         return super.onOptionsItemSelected(item);

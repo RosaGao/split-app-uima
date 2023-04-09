@@ -37,11 +37,14 @@ public class SelectParticipantsActivity extends AppCompatActivity {
     public static ArrayList<User> users = new ArrayList<>();
     public static UsersAdapter adapter;
     public static List<User> participants = new ArrayList<>();
+    public static SelectParticipantsActivity instance = null;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        instance = this;
+
         binding = ActivityNewExpenseParticipantsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -72,10 +75,6 @@ public class SelectParticipantsActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.check_image_button) {
-
-            for (User user: participants) {
-                Log.v("participant", user.getName());
-            }
             NewExpenseActivity.finalParticipants.clear();
             NewExpenseActivity.finalParticipants.addAll(participants);
 
@@ -105,4 +104,5 @@ public class SelectParticipantsActivity extends AppCompatActivity {
             }
         });
     }
+
 }
