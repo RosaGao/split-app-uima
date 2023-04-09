@@ -19,8 +19,9 @@
 
             <ImageView
                 android:id="@+id/profile_pic_img"
-                android:layout_width="32dp"
-                android:layout_height="64dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:gravity="center|center_vertical"
                 app:srcCompat="@drawable/darkangry_icon" />
@@ -38,10 +39,11 @@
 
             <RadioButton
                 android:id="@+id/radioButton"
-                android:layout_width="0dp"
+                android:layout_width="8dp"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
                 android:layout_weight="1"
-                android:gravity="right|center_vertical" />
+                android:gravity="center_vertical" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
