@@ -20,3 +20,7 @@ Test Users
 - email: kyang53@jhu.edu
   password: 123123
 
+------
+Meeting notes for sprint 1:
+https://docs.google.com/document/d/1dDc5tnYbgK_LDFnB96u57W2_MpmGEie-mlZZSlWrsj4/edit?usp=sharing
+
