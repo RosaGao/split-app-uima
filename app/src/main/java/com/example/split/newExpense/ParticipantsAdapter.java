@@ -9,7 +9,6 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import com.example.split.NewExpenseActivity;
@@ -45,7 +44,7 @@ public class ParticipantsAdapter extends ArrayAdapter<User> {
             itemView = (LinearLayout) convertView;
         }
 
-        TextView name = (TextView) itemView.findViewById(R.id.participant_name);
+        TextView name = (TextView) itemView.findViewById(R.id.friend_name);
         name.setText(participant.getName());
 
         RadioButton selected = (RadioButton) itemView.findViewById(R.id.radioButton);

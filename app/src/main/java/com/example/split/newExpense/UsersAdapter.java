@@ -11,18 +11,8 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-
 import com.example.split.R;
 import com.example.split.entity.User;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class UsersAdapter extends ArrayAdapter<User> {
     int resource;
@@ -49,7 +39,7 @@ public class UsersAdapter extends ArrayAdapter<User> {
             itemView = (LinearLayout) convertView;
         }
 
-        TextView name = (TextView) itemView.findViewById(R.id.participant_name);
+        TextView name = (TextView) itemView.findViewById(R.id.friend_name);
         name.setText(user.getName());
 
         CheckBox selected = (CheckBox) itemView.findViewById(R.id.checkBox);

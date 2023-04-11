@@ -1,7 +1,5 @@
 package com.example.split.expenseList;
 
-import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +8,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.split.MainActivity;
 import com.example.split.R;
 import com.example.split.entity.Expense;
 import com.example.split.ui.home.HomeFragment;
@@ -48,7 +45,7 @@ public class ExpenseListRecyclerViewAdapter
     @Override
     public ExpenseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.home_expense_list_content, parent, false);
+                .inflate(R.layout.expense_list_content, parent, false);
         return new ExpenseViewHolder(view);
     }
 
