@@ -15,7 +15,7 @@
         android:id="@+id/navigation_tag"
         android:name="com.example.split.ui.tags.TagFragment"
         android:label="@string/title_tag"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_tag" />
 
     <fragment
         android:id="@+id/navigation_friend"

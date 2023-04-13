@@ -7,25 +7,6 @@
     android:layout_height="match_parent"
     tools:context="com.example.split.MainActivity">
 
-    <!--    <com.google.android.material.appbar.AppBarLayout-->
-    <!--        android:id="@+id/home_appbar_layout"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content">-->
-
-    <!--        <androidx.appcompat.widget.Toolbar-->
-    <!--            android:id="@+id/home_toolbar"-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_gravity="center"-->
-    <!--            android:gravity="center"-->
-    <!--            app:subtitleTextColor="@color/white"-->
-    <!--            app:title="$plit"-->
-    <!--            app:titleTextAppearance="@style/TextAppearance.AppCompat.Display1"-->
-    <!--            app:titleTextColor="@color/white" />-->
-
-
-    <!--    </com.google.android.material.appbar.AppBarLayout>-->
-
     <TextView
         android:id="@+id/emptyHomeView"
         android:layout_width="match_parent"
@@ -40,7 +21,7 @@
         android:visibility="invisible" />
 
     <FrameLayout
-        android:id="@+id/frameLayout"
+        android:id="@+id/friendFrameLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
