@@ -18,15 +18,20 @@
             android:layout_height="wrap_content"
             android:maxEms="10"
             android:maxLines="2"
-            android:text="some description"
+            android:text="Dinner with JJ"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="normal" />
 
-        <include
-            layout="@layout/tag_layout"
+        <TextView
+            android:id="@+id/expense_date_home_TextView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:maxEms="10"
+            android:maxLines="2"
+            android:text="Jan 20 2022 at 19:55"
+            android:textSize="10sp" />
+
 
     </LinearLayout>
 
@@ -36,24 +41,15 @@
         android:layout_gravity="right"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/expense_date_home_TextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:gravity="end"
-            android:maxLines="1"
-            android:text="Dec 20 2022 at 19:55"
-            android:textSize="10sp" />
 
         <TextView
             android:id="@+id/expense_status_home_TextView"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_gravity="bottom|end"
-            android:layout_marginBottom="10dp"
-            android:gravity="bottom"
-            android:text="You borrowed $17"
+            android:layout_gravity="end"
+            android:gravity="center_vertical"
+            android:text="You are owed $80"
+            android:textColor="@color/green"
             android:textSize="16sp" />
 
     </LinearLayout>
