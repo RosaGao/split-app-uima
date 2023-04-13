@@ -30,28 +30,6 @@
 
         </androidx.appcompat.widget.Toolbar>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="right"
-            android:orientation="horizontal">
-
-            <ImageButton
-                android:id="@+id/edit_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/transparent"
-                android:paddingRight="10dp"
-                app:srcCompat="@drawable/edit_icon_btn" />
-
-            <ImageButton
-                android:id="@+id/trash_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/transparent"
-                app:srcCompat="@drawable/trash_icon_btn" />
-        </LinearLayout>
-
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -69,6 +47,8 @@
                 android:id="@+id/tagTitleTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
                 android:text="Tag Title"
                 android:textAlignment="center"
                 android:textColor="@color/black"
