@@ -52,7 +52,6 @@
             android:layout_height="match_parent"
             android:layout_gravity="bottom|end"
             android:layout_marginBottom="10dp"
-            android:fontFamily="@font/jost"
             android:gravity="bottom"
             android:text="You borrowed $17"
             android:textSize="16sp" />

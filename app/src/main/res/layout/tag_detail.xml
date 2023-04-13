@@ -30,6 +30,28 @@
 
         </androidx.appcompat.widget.Toolbar>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="right"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/edit_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"
+                android:paddingRight="10dp"
+                app:srcCompat="@drawable/edit_icon_btn" />
+
+            <ImageButton
+                android:id="@+id/trash_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"
+                app:srcCompat="@drawable/trash_icon_btn" />
+        </LinearLayout>
+
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -62,7 +84,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:paddingLeft="10dp"
+                    android:paddingLeft="15dp"
                     android:text="Total:"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
@@ -78,6 +100,27 @@
                     android:textColor="@color/green"
                     android:textSize="20sp" />
             </LinearLayout>
+
+            <FrameLayout
+                android:id="@+id/friendFrameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                <include layout="@layout/home_expense_list" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/new_expense_fab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|end"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginBottom="60dp"
+                    android:background="@color/dark_blue"
+                    android:contentDescription="Add New Expense"
+                    app:backgroundTint="@color/dark_blue"
+                    app:srcCompat="@android:drawable/ic_input_add" />
+            </FrameLayout>
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
