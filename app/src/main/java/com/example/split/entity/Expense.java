@@ -23,9 +23,11 @@ public class Expense {
 
     private String expenseId;
 
+    private Double borrowing;
+
     public Expense() {}
 
-    public Expense(String userId, String description, String date, String amount, List<User> participants, User payer, Tag tag, SplitMethod method) {
+    public Expense(String userId, String description, String date, String amount, List<User> participants, User payer, Tag tag, SplitMethod method, Double borrowing) {
         this.userId = userId;
         this.description = description;
         this.date = date;
@@ -34,6 +36,7 @@ public class Expense {
         this.participants.addAll(participants);
         this.payer = payer;
         this.method = method;
+        this.borrowing = borrowing;
     }
 
     public void setExpenseId(String id) {
@@ -69,6 +72,20 @@ public class Expense {
 
     public List<User> getParticipants() {return this.participants;}
 
+    public void setBorrowing(Double amount, boolean isPayer) {
+        // if i borrow, borrow 'positive' amount
+        // if i am the payer (others borrow), 'negative' amount
+        if (isPayer) {
+            borrowing = -amount;
+        } else {
+            borrowing = amount;
+        }
+    }
+
+    public double getBorrowing () {
+        return borrowing;
+    }
+
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
 
@@ -81,6 +98,7 @@ public class Expense {
         result.put("payer", payer);
         result.put("method", method);
         result.put("expenseId", expenseId);
+        result.put("borrowing", borrowing);
 
         return result;
     }
