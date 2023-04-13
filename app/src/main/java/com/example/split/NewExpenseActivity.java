@@ -1,5 +1,6 @@
 package com.example.split;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.menu.MenuBuilder;
 
@@ -33,8 +34,13 @@ import com.example.split.newExpense.SplitMethodActivity;
 import com.example.split.ui.home.HomeFragment;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import org.w3c.dom.Comment;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -302,7 +308,7 @@ public class NewExpenseActivity extends AppCompatActivity {
             return false;
         }
 
-        method = SplitMethod.EQUAL;
+//        method = SplitMethod.EQUAL;
         if (method == null) {
             Snackbar.make(getWindow().getDecorView().getRootView()
                             , "Must choose a split method!", Snackbar.LENGTH_LONG)
@@ -310,25 +316,82 @@ public class NewExpenseActivity extends AppCompatActivity {
             return false;
         }
 
+
+        // record expense for book-keeping
         Expense newExpense = new Expense(userId, description, date, amount,
                 finalParticipants,
-                finalPayer, tag, method);
-
-
+                finalPayer, tag, method, 0.0);
         newExpenseId = mDatabase.child("expenses").push().getKey();
         newExpense.setExpenseId(newExpenseId);
-        mDatabase.child("expenses").child(newExpenseId).setValue(newExpense);
+        mDatabase.child("expenses").child(newExpenseId).updateChildren(newExpense.toMap());
+        Log.v("before relations", finalParticipants.size() + "");
 
-        Snackbar.make(getWindow().getDecorView().getRootView(), "New Expense added", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
 
-        HomeFragment.allExpenses.add(newExpense);
 
-        NewExpenseActivity.finalParticipants = new ArrayList<>();
-        NewExpenseActivity.finalPayer = null;
-        NewExpenseActivity.method = null;
-        NewExpenseActivity.tag = null;
-        result = new HashMap<>();
+        // update relations between non-payers and payer
+        DatabaseReference relationsRef =  mDatabase.child("relations");
+        relationsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Log.v("here", "inside relations");
+                Log.v("here", finalParticipants.size() + "");
+
+
+                for (User participant : finalParticipants) {
+                    Log.v("participant name", participant.getName());
+
+                    if (participant == finalPayer) {
+                        continue;
+                    }
+                    // if I borrow, then friend is associated with a 'positive' amount
+                    // if I am owed, then friend is associated with a 'negative' amount
+
+                    String nonPayerId = participant.getUserId();
+                    String payerId = finalPayer.getUserId();
+
+                    Double prevBorrowingsByNonPayer = snapshot.child(nonPayerId).child(payerId).getValue(Double.class);
+                    if (prevBorrowingsByNonPayer == null) prevBorrowingsByNonPayer = 0.0;
+                    Double prevBorrowingsByPayer = snapshot.child(payerId).child(nonPayerId).getValue(Double.class);
+                    if (prevBorrowingsByPayer == null) prevBorrowingsByPayer = 0.0;
+                    assert Math.abs(prevBorrowingsByNonPayer) == Math.abs(prevBorrowingsByPayer);
+
+                    Log.v(participant.getName() + " borrow from " + finalPayer.getName(),
+                            prevBorrowingsByNonPayer + " -> " + (prevBorrowingsByNonPayer + result.get(participant)));
+                    Log.v(finalPayer.getName() + " borrow from " + participant.getName(),
+                            prevBorrowingsByPayer + " -> " + (prevBorrowingsByPayer - result.get(participant)));
+
+                    relationsRef.child(nonPayerId).child(payerId).setValue(prevBorrowingsByNonPayer + result.get(participant));
+                    relationsRef.child(payerId).child(nonPayerId).setValue(prevBorrowingsByPayer - result.get(participant));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+        // add expense to expenseList of each participant
+        for (User participant : finalParticipants) {
+            Log.v("participant name", participant.getName());
+
+            DatabaseReference userRef = mDatabase.child("users").child(participant.getUserId());
+
+            Expense participantExpense = new Expense(participant.getUserId(), description, date, amount,
+                    finalParticipants, finalPayer, tag, method, 0.0);
+            participantExpense.setExpenseId(newExpenseId);
+
+            if (participant != finalPayer) {
+                participantExpense.setBorrowing(result.get(participant), false);
+            } else {
+                participantExpense.setBorrowing(Double.parseDouble(amount) - result.get(finalPayer), true);
+            }
+
+            String key = userRef.child("expenseList").push().getKey();
+            userRef.child("expenseList").child(key).updateChildren(participantExpense.toMap());
+        }
+
 
         return true;
     }
@@ -352,6 +415,15 @@ public class NewExpenseActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.check_image_button && createNewExpense()) {
             Intent sentResultToHome = new Intent(NewExpenseActivity.this, HomeFragment.class);
             setResult(Activity.RESULT_OK, sentResultToHome);
+
+
+
+//            NewExpenseActivity.finalParticipants = new ArrayList<>();
+//            NewExpenseActivity.finalPayer = null;
+//            NewExpenseActivity.method = null;
+//            NewExpenseActivity.tag = null;
+//            result = new HashMap<>();
+
             finish();
             return true;
         }

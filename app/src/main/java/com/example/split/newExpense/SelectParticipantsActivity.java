@@ -112,8 +112,7 @@ public class SelectParticipantsActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Handle error here
-            }
+                throw databaseError.toException();            }
         });
     }
 

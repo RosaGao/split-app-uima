@@ -89,17 +89,6 @@
 
                 <include layout="@layout/home_expense_list" />
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/new_expense_fab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|end"
-                    android:layout_marginRight="30dp"
-                    android:layout_marginBottom="60dp"
-                    android:background="@color/dark_blue"
-                    android:contentDescription="Add New Expense"
-                    app:backgroundTint="@color/dark_blue"
-                    app:srcCompat="@android:drawable/ic_input_add" />
             </FrameLayout>
 
         </LinearLayout>
