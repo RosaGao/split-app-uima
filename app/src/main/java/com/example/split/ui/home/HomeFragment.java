@@ -78,28 +78,27 @@ public class HomeFragment extends Fragment {
         myAdapt = new ExpenseListRecyclerViewAdapter(this, allExpenses, false);
         recyclerView.setAdapter(myAdapt);
 
-        userDataRef.addValueEventListener(new ValueEventListener() {
+        userDataRef.child("expenseList").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                User user = snapshot.getValue(User.class);
-                if (user == null) {
-                    Log.e("expense list activity: ", "User " + userId + " is unexpectedly null");
+                if (snapshot.getChildrenCount() == 0) {
+                    view.findViewById(R.id.emptyHomeView).setVisibility(View.VISIBLE);
+                    Log.v("user expenses", "no expenses yet");
+                    return;
                 } else {
-                    Log.v("user name", String.valueOf(user.getName()));
-                    Log.v("user email", String.valueOf(user.getEmail()));
+                    view.findViewById(R.id.emptyHomeView).setVisibility(View.INVISIBLE);
 
-                    if (user.getExpenseList() == null) {
-                        view.findViewById(R.id.emptyHomeView).setVisibility(View.VISIBLE);
-                        Log.v("user expenses", "no expenses yet");
-                        return;
+                    List<Expense> expenses = new ArrayList<>();
+                    for(DataSnapshot ds : snapshot.getChildren()) {
+                        Expense exp = ds.getValue(Expense.class);
+                        expenses.add(exp);
                     }
-
 
                     view.findViewById(R.id.emptyHomeView).setVisibility(View.INVISIBLE);
                     allExpenses.clear();
-                    allExpenses.addAll(user.getExpenseList());
+                    allExpenses.addAll(expenses);
                     myAdapt.notifyDataSetChanged();
-                    currentUser = user;
+
                     Log.v("user expenses", String.valueOf(allExpenses.size()));
                 }
             }
@@ -117,11 +116,12 @@ public class HomeFragment extends Fragment {
 
         if (requestCode == LAUNCH_NEW_EXPENSE_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
+
                 myAdapt.notifyDataSetChanged();
 
-                Map<String, Object> childUpdates = new HashMap<>();
-                childUpdates.put("/users/" + userId + "/expenseList", allExpenses);
-                dbRef.updateChildren(childUpdates);
+//                Map<String, Object> childUpdates = new HashMap<>();
+//                childUpdates.put("/users/" + userId + "/expenseList", allExpenses);
+//                dbRef.updateChildren(childUpdates);
             }
         } else {
             Snackbar.make(getView(), "Failed to create new expense!", Snackbar.LENGTH_LONG)
