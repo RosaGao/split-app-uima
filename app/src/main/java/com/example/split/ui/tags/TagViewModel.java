@@ -4,16 +4,25 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class TagViewModel extends ViewModel {
 
-    private final MutableLiveData<String> mText;
+    private MutableLiveData<List<String>> tags;
 
     public TagViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is tag fragment");
+        tags = new MutableLiveData<>(new ArrayList<>(Arrays.asList("food", "travel", "groceries", "utilities", "business")));
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public LiveData<List<String>> getTags() {
+        return tags;
+    }
+
+    public void addTag(String tag) {
+        List<String> currentTags = tags.getValue();
+        currentTags.add(tag);
+        tags.setValue(currentTags);
     }
 }
