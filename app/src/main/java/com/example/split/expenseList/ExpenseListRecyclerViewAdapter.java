@@ -14,6 +14,7 @@ import com.example.split.R;
 import com.example.split.entity.Expense;
 import com.example.split.ui.home.HomeFragment;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -54,19 +55,21 @@ public class ExpenseListRecyclerViewAdapter
 
     @Override
     public void onBindViewHolder(@NonNull ExpenseViewHolder holder, int position) {
-        Random randomValue = new Random();
 
-        Log.d("in binder", myExpenses.get(position).toString());
+
 
         holder.description.setText(myExpenses.get(position).getDescription());
-//            holder.tag.setText(myExpenses.get(position).getTag().getNumExpenses());
         holder.date.setText(myExpenses.get(position).getDate());
 
-        if (randomValue.nextInt(10) < 5) {
-            holder.status.setText("You borrowed $123");
+        Expense expense = myExpenses.get(position);
+        double borrowing = expense.getBorrowing();
+        DecimalFormat df = new DecimalFormat("0.00");
+
+        if (borrowing > 0) {
+            holder.status.setText("You borrowed $" + df.format(borrowing));
             holder.status.setTextColor(holder.status.getResources().getColor(R.color.red));
         } else {
-            holder.status.setText("You are owed $123");
+            holder.status.setText("You are owed $" + df.format(-borrowing));
             holder.status.setTextColor(holder.status.getResources().getColor(R.color.green));
         }
 

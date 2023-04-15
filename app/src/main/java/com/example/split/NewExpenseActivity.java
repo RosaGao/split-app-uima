@@ -308,7 +308,6 @@ public class NewExpenseActivity extends AppCompatActivity {
             return false;
         }
 
-//        method = SplitMethod.EQUAL;
         if (method == null) {
             Snackbar.make(getWindow().getDecorView().getRootView()
                             , "Must choose a split method!", Snackbar.LENGTH_LONG)
@@ -324,7 +323,6 @@ public class NewExpenseActivity extends AppCompatActivity {
         newExpenseId = mDatabase.child("expenses").push().getKey();
         newExpense.setExpenseId(newExpenseId);
         mDatabase.child("expenses").child(newExpenseId).updateChildren(newExpense.toMap());
-        Log.v("before relations", finalParticipants.size() + "");
 
 
 
@@ -333,10 +331,6 @@ public class NewExpenseActivity extends AppCompatActivity {
         relationsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Log.v("here", "inside relations");
-                Log.v("here", finalParticipants.size() + "");
-
-
                 for (User participant : finalParticipants) {
                     Log.v("participant name", participant.getName());
 
@@ -415,15 +409,6 @@ public class NewExpenseActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.check_image_button && createNewExpense()) {
             Intent sentResultToHome = new Intent(NewExpenseActivity.this, HomeFragment.class);
             setResult(Activity.RESULT_OK, sentResultToHome);
-
-
-
-//            NewExpenseActivity.finalParticipants = new ArrayList<>();
-//            NewExpenseActivity.finalPayer = null;
-//            NewExpenseActivity.method = null;
-//            NewExpenseActivity.tag = null;
-//            result = new HashMap<>();
-
             finish();
             return true;
         }
