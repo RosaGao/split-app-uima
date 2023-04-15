@@ -1,24 +1,66 @@
 package com.example.split.ui.tags;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.EditText;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.split.R;
-import com.example.split.ui.tags.TagViewModel;
+import com.example.split.Tag.TagsAdapter;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class TagFragment extends Fragment {
 
-    private TagViewModel tagViewModel;
+    private DatabaseReference mDatabaseReference;
+
+    private RecyclerView tagsRecyclerView;
+    private TagsAdapter tagsAdapter;
+    private List<String> tagNames = new ArrayList<>();
 
     public TagFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // Initialize the DatabaseReference
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference("tags");
+        mDatabaseReference.addValueEventListener(tagsValueEventListener);
+
+        // Add the default tags to the database
+        List<String> defaultTags = Arrays.asList("food", "travel", "groceries", "utilities", "business");
+
+        for (String tag : defaultTags) {
+            saveTagToDatabase(tag);
+        }
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mDatabaseReference != null && tagsValueEventListener != null) {
+            mDatabaseReference.removeEventListener(tagsValueEventListener);
+        }
     }
 
     @Override
@@ -30,18 +72,65 @@ public class TagFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Initialize the ViewModel
-        tagViewModel = new ViewModelProvider(this).get(TagViewModel.class);
+        tagsRecyclerView = view.findViewById(R.id.tags_recycler_view);
+        tagsAdapter = new TagsAdapter(tagNames);
+        tagsRecyclerView.setAdapter(tagsAdapter);
+        tagsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        // Get the TextView from the layout
-        TextView textView = view.findViewById(R.id.text_chat);
-
-        // Observe the LiveData from the ViewModel and update the TextView
-        tagViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        FloatingActionButton fabAddTag = view.findViewById(R.id.fab_add_tag);
+        fabAddTag.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+                LayoutInflater inflater = requireActivity().getLayoutInflater();
+                View dialogView = inflater.inflate(R.layout.dialog_add_tag, null);
+                builder.setView(dialogView);
+
+                final EditText tagNameInput = dialogView.findViewById(R.id.tag_name_input);
+
+                builder.setTitle("Add a tag")
+                        .setPositiveButton("Add Tag", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                String tagName = tagNameInput.getText().toString();
+                                if (!tagName.isEmpty()) {
+                                    saveTagToDatabase(tagName);
+                                }
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
             }
         });
     }
+
+    private ValueEventListener tagsValueEventListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            tagNames.clear();
+            for (DataSnapshot tagSnapshot : dataSnapshot.getChildren()) {
+                String tagName = tagSnapshot.getValue(String.class);
+                tagNames.add(tagName);
+            }
+            tagsAdapter.notifyDataSetChanged();
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+            Log.e("TagFragment", "Error fetching tags: ", databaseError.toException());
+        }
+    };
+
+    private void saveTagToDatabase(String tagName) {
+        String tagId = mDatabaseReference.push().getKey();
+        mDatabaseReference.child(tagId).setValue(tagName);
+    }
 }
+
