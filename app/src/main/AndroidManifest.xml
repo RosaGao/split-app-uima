@@ -40,6 +40,10 @@
             android:theme="@style/Theme.Split.NoActionBar"
             android:exported="false" />
         <activity
+            android:name=".expenseList.ExpenseDetailActivity"
+            android:theme="@style/Theme.Split.NoActionBar"
+            android:exported="false" />
+        <activity
             android:name=".loginSignup.SignupActivity"
             android:label="@string/signup_page_name"
             android:exported="false" />

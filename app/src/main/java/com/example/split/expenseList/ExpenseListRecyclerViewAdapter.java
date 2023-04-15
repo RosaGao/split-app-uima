@@ -1,5 +1,7 @@
 package com.example.split.expenseList;
 
+import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,10 +29,10 @@ public class ExpenseListRecyclerViewAdapter
         public void onClick(View view) {
             Expense item = (Expense) view.getTag();
 
-//            Context context = view.getContext();
-//            Intent intent = new Intent(context, ExpenseDetailActivity.class);
-//            intent.putExtra(ExpenseDetailActivity.USER_ID, item.getUserId());
-//            context.startActivity(intent);
+            Context context = view.getContext();
+            Intent intent = new Intent(context, ExpenseDetailActivity.class);
+            //intent.putExtra(ExpenseDetailActivity.USER_ID, item.getUserId());
+            context.startActivity(intent);
         }
     };
 
