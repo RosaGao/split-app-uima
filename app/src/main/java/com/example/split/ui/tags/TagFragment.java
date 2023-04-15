@@ -48,13 +48,27 @@ public class TagFragment extends Fragment {
         mDatabaseReference = FirebaseDatabase.getInstance().getReference("tags");
         mDatabaseReference.addValueEventListener(tagsValueEventListener);
 
-        // Add the default tags to the database
+        // Add the default tags to the database if they do not exist
         List<String> defaultTags = Arrays.asList("food", "travel", "groceries", "utilities", "business");
 
         for (String tag : defaultTags) {
-            saveTagToDatabase(tag);
+            final String tagName = tag;
+            mDatabaseReference.orderByValue().equalTo(tagName).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (!dataSnapshot.exists()) {
+                        saveTagToDatabase(tagName);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Log.e("TagFragment", "Error checking for tag: " + tagName, databaseError.toException());
+                }
+            });
         }
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
