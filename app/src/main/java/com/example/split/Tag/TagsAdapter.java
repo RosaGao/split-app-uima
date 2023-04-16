@@ -9,14 +9,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.split.R;
+import com.example.split.entity.Tag;
+import com.example.split.ui.tags.TagFragment;
 
 import java.util.List;
 
 public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.ViewHolder> {
 
-    private List<String> mTags;
+    private List<Tag> mTags;
+//    private List<Integer> mNumExpenses;
 
-    public TagsAdapter(List<String> tags) {
+    public TagsAdapter(List<Tag> tags) {
         mTags = tags;
     }
 
@@ -30,10 +33,10 @@ public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         // Set the tag name
-        holder.tagName.setText(mTags.get(position));
+        holder.tagName.setText(mTags.get(position).getName());
 
         // Set the number of expenses
-        holder.tagExpenseCount.setText("# of expenses");
+        holder.tagExpenseCount.setText(mTags.get(position).getNumExpenses() + " of expenses");
     }
 
     @Override
@@ -41,9 +44,9 @@ public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.ViewHolder> {
         return mTags.size();
     }
 
-    public void setTags(List<String> tags) {
-        mTags = tags;
-    }
+//    public void setTags(List<Tag> tags) {
+//        mTags = tags;
+//    }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public final TextView tagName;

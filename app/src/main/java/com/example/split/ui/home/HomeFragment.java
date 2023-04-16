@@ -49,7 +49,6 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         db = FirebaseDatabase.getInstance();
         dbRef = db.getReference();
-
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 

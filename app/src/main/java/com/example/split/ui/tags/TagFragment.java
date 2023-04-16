@@ -17,7 +17,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.split.R;
 import com.example.split.Tag.TagsAdapter;
+import com.example.split.entity.Tag;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,54 +33,21 @@ import java.util.List;
 public class TagFragment extends Fragment {
 
     private DatabaseReference mDatabaseReference;
+    private String userId;
 
     private RecyclerView tagsRecyclerView;
     private TagsAdapter tagsAdapter;
-    private List<String> tagNames = new ArrayList<>();
+    public static List<Tag> tagList = new ArrayList<>();
 
     public TagFragment() {
         // Required empty public constructor
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        // Initialize the DatabaseReference
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference("tags");
-        mDatabaseReference.addValueEventListener(tagsValueEventListener);
-
-        // Add the default tags to the database if they do not exist
-        List<String> defaultTags = Arrays.asList("food", "travel", "groceries", "utilities", "business");
-
-        for (String tag : defaultTags) {
-            final String tagName = tag;
-            mDatabaseReference.orderByValue().equalTo(tagName).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if (!dataSnapshot.exists()) {
-                        saveTagToDatabase(tagName);
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    Log.e("TagFragment", "Error checking for tag: " + tagName, databaseError.toException());
-                }
-            });
-        }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (mDatabaseReference != null && tagsValueEventListener != null) {
-            mDatabaseReference.removeEventListener(tagsValueEventListener);
-        }
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference();
+        userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
         return inflater.inflate(R.layout.fragment_tag, container, false);
     }
 
@@ -87,9 +56,27 @@ public class TagFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         tagsRecyclerView = view.findViewById(R.id.tags_recycler_view);
-        tagsAdapter = new TagsAdapter(tagNames);
+        tagsAdapter = new TagsAdapter(tagList);
         tagsRecyclerView.setAdapter(tagsAdapter);
         tagsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        mDatabaseReference.child("users").child(userId).child("tags").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                tagList.clear();
+                for (DataSnapshot tagSnapshot : dataSnapshot.getChildren()) {
+                    Tag tag = tagSnapshot.getValue(Tag.class);
+                    Log.v("tag", tag.getName() + ", num ->" + tag.getNumExpenses());
+                    tagList.add(tag);
+                }
+                tagsAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("TagFragment", "Error fetching tags: ", databaseError.toException());
+            }
+        });
 
         FloatingActionButton fabAddTag = view.findViewById(R.id.fab_add_tag);
         fabAddTag.setOnClickListener(new View.OnClickListener() {
@@ -125,26 +112,11 @@ public class TagFragment extends Fragment {
         });
     }
 
-    private ValueEventListener tagsValueEventListener = new ValueEventListener() {
-        @Override
-        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-            tagNames.clear();
-            for (DataSnapshot tagSnapshot : dataSnapshot.getChildren()) {
-                String tagName = tagSnapshot.getValue(String.class);
-                tagNames.add(tagName);
-            }
-            tagsAdapter.notifyDataSetChanged();
-        }
-
-        @Override
-        public void onCancelled(@NonNull DatabaseError databaseError) {
-            Log.e("TagFragment", "Error fetching tags: ", databaseError.toException());
-        }
-    };
 
     private void saveTagToDatabase(String tagName) {
         String tagId = mDatabaseReference.push().getKey();
-        mDatabaseReference.child(tagId).setValue(tagName);
+        mDatabaseReference.child(tagId).child("name").setValue(tagName);
+        mDatabaseReference.child(tagId).child("numExpenses").setValue(0);
     }
 }
 

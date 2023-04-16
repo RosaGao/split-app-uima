@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.split.R;
 
 public class ExpenseDetailActivity extends AppCompatActivity {
-    public static final String USER_ID = "userId";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
