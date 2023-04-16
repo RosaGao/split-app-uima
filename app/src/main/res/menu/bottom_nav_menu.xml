@@ -12,7 +12,7 @@
         android:title="@string/title_tag" />
 
     <item
-        android:id="@+id/navigation_friends"
+        android:id="@+id/navigation_friend"
         android:icon="@drawable/people"
         android:title="@string/title_friends" />
 

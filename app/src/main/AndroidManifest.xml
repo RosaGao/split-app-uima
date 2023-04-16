@@ -54,9 +54,9 @@
 
         </activity>
         <!-- Add the TagActivity -->
-        <activity
-            android:name=".Tag.TagActivity"
-            android:exported="false" />
+<!--        <activity-->
+<!--            android:name=".Tag.TagActivity"-->
+<!--            android:exported="false" />-->
     </application>
 
 </manifest>
