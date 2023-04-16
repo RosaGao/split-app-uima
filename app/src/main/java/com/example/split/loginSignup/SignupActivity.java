@@ -7,6 +7,7 @@ import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,7 +29,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class SignupActivity extends AppCompatActivity {
@@ -105,6 +109,24 @@ public class SignupActivity extends AppCompatActivity {
         user.setUserId(userId);
         mDatabase.child("users").child(userId).updateChildren(user.toMap());
         mDatabase.child("relations").child(userId).setValue(0.0);
+
+
+        List<String> defaultTags = Arrays.asList("food", "travel", "groceries", "utilities", "business");
+        for (String tagName : defaultTags) {
+            mDatabase.child("users").child(userId).child("tags").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    String tagId = dataSnapshot.getRef().push().getKey();
+                    dataSnapshot.getRef().child(tagId).child("name").setValue(tagName);
+                    dataSnapshot.getRef().child(tagId).child("numExpenses").setValue(0);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Log.e("TagFragment", "Error checking for tag: " + tagName, databaseError.toException());
+                }
+            });
+        }
     }
 
     private boolean validateForm() {
