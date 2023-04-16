@@ -1,14 +1,14 @@
 package com.example.split.entity;
 
 public class Tag {
-    private String userId;
     private String name;
     private int numExpenses;
 
+    private String tagId;
+
     public Tag() {}
 
-    public Tag(String id, String name) {
-        this.userId = id;
+    public Tag(String name) {
         this.name = name;
         this.numExpenses = 0;
     }
@@ -23,5 +23,13 @@ public class Tag {
 
     public String getName() {
         return name;
+    }
+
+    public void setTagId(String id) {
+        tagId = id;
+    }
+
+    public String getTagId() {
+        return tagId;
     }
 }

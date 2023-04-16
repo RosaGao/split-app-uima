@@ -344,6 +344,11 @@ public class NewExpenseActivity extends AppCompatActivity {
             return false;
         }
 
+        // increment numExpenses for tag
+        String tagId = tag.getTagId();
+        mDatabase.child("users").child(userId).child("tags")
+                .child(tagId).child("numExpenses").setValue(tag.getNumExpenses() + 1);
+
 
         // record expense for book-keeping
         Expense newExpense = new Expense(userId, description, date, amount,
@@ -352,7 +357,6 @@ public class NewExpenseActivity extends AppCompatActivity {
         newExpenseId = mDatabase.child("expenses").push().getKey();
         newExpense.setExpenseId(newExpenseId);
         mDatabase.child("expenses").child(newExpenseId).updateChildren(newExpense.toMap());
-
 
 
         // update relations between non-payers and payer

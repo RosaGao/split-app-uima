@@ -16,6 +16,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.example.split.R;
+import com.example.split.entity.Tag;
 import com.example.split.entity.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -117,8 +118,12 @@ public class SignupActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     String tagId = dataSnapshot.getRef().push().getKey();
-                    dataSnapshot.getRef().child(tagId).child("name").setValue(tagName);
-                    dataSnapshot.getRef().child(tagId).child("numExpenses").setValue(0);
+                    Tag tag = new Tag(tagName);
+                    tag.setTagId(tagId);
+                    dataSnapshot.getRef().child(tagId).setValue(tag);
+
+//                    dataSnapshot.getRef().child(tagId).child("name").setValue(tagName);
+//                    dataSnapshot.getRef().child(tagId).child("numExpenses").setValue(0);
                 }
 
                 @Override

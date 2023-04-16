@@ -116,8 +116,9 @@ public class TagFragment extends Fragment {
     private void saveTagToDatabase(String tagName) {
         DatabaseReference tagDbRef = mDatabaseReference.child("users").child(userId).child("tags");
         String tagId = tagDbRef.push().getKey();
-        tagDbRef.child(tagId).child("name").setValue(tagName);
-        tagDbRef.child(tagId).child("numExpenses").setValue(0);
+        Tag tag = new Tag(tagName);
+        tag.setTagId(tagId);
+        tagDbRef.child(tagId).setValue(tag);
     }
 }
 
