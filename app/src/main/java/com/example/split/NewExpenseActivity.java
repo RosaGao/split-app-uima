@@ -71,6 +71,8 @@ public class NewExpenseActivity extends AppCompatActivity {
 
     public static Map<User, Double> result = new HashMap<>();
 
+    List<Tag> allTagsFromUserDb = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,15 +156,42 @@ public class NewExpenseActivity extends AppCompatActivity {
             tagChip.setText("");
         }
 
-        tagChip.setOnClickListener(new View.OnClickListener() {
-            final Tag[] tags = new Tag[]{new Tag("id1", "food"),
-                    new Tag("id2", "travel"), new Tag("id3", "groceries"),
-                    new Tag("id2", "utilities"), new Tag("id2", "business")};
+        mDatabase.child("users").child(userId).child("tags").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                allTagsFromUserDb.clear();
+                for (DataSnapshot tagSnapshot : snapshot.getChildren()) {
+                    Tag tag = tagSnapshot.getValue(Tag.class);
+                    Log.v("tag", tag.getName() + ", num ->" + tag.getNumExpenses());
+                    allTagsFromUserDb.add(tag);
+                }
 
-            final String[] tagNames = new String[]{"food", "travel", "groceries", "utilities", "business"};
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+        tagChip.setOnClickListener(new View.OnClickListener() {
+            String[] tagNames;
+            Tag[] tags;
+
+            private void setUp() {
+                tagNames = new String[allTagsFromUserDb.size()];
+                tags = new Tag[allTagsFromUserDb.size()];
+                for (int i = 0; i < allTagsFromUserDb.size(); i++) {
+                    tags[i] = allTagsFromUserDb.get(i);
+                    tagNames[i] =  tags[i].getName();
+                }
+            }
 
             @Override
             public void onClick(View v) {
+                setUp();
+
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(NewExpenseActivity.this);
                 alertDialog.setIcon(R.drawable.tags);
                 alertDialog.setTitle("Tags");
