@@ -32,6 +32,8 @@ public class ExpenseListRecyclerViewAdapter
 
             Context context = view.getContext();
             Intent intent = new Intent(context, ExpenseDetailActivity.class);
+            //intent.putExtra("expense_id", item.getExpenseId());
+
             context.startActivity(intent);
         }
     };

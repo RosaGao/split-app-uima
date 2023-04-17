@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/expense_detail_toolbar"
@@ -13,6 +13,20 @@
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/expense_detail_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Expense Detail"
+        android:textAlignment="gravity"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/expense_detail_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/expense_detail_toolbar" />
 
     <LinearLayout
         android:id="@+id/expense_detail_header"
@@ -47,26 +61,43 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layoutManager="LinearLayoutManager"
-            tools:listitem="@layout/expence_detail_payee_layout" />
-
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/expense_detail_title"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/payer_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:gravity="center"
-        android:text="Expense Detail"
-        android:textAlignment="gravity"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/expense_detail_toolbar"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/expense_detail_header">
+
+        <ImageView
+            android:id="@+id/payer_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/darkangry_icon" />
+
+        <TextView
+            android:id="@+id/payer_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="TextView"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/payee_recycler_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        app:layoutManager="LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.318"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/expense_detail_toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/payer_layout"
+        tools:listitem="@layout/expence_detail_payee_layout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
