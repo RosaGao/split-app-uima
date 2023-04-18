@@ -25,18 +25,18 @@ public class ExpenseListRecyclerViewAdapter
     private HomeFragment myParentActivity;
     private List<Expense> myExpenses = new ArrayList<>();
 
-    private final View.OnClickListener myOnClickListener = new View.OnClickListener() {
+    /*private final View.OnClickListener myOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Expense item = (Expense) view.getTag();
 
             Context context = view.getContext();
             Intent intent = new Intent(context, ExpenseDetailActivity.class);
+            //intent.putExtra("expense_id", myExpenses.get(1).getExpenseId());
             //intent.putExtra("expense_id", item.getExpenseId());
-
+            //intent.putExtra("expense_id", context.getText());
             context.startActivity(intent);
         }
-    };
+    };*/
 
     public ExpenseListRecyclerViewAdapter(HomeFragment parent,
                                           List<Expense> allExpenses,
@@ -72,11 +72,20 @@ public class ExpenseListRecyclerViewAdapter
             holder.status.setTextColor(holder.status.getResources().getColor(R.color.green));
         }
 
-
         Log.v("tag name", myExpenses.get(position).getTag().getName());
         holder.tag.setText(myExpenses.get(position).getTag().getName());
 
-        holder.itemView.setOnClickListener(myOnClickListener);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Context context = view.getContext();
+                Intent intent = new Intent(context, ExpenseDetailActivity.class);
+                intent.putExtra("expense_id", myExpenses.get(position).getExpenseId());
+                context.startActivity(intent);
+            }
+        });
+
     }
 
     @Override

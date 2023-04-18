@@ -10,7 +10,7 @@
         android:id="@+id/tag_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:elevation="5dp"
+        android:elevation="10dp"
         android:text="tag name"
         android:textSize="14sp"
         app:chipBackgroundColor="@color/tag_orange"
