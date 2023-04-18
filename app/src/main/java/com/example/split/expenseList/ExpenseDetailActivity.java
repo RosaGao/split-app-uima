@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.split.R;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,6 +25,9 @@ public class ExpenseDetailActivity extends AppCompatActivity {
     View split_method_view;
     TextView expense_tag;
     TextView expense_method;
+    TextView payer_info;
+    String current_user;
+    String expense_payer;
     private DatabaseReference database;
 
     @Override
@@ -45,6 +49,7 @@ public class ExpenseDetailActivity extends AppCompatActivity {
         split_method_view = findViewById(R.id.expense_split_method);
         expense_tag = (TextView) tag_view.findViewById(R.id.tag_layout);
         expense_method = (TextView) split_method_view.findViewById(R.id.split_method_chip);
+        payer_info = findViewById(R.id.payer_info);
 
         database.addValueEventListener(new ValueEventListener() {
             @Override
@@ -53,6 +58,15 @@ public class ExpenseDetailActivity extends AppCompatActivity {
                 expense_date.setText(snapshot.child("date").getValue().toString());
                 expense_tag.setText(snapshot.child("tag").child("name").getValue().toString());
                 expense_method.setText(snapshot.child("method").getValue().toString());
+
+                current_user = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                expense_payer = snapshot.child("payer").child("userId").getValue().toString();
+                if (current_user.equals(expense_payer)) {
+                    payer_info.setText("You paid $" + snapshot.child("amount").getValue().toString());
+                } else {
+                    expense_payer = snapshot.child("payer").child("name").getValue().toString();
+                    payer_info.setText(expense_payer + " paid $" + snapshot.child("amount").getValue().toString());
+                }
             }
 
             @Override
