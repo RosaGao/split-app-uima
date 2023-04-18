@@ -29,19 +29,5 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        // Initialize the ViewModel
-        profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
-
-        // Get the TextView from the layout
-        TextView textView = view.findViewById(R.id.text_chat);
-
-        // Observe the LiveData from the ViewModel and update the TextView
-        profileViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
     }
 }

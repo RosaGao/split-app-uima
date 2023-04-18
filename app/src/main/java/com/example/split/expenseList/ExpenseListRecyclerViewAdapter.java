@@ -57,8 +57,6 @@ public class ExpenseListRecyclerViewAdapter
     @Override
     public void onBindViewHolder(@NonNull ExpenseViewHolder holder, int position) {
 
-
-
         holder.description.setText(myExpenses.get(position).getDescription());
         holder.date.setText(myExpenses.get(position).getDate());
 

@@ -7,31 +7,6 @@
     android:layout_height="match_parent"
     tools:context="com.example.split.ui.friend.FriendFragment">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/friendFragmentAppbarLayout"
-
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/friendFragmentAppBar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize">
-
-            <TextView
-                android:id="@+id/friendsTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="Friends"
-                android:textColor="@color/white"
-                android:textSize="20sp" />
-
-        </androidx.appcompat.widget.Toolbar>
-
-    </com.google.android.material.appbar.AppBarLayout>
-
     <TextView
         android:id="@+id/emptyFriendView"
         android:layout_width="match_parent"
