@@ -70,15 +70,23 @@ public class FriendProfileActivity extends AppCompatActivity {
         dbRef.child("relations").child(userId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (!snapshot.child(myFriend.getUserId()).exists()) {
+                    binding.status.setText("Settled up with " + myFriend.getName());
+                    return;
+                }
+
                 double borrowing = snapshot.child(myFriend.getUserId()).getValue(Double.class);
                 DecimalFormat df = new DecimalFormat("0.00");
                 if (borrowing < 0) { // friend owes me money
                     binding.status.setTextColor(getResources().getColor(R.color.green));
                     binding.status.setText(myFriend.getName() + " owes you $" + df.format((-borrowing)));
 
-                } else { // I borrowed money from friend
+                } else if (borrowing > 0) { // I borrowed money from friend
                     binding.status.setTextColor(getResources().getColor(R.color.red));
                     binding.status.setText("You owe " + myFriend.getName() + " $" + df.format(borrowing));
+                } else {
+                    binding.status.setText("Settled up " + myFriend.getName());
+                    binding.status.setTextColor(getResources().getColor(R.color.black));
                 }
             }
 
