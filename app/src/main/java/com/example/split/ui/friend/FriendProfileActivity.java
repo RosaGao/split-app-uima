@@ -6,10 +6,14 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.split.R;
 import com.example.split.databinding.FriendProfileBinding;
+import com.example.split.entity.Expense;
 import com.example.split.entity.User;
+import com.example.split.expenseList.ExpenseListRecyclerViewAdapter;
+import com.example.split.ui.home.HomeFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -18,6 +22,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FriendProfileActivity extends AppCompatActivity {
 
@@ -25,6 +31,10 @@ public class FriendProfileActivity extends AppCompatActivity {
     FriendProfileBinding binding;
     private DatabaseReference dbRef;
     private String userId;
+
+
+    private List<Expense> expensesWithThisFriend;
+    public ExpenseListRecyclerViewAdapter friendProfileExpensesAdapt;
 
 
 
@@ -78,7 +88,25 @@ public class FriendProfileActivity extends AppCompatActivity {
             }
         });
 
+        expensesWithThisFriend = getExpensesWithFriend();
+        RecyclerView expensesListRecyclerView = binding.expenseListHome;
+        friendProfileExpensesAdapt = new ExpenseListRecyclerViewAdapter(null, expensesWithThisFriend, false);
+        expensesListRecyclerView.setAdapter(friendProfileExpensesAdapt);
+    }
 
+    private List<Expense> getExpensesWithFriend() {
+        List<Expense> allMyExpenses = HomeFragment.allExpenses;
+        List<Expense> expensesWithMyFriend = new ArrayList<>();
+        String myFriendId = myFriend.getUserId();
+
+        for (Expense exp : allMyExpenses) {
+            for (User participant : exp.getParticipants()) {
+                if (participant.getUserId().equals(myFriendId)) {
+                    expensesWithMyFriend.add(exp);
+                }
+            }
+        }
+        return expensesWithMyFriend;
     }
 
 
