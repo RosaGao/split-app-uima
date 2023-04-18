@@ -24,20 +24,6 @@ public class ExpenseListRecyclerViewAdapter
 
     private HomeFragment myParentActivity;
     private List<Expense> myExpenses = new ArrayList<>();
-
-    /*private final View.OnClickListener myOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-
-            Context context = view.getContext();
-            Intent intent = new Intent(context, ExpenseDetailActivity.class);
-            //intent.putExtra("expense_id", myExpenses.get(1).getExpenseId());
-            //intent.putExtra("expense_id", item.getExpenseId());
-            //intent.putExtra("expense_id", context.getText());
-            context.startActivity(intent);
-        }
-    };*/
-
     public ExpenseListRecyclerViewAdapter(HomeFragment parent,
                                           List<Expense> allExpenses,
                                           boolean twoPane) {
