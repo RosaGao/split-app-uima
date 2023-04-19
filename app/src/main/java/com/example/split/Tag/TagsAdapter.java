@@ -1,5 +1,8 @@
 package com.example.split.Tag;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +33,7 @@ public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.ViewHolder> {
         return new ViewHolder(view);
     }
 
+    @SuppressLint("RecyclerView")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         // Set the tag name
@@ -37,6 +41,16 @@ public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.ViewHolder> {
 
         // Set the number of expenses
         holder.tagExpenseCount.setText(mTags.get(position).getNumExpenses() + " of expenses");
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Context context = view.getContext();
+                Intent intent = new Intent(context, TagDetailActivity.class);
+                intent.putExtra("tag_id", mTags.get(position).getTagId());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

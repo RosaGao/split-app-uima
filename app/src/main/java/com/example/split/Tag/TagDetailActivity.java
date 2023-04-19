@@ -50,7 +50,7 @@ public class TagDetailActivity extends AppCompatActivity {
     public static List<Expense> allExpenses = new ArrayList<>();
     public TagExpenseListRecyclerViewAdapter myAdapt;
 
-    public static Tag myTag = null;
+    public static Tag myTag;
     private TextView tagTitle;
     private TextView tagTotal;
     private List<Expense> expensesWithThisTag;
@@ -60,63 +60,57 @@ public class TagDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tag_detail);
 
+        Intent intent = getIntent();
+        String tagId = intent.getStringExtra("tag_id");
+        if (tagId == null) {
+            finish();
+        }
+        Log.v("tagid", tagId);
+
         db = FirebaseDatabase.getInstance();
         dbRef = db.getReference();
-
-        userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        Log.v("userid", userId);
-        userDataRef = dbRef.child("users").child(userId);
 
         tagTitle = findViewById(R.id.tagTitleTextView);
         tagTotal = findViewById(R.id.totalCalculationTextView);
 
-        tagTitle.setText(myTag.getName());
-        // TODO: can't seem to find total in tag, might need to calculate
-//        tagTotal.setText(myTag.);
-
-        expensesWithThisTag = getExpensesWithTag();
-        RecyclerView recyclerView = findViewById(R.id.expense_list_tag);
-        // TODO: not sure if parent should be this or null
-        myAdapt = new TagExpenseListRecyclerViewAdapter(this, expensesWithThisTag, false);
-        recyclerView.setAdapter(myAdapt);
-
-        // TODO: not sure if mine is actually called "expenseList". need to reviw
-        userDataRef.child("expenseList").addValueEventListener((new ValueEventListener() {
+        userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        Log.v("userid", userId);
+        dbRef.child("users").child(userId).child("tags").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                // TODO: if empty, just can't click into tag so shouldn't be on this page ? show toast message instead
-                if (snapshot.getChildrenCount() == 0) {
-
-                    findViewById(R.id.emptyTagView).setVisibility(View.VISIBLE);
-                    Log.v("tag expenses", "no expenses yet");
-                    return;
-                } else {
-                    findViewById(R.id.emptyTagView).setVisibility(View.INVISIBLE);
-
-                    List<Expense> expenses = new ArrayList<>();
-                    for (DataSnapshot ds : snapshot.getChildren()) {
-                        Expense exp = ds.getValue(Expense.class);
-                        expenses.add(exp);
-                    }
-
-                    // TODO: is this line necessary again? why
-                    findViewById(R.id.emptyTagView).setVisibility(View.INVISIBLE);
-                    expensesWithThisTag.clear();
-                    expensesWithThisTag.addAll(expenses);
-                    myAdapt.notifyDataSetChanged();
-
-
-                    // TODO: set color of total text, maybe refer to friend profile
-                }
+                Log.v("num", snapshot.getChildrenCount() + "");
+                myTag = snapshot.child(tagId).getValue(Tag.class);
+                tagTitle.setText(myTag.getName());
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                // failed to read value
-                Log.w("db expenses: " + userId, "Failed to read value.", error.toException());
+
             }
-        }));
+        });
+
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if (myTag != null) {
+            tagTitle.setText(myTag.getName());
+            expensesWithThisTag = getExpensesWithTag();
+            RecyclerView recyclerView = findViewById(R.id.expense_list_tag);
+            // TODO: not sure if parent should be this or null
+            myAdapt = new TagExpenseListRecyclerViewAdapter(this, expensesWithThisTag, false);
+            recyclerView.setAdapter(myAdapt);
+        }
+
+
+        // TODO: can't seem to find total in tag, might need to calculate
+//        tagTotal.setText(myTag.);
+
+        // when iterating through, change colors of layout from friend profile
+
 
 
 
@@ -186,6 +180,8 @@ public class TagDetailActivity extends AppCompatActivity {
                             if (!tagName.isEmpty()) {
                                 // TODO: this is such a dumb question, but do i need to save changes to the database or is it automatic?
                                 myTag.setName(tagName);
+                                Log.v("attempted new tag name", tagName);
+                                Log.v("actual new tag name", myTag.getName());
                             }
                         }
                     })

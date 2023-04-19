@@ -58,6 +58,12 @@
 
         </activity>
 
+
+        <activity
+            android:name=".Tag.TagDetailActivity"
+            android:label="@string/signup_page_name"
+            android:exported="false" />
+
     </application>
 
 </manifest>
