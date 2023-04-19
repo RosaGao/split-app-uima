@@ -74,6 +74,12 @@ public class TagDetailActivity extends AppCompatActivity {
         // TODO: can't seem to find total in tag, might need to calculate
 //        tagTotal.setText(myTag.);
 
+        expensesWithThisTag = getExpensesWithTag();
+        RecyclerView recyclerView = findViewById(R.id.expense_list_tag);
+        // TODO: not sure if parent should be this or null
+        myAdapt = new TagExpenseListRecyclerViewAdapter(this, expensesWithThisTag, false);
+        recyclerView.setAdapter(myAdapt);
+
         // TODO: not sure if mine is actually called "expenseList". need to reviw
         userDataRef.child("expenseList").addValueEventListener((new ValueEventListener() {
             @Override
@@ -82,11 +88,11 @@ public class TagDetailActivity extends AppCompatActivity {
                 // TODO: if empty, just can't click into tag so shouldn't be on this page ? show toast message instead
                 if (snapshot.getChildrenCount() == 0) {
 
-                    findViewById(R.id.emptyHomeView).setVisibility(View.VISIBLE);
+                    findViewById(R.id.emptyTagView).setVisibility(View.VISIBLE);
                     Log.v("tag expenses", "no expenses yet");
                     return;
                 } else {
-                    findViewById(R.id.emptyHomeView).setVisibility(View.INVISIBLE);
+                    findViewById(R.id.emptyTagView).setVisibility(View.INVISIBLE);
 
                     List<Expense> expenses = new ArrayList<>();
                     for (DataSnapshot ds : snapshot.getChildren()) {
@@ -95,9 +101,9 @@ public class TagDetailActivity extends AppCompatActivity {
                     }
 
                     // TODO: is this line necessary again? why
-                    findViewById(R.id.emptyHomeView).setVisibility(View.INVISIBLE);
-                    allExpenses.clear();
-                    allExpenses.addAll(expenses);
+                    findViewById(R.id.emptyTagView).setVisibility(View.INVISIBLE);
+                    expensesWithThisTag.clear();
+                    expensesWithThisTag.addAll(expenses);
                     myAdapt.notifyDataSetChanged();
 
 
@@ -112,11 +118,7 @@ public class TagDetailActivity extends AppCompatActivity {
             }
         }));
 
-        expensesWithThisTag = getExpensesWithTag();
-        RecyclerView recyclerView = findViewById(R.id.expense_list_tag);
-        // TODO: not sure if parent should be this or null
-        myAdapt = new TagExpenseListRecyclerViewAdapter(this, expensesWithThisTag, false);
-        recyclerView.setAdapter(myAdapt);
+
 
     }
 
