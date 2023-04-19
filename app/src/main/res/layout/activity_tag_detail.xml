@@ -7,18 +7,18 @@
     tools:context=".Tag.TagDetailActivity">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/newExpenseAppBarLayout"
+        android:id="@+id/tagAppBarLayout"
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/newExpenseToolbar"
+            android:id="@+id/tagToolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize">
 
             <TextView
-                android:id="@+id/newExpenseTitle"
+                android:id="@+id/tagTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
