@@ -25,6 +25,8 @@ public class Tag {
         return name;
     }
 
+    public void setName(String newName) { name = newName; }
+
     public void setTagId(String id) {
         tagId = id;
     }
