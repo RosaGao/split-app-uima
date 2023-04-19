@@ -70,6 +70,12 @@ public class Expense {
         return this.userId;
     }
 
+    public User getPayer() { return this.payer; }
+
+    public boolean isSettled(User user) {
+        return false;
+    }
+
     public List<User> getParticipants() {return this.participants;}
 
     public void setBorrowing(Double amount, boolean isPayer) {
