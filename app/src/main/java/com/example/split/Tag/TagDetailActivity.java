@@ -46,6 +46,7 @@ public class TagDetailActivity extends AppCompatActivity {
     private DatabaseReference dbRef;
     DatabaseReference userDataRef;
     private static String userId;
+    private static String tagId;
     private static User currentUser = null;
     public static List<Expense> allExpenses = new ArrayList<>();
     public TagExpenseListRecyclerViewAdapter myAdapt;
@@ -61,7 +62,7 @@ public class TagDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tag_detail);
 
         Intent intent = getIntent();
-        String tagId = intent.getStringExtra("tag_id");
+        tagId = intent.getStringExtra("tag_id");
         if (tagId == null) {
             finish();
         }
@@ -110,8 +111,6 @@ public class TagDetailActivity extends AppCompatActivity {
 //        tagTotal.setText(myTag.);
 
         // when iterating through, change colors of layout from friend profile
-
-
 
 
     }
@@ -164,7 +163,6 @@ public class TagDetailActivity extends AppCompatActivity {
             finish();
             return true;
         } else if (item.getItemId() == R.id.edit_image_button) {
-            // TODO: not sure why requireContext and requireActivity are creating errors, otherwise this should be correct
             AlertDialog.Builder builder = new AlertDialog.Builder(TagDetailActivity.this);
             LayoutInflater inflater = getLayoutInflater();
             View dialogView = inflater.inflate(R.layout.dialog_add_tag, null);
@@ -178,8 +176,8 @@ public class TagDetailActivity extends AppCompatActivity {
                         public void onClick(DialogInterface dialog, int which) {
                             String tagName = tagNameInput.getText().toString();
                             if (!tagName.isEmpty()) {
-                                // TODO: this is such a dumb question, but do i need to save changes to the database or is it automatic?
-                                myTag.setName(tagName);
+                                // TODO
+                                saveNewTagNameToDatabase(tagName);
                                 Log.v("attempted new tag name", tagName);
                                 Log.v("actual new tag name", myTag.getName());
                             }
@@ -197,5 +195,10 @@ public class TagDetailActivity extends AppCompatActivity {
         }
 
         return false;
+    }
+
+    private void saveNewTagNameToDatabase(String tagName) {
+        DatabaseReference tagDbRf = dbRef.child("users").child(userId).child("tags").child(tagId);
+        tagDbRf.child("name").setValue(tagName);
     }
 }
