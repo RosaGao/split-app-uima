@@ -78,7 +78,10 @@ public class TagDetailActivity extends AppCompatActivity {
         userDataRef.child("expenseList").addValueEventListener((new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                // TODO: if empty, just can't click into tag so shouldn't be on this page ? show toast message instead
                 if (snapshot.getChildrenCount() == 0) {
+
                     findViewById(R.id.emptyHomeView).setVisibility(View.VISIBLE);
                     Log.v("tag expenses", "no expenses yet");
                     return;
@@ -97,7 +100,6 @@ public class TagDetailActivity extends AppCompatActivity {
                     allExpenses.addAll(expenses);
                     myAdapt.notifyDataSetChanged();
 
-                    Log.v("user expenses", String.valueOf(allExpenses.size()));
 
                     // TODO: set color of total text, maybe refer to friend profile
                 }
@@ -166,34 +168,34 @@ public class TagDetailActivity extends AppCompatActivity {
             finish();
             return true;
         } else if (item.getItemId() == R.id.edit_image_button) {
-//            // TODO: not sure why requireContext and requireActivity are creating errors, otherwise this should be correct
-//            AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-//            LayoutInflater inflater = requireActivity().getLayoutInflater();
-//            View dialogView = inflater.inflate(R.layout.dialog_add_tag, null);
-//            builder.setView(dialogView);
-//
-//            final EditText tagNameInput = dialogView.findViewById(R.id.tag_name_input);
-//
-//            builder.setTitle("Edit tag name")
-//                    .setPositiveButton("Save Changes", new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialog, int which) {
-//                            String tagName = tagNameInput.getText().toString();
-//                            if (!tagName.isEmpty()) {
-//                                // TODO: this is such a dumb question, but do i need to save changes to the database or is it automatic?
-//                                myTag.setName(tagName);
-//                            }
-//                        }
-//                    })
-//                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialog, int which) {
-//                            dialog.cancel();
-//                        }
-//                    });
-//
-//            AlertDialog alertDialog = builder.create();
-//            alertDialog.show();
+            // TODO: not sure why requireContext and requireActivity are creating errors, otherwise this should be correct
+            AlertDialog.Builder builder = new AlertDialog.Builder(TagDetailActivity.this);
+            LayoutInflater inflater = getLayoutInflater();
+            View dialogView = inflater.inflate(R.layout.dialog_add_tag, null);
+            builder.setView(dialogView);
+
+            final EditText tagNameInput = dialogView.findViewById(R.id.tag_name_input);
+
+            builder.setTitle("Edit tag name")
+                    .setPositiveButton("Save Changes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            String tagName = tagNameInput.getText().toString();
+                            if (!tagName.isEmpty()) {
+                                // TODO: this is such a dumb question, but do i need to save changes to the database or is it automatic?
+                                myTag.setName(tagName);
+                            }
+                        }
+                    })
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
         }
 
         return false;
