@@ -36,6 +36,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,6 +91,10 @@ public class TagDetailActivity extends AppCompatActivity {
             }
         });
 
+        // TODO: can't seem to find total in tag, might need to calculate
+//        tagTotal.setText(myTag.);
+
+        // when iterating through, change colors of layout from friend profile
 
     }
 
@@ -101,17 +106,24 @@ public class TagDetailActivity extends AppCompatActivity {
             tagTitle.setText(myTag.getName());
             expensesWithThisTag = getExpensesWithTag();
             RecyclerView recyclerView = findViewById(R.id.expense_list_tag);
-            // TODO: not sure if parent should be this or null
             myAdapt = new TagExpenseListRecyclerViewAdapter(this, expensesWithThisTag, false);
             recyclerView.setAdapter(myAdapt);
+
+            double total = getTotal(expensesWithThisTag);
+            DecimalFormat df = new DecimalFormat("0.00");
+
+            if (total == 0) {
+                tagTotal.setText("You are owed $" + df.format(total));
+                tagTotal.setTextColor(getResources().getColor(R.color.black));
+            } else if (total > 0) {
+                tagTotal.setText("You borrowed $" + df.format(total));
+                tagTotal.setTextColor(getResources().getColor(R.color.red));
+            } else {
+                tagTotal.setText("You are owed $" + df.format(Math.abs(total)));
+                tagTotal.setTextColor(getResources().getColor(R.color.green));
+            }
+
         }
-
-
-        // TODO: can't seem to find total in tag, might need to calculate
-//        tagTotal.setText(myTag.);
-
-        // when iterating through, change colors of layout from friend profile
-
 
     }
 
@@ -126,6 +138,19 @@ public class TagDetailActivity extends AppCompatActivity {
             }
         }
         return expensesWithMyTag;
+    }
+
+    private void saveNewTagNameToDatabase(String tagName) {
+        DatabaseReference tagDbRf = dbRef.child("users").child(userId).child("tags").child(tagId);
+        tagDbRf.child("name").setValue(tagName);
+    }
+
+    private double getTotal(List<Expense> expenses) {
+        double total = 0;
+        for (Expense expense : expenses) {
+            total += expense.getBorrowing();
+        }
+        return total;
     }
 
     @SuppressLint("RestrictedApi")
@@ -195,10 +220,5 @@ public class TagDetailActivity extends AppCompatActivity {
         }
 
         return false;
-    }
-
-    private void saveNewTagNameToDatabase(String tagName) {
-        DatabaseReference tagDbRf = dbRef.child("users").child(userId).child("tags").child(tagId);
-        tagDbRf.child("name").setValue(tagName);
     }
 }
