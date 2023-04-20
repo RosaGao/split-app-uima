@@ -66,7 +66,7 @@
                     android:paddingLeft="15dp"
                     android:text="Total:"
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/totalCalculationTextView"
