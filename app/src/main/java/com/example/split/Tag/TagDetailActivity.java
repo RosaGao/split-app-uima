@@ -91,11 +91,6 @@ public class TagDetailActivity extends AppCompatActivity {
             }
         });
 
-        // TODO: can't seem to find total in tag, might need to calculate
-//        tagTotal.setText(myTag.);
-
-        // when iterating through, change colors of layout from friend profile
-
     }
 
     @Override
@@ -170,23 +165,32 @@ public class TagDetailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // action with ID action_settings was selected
         if (item.getItemId() == R.id.trash_image_button) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(TagDetailActivity.this);
+            LayoutInflater inflater = getLayoutInflater();
+            View dialogView = inflater.inflate(R.layout.dialog_delete, null);
+            builder.setView(dialogView);
 
-            List<Expense> allMyExpenses = HomeFragment.allExpenses;
-            String tagId = myTag.getTagId();
+            builder.setTitle("Delete tag permanently?")
+                    .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if (expensesWithThisTag.size() == 0) {
+                                DatabaseReference tagDbRef = dbRef.child("users").child(userId).child("tags").child(tagId);
+                                tagDbRef.removeValue();
+                                finish();
+                            }
+                        }
+                    })
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
 
-            for (Expense exp : allMyExpenses) {
-                if (exp.getTag().getTagId().equals(tagId)) {
-                    // TODO: remove expenses with this tag, i don't think this is right
-                    exp = null;
-                }
-            }
-            // TODO: have to grab expense id and iterate through all expenses in database to remove
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
 
-            // TODO: after deleting tag, should return user (from tag detail) to tag page
-//            Intent sentResultToHome = new Intent(NewExpenseActivity.this, HomeFragment.class);
-//            setResult(Activity.RESULT_OK, sentResultToHome);
-            finish();
-            return true;
         } else if (item.getItemId() == R.id.edit_image_button) {
             AlertDialog.Builder builder = new AlertDialog.Builder(TagDetailActivity.this);
             LayoutInflater inflater = getLayoutInflater();
@@ -201,10 +205,7 @@ public class TagDetailActivity extends AppCompatActivity {
                         public void onClick(DialogInterface dialog, int which) {
                             String tagName = tagNameInput.getText().toString();
                             if (!tagName.isEmpty()) {
-                                // TODO
                                 saveNewTagNameToDatabase(tagName);
-                                Log.v("attempted new tag name", tagName);
-                                Log.v("actual new tag name", myTag.getName());
                             }
                         }
                     })
