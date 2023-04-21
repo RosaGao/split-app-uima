@@ -62,7 +62,8 @@
         <activity
             android:name=".Tag.TagDetailActivity"
             android:label="@string/signup_page_name"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.Split.NoActionBar"/>
 
     </application>
 

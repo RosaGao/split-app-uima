@@ -50,14 +50,12 @@ public class TagDetailActivity extends AppCompatActivity {
     DatabaseReference userDataRef;
     private static String userId;
     private static String tagId;
-    private static User currentUser = null;
-    public static List<Expense> allExpenses = new ArrayList<>();
     public TagExpenseListRecyclerViewAdapter myAdapt;
 
-    public static Tag myTag;
+    public static Tag myTag = null;
     private TextView tagTitle;
     private TextView tagTotal;
-    private List<Expense> expensesWithThisTag;
+    private List<Expense> expensesWithThisTag = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +67,21 @@ public class TagDetailActivity extends AppCompatActivity {
         if (tagId == null) {
             finish();
         }
-        Log.v("tagid", tagId);
+        Log.v("tag_id", tagId);
+
+        androidx.appcompat.widget.Toolbar toolBar = findViewById(R.id.tagToolbar);
+        setSupportActionBar(toolBar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        toolBar.setNavigationIcon(R.drawable.baseline_arrow_back_24);
+        toolBar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myTag = null;
+                expensesWithThisTag.clear();
+                finish();
+            }
+        });
+
 
         db = FirebaseDatabase.getInstance();
         dbRef = db.getReference();
@@ -78,13 +90,40 @@ public class TagDetailActivity extends AppCompatActivity {
         tagTotal = findViewById(R.id.totalCalculationTextView);
 
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        Log.v("userid", userId);
+
+        RecyclerView recyclerView = findViewById(R.id.expense_list_tag);
+
         dbRef.child("users").child(userId).child("tags").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Log.v("num", snapshot.getChildrenCount() + "");
                 myTag = snapshot.child(tagId).getValue(Tag.class);
+
+                if (myTag == null) {
+                    finish();
+                    return;
+                }
+
                 tagTitle.setText(myTag.getName());
+
+                getExpensesWithTag();
+                myAdapt = new TagExpenseListRecyclerViewAdapter(null, expensesWithThisTag, false);
+                recyclerView.setAdapter(myAdapt);
+
+                double total = getTotal(expensesWithThisTag);
+                DecimalFormat df = new DecimalFormat("0.00");
+
+                if (total == 0) {
+                    tagTotal.setText("You are owed $" + df.format(total));
+                    tagTotal.setTextColor(getResources().getColor(R.color.black));
+                } else if (total > 0) {
+                    tagTotal.setText("You borrowed $" + df.format(total));
+                    tagTotal.setTextColor(getResources().getColor(R.color.red));
+                } else {
+                    tagTotal.setText("You are owed $" + df.format(Math.abs(total)));
+                    tagTotal.setTextColor(getResources().getColor(R.color.green));
+                }
+
             }
 
             @Override
@@ -95,46 +134,16 @@ public class TagDetailActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
 
-        if (myTag != null) {
-            tagTitle.setText(myTag.getName());
-            expensesWithThisTag = getExpensesWithTag();
-            RecyclerView recyclerView = findViewById(R.id.expense_list_tag);
-            myAdapt = new TagExpenseListRecyclerViewAdapter(this, expensesWithThisTag, false);
-            recyclerView.setAdapter(myAdapt);
-
-            double total = getTotal(expensesWithThisTag);
-            DecimalFormat df = new DecimalFormat("0.00");
-
-            if (total == 0) {
-                tagTotal.setText("You are owed $" + df.format(total));
-                tagTotal.setTextColor(getResources().getColor(R.color.black));
-            } else if (total > 0) {
-                tagTotal.setText("You borrowed $" + df.format(total));
-                tagTotal.setTextColor(getResources().getColor(R.color.red));
-            } else {
-                tagTotal.setText("You are owed $" + df.format(Math.abs(total)));
-                tagTotal.setTextColor(getResources().getColor(R.color.green));
-            }
-
-        }
-
-    }
-
-    private List<Expense> getExpensesWithTag() {
-        List<Expense> allMyExpenses = HomeFragment.allExpenses;
-        List<Expense> expensesWithMyTag = new ArrayList<>();
+    private void getExpensesWithTag() {
         String tagId = myTag.getTagId();
 
-        for (Expense exp : allMyExpenses) {
+        for (Expense exp : HomeFragment.allExpenses) {
             if (exp.getTag().getTagId().equals(tagId)) {
-                expensesWithMyTag.add(exp);
+                expensesWithThisTag.add(exp);
             }
         }
-        return expensesWithMyTag;
+        Log.v("num of expenses w tag", expensesWithThisTag.size() + "");
     }
 
     private void saveNewTagNameToDatabase(String tagName) {
