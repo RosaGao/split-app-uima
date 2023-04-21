@@ -20,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.split.NewExpenseActivity;
 import com.example.split.R;
@@ -27,6 +28,7 @@ import com.example.split.entity.Expense;
 import com.example.split.entity.Tag;
 import com.example.split.entity.User;
 import com.example.split.expenseList.ExpenseListRecyclerViewAdapter;
+import com.example.split.loginSignup.LoginActivity;
 import com.example.split.ui.home.HomeFragment;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
@@ -165,31 +167,34 @@ public class TagDetailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // action with ID action_settings was selected
         if (item.getItemId() == R.id.trash_image_button) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(TagDetailActivity.this);
-            LayoutInflater inflater = getLayoutInflater();
-            View dialogView = inflater.inflate(R.layout.dialog_delete, null);
-            builder.setView(dialogView);
+            if (expensesWithThisTag.size() == 0) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(TagDetailActivity.this);
+                LayoutInflater inflater = getLayoutInflater();
+                View dialogView = inflater.inflate(R.layout.dialog_delete, null);
+                builder.setView(dialogView);
 
-            builder.setTitle("Delete tag permanently?")
-                    .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            if (expensesWithThisTag.size() == 0) {
-                                DatabaseReference tagDbRef = dbRef.child("users").child(userId).child("tags").child(tagId);
-                                tagDbRef.removeValue();
-                                finish();
+                builder.setTitle("Delete tag permanently?")
+                        .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                    DatabaseReference tagDbRef = dbRef.child("users").child(userId).child("tags").child(tagId);
+                                    tagDbRef.removeValue();
+                                    finish();
                             }
-                        }
-                    })
-                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                        }
-                    });
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
 
-            AlertDialog alertDialog = builder.create();
-            alertDialog.show();
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+            } else {
+                Toast.makeText(TagDetailActivity.this, "Cannot delete tag with expenses!",
+                        Toast.LENGTH_SHORT).show();
+            }
 
         } else if (item.getItemId() == R.id.edit_image_button) {
             AlertDialog.Builder builder = new AlertDialog.Builder(TagDetailActivity.this);
