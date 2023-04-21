@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.util.Log;
 
@@ -14,8 +15,6 @@ import com.example.split.R;
 import com.example.split.databinding.ActivityMainBinding;
 import com.example.split.databinding.ActivityNewExpenseParticipantsBinding;
 import com.example.split.entity.User;
-import com.example.split.ui.home.HomeFragment;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -30,6 +29,7 @@ import java.util.Set;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 
 public class SelectParticipantsActivity extends AppCompatActivity {
@@ -80,9 +80,10 @@ public class SelectParticipantsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.check_image_button) {
             if (participants.size() == 0) {
-                Snackbar.make(getWindow().getDecorView().getRootView()
-                                , "Must select at least one participant!", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Toast toast = Toast.makeText(getApplicationContext(), "Must select at least one participant!", Toast.LENGTH_LONG);
+                toast.getView().setBackgroundColor(getResources().getColor(R.color.red));
+                toast.setGravity(Gravity.FILL_HORIZONTAL | Gravity.BOTTOM, 0, 0);
+                toast.show();
                 return false;
             }
 

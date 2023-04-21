@@ -8,11 +8,13 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.split.NewExpenseActivity;
 import com.example.split.R;
@@ -194,9 +196,10 @@ public class SplitMethodActivity extends AppCompatActivity {
                     inputs.add(Double.valueOf(input));
                     total += value;
                 } catch (Exception e) {
-                    Snackbar.make(getWindow().getDecorView().getRootView()
-                                    , "Invalid input format!", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
+                    Toast toast = Toast.makeText(getApplicationContext(), "Invalid input format!", Toast.LENGTH_LONG);
+                    toast.getView().setBackgroundColor(getResources().getColor(R.color.red));
+                    toast.setGravity(Gravity.FILL_HORIZONTAL | Gravity.BOTTOM, 0, 0);
+                    toast.show();
                     return false;
                 }
             }
@@ -204,16 +207,18 @@ public class SplitMethodActivity extends AppCompatActivity {
             Log.v("total", Double.toString(total));
 
             if (method == SplitMethod.PERCENT && total != 100) {
-                Snackbar.make(getWindow().getDecorView().getRootView()
-                                , "Oops! The percents don't add up to 100%. ", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Toast toast = Toast.makeText(getApplicationContext(), "Oops! The percents don't add up to 100%. ", Toast.LENGTH_LONG);
+                toast.getView().setBackgroundColor(getResources().getColor(R.color.red));
+                toast.setGravity(Gravity.FILL_HORIZONTAL | Gravity.BOTTOM, 0, 0);
+                toast.show();
                 return false;
             }
 
             if (method == SplitMethod.EXACT && total != Double.parseDouble(amount)) {
-                Snackbar.make(getWindow().getDecorView().getRootView()
-                                , "Oops! The exact amounts don't add up to " + amount, Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Toast toast = Toast.makeText(getApplicationContext(), "Oops! The exact amounts don't add up to " + amount, Toast.LENGTH_LONG);
+                toast.getView().setBackgroundColor(getResources().getColor(R.color.red));
+                toast.setGravity(Gravity.FILL_HORIZONTAL | Gravity.BOTTOM, 0, 0);
+                toast.show();
                 return false;
             }
 

@@ -13,6 +13,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -201,8 +202,10 @@ public class TagDetailActivity extends AppCompatActivity {
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
             } else {
-                Toast.makeText(TagDetailActivity.this, "Cannot delete tag with expenses!",
-                        Toast.LENGTH_SHORT).show();
+                Toast toast = Toast.makeText(getApplicationContext(), "Cannot delete tag with expenses!", Toast.LENGTH_LONG);
+                toast.getView().setBackgroundColor(getResources().getColor(R.color.red));
+                toast.setGravity(Gravity.FILL_HORIZONTAL | Gravity.BOTTOM, 0, 0);
+                toast.show();
             }
 
         } else if (item.getItemId() == R.id.edit_image_button) {

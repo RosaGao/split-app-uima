@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Toast;
 
 
 import com.example.split.NewExpenseActivity;
@@ -21,8 +23,6 @@ import com.google.firebase.database.DatabaseReference;
 public class SelectPayerActivity extends AppCompatActivity {
     private ActivityNewExpensePayerBinding binding;
     public ParticipantsAdapter adapter;
-
-//    public static User payer = null;
 
 
     @Override
@@ -57,9 +57,10 @@ public class SelectPayerActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.check_image_button) {
             if (NewExpenseActivity.finalPayer == null) {
-                Snackbar.make(getWindow().getDecorView().getRootView()
-                                , "Must select a payer!", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Toast toast = Toast.makeText(getApplicationContext(), "Must select a payer!", Toast.LENGTH_LONG);
+                toast.getView().setBackgroundColor(getResources().getColor(R.color.red));
+                toast.setGravity(Gravity.FILL_HORIZONTAL | Gravity.BOTTOM, 0, 0);
+                toast.show();
                 return false;
             }
             for (User participant: NewExpenseActivity.finalParticipants) {

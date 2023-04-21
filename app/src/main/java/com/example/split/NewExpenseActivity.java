@@ -11,9 +11,11 @@ import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -23,25 +25,21 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.split.entity.Expense;
 import com.example.split.entity.SplitMethod;
 import com.example.split.entity.Tag;
 import com.example.split.entity.User;
 import com.example.split.newExpense.SelectParticipantsActivity;
-import com.example.split.newExpense.SelectPayerActivity;
 import com.example.split.newExpense.SplitMethodActivity;
 import com.example.split.ui.home.HomeFragment;
 import com.google.android.material.chip.Chip;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import org.w3c.dom.Comment;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -102,9 +100,10 @@ public class NewExpenseActivity extends AppCompatActivity {
 
         if (userId == null) {
             Log.v("userId", "null user id");
-            Snackbar.make(getWindow().getDecorView().getRootView()
-                            , "Unexpected auth error! Please try again", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            Toast toast = Toast.makeText(getApplicationContext(), "Unexpected auth error! Please try again.", Toast.LENGTH_LONG);
+            toast.getView().setBackgroundColor(getResources().getColor(R.color.red));
+            toast.setGravity(Gravity.FILL_HORIZONTAL | Gravity.BOTTOM, 0, 0);
+            toast.show();
             return;
         }
 
@@ -218,23 +217,26 @@ public class NewExpenseActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String amount = editAmount.getText().toString();
                 if (TextUtils.isEmpty(amount)) {
-                    Snackbar.make(getWindow().getDecorView().getRootView()
-                                    , "Must enter a split amount to proceed!", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
+                    Toast toast = Toast.makeText(getApplicationContext(), "Must enter a split amount to proceed!", Toast.LENGTH_LONG);
+                    toast.getView().setBackgroundColor(getResources().getColor(R.color.red));
+                    toast.setGravity(Gravity.FILL_HORIZONTAL | Gravity.BOTTOM, 0, 0);
+                    toast.show();
                     return;
                 }
 
                 if (finalParticipants.size() == 0) {
-                    Snackbar.make(getWindow().getDecorView().getRootView()
-                                    , "Must select participants to proceed!", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
+                    Toast toast = Toast.makeText(getApplicationContext(), "Must select participants to proceed!", Toast.LENGTH_LONG);
+                    toast.getView().setBackgroundColor(getResources().getColor(R.color.red));
+                    toast.setGravity(Gravity.FILL_HORIZONTAL | Gravity.BOTTOM, 0, 0);
+                    toast.show();
                     return;
                 }
 
                 if (finalPayer == null) {
-                    Snackbar.make(getWindow().getDecorView().getRootView()
-                                    , "Must select a payer to proceed!", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
+                    Toast toast = Toast.makeText(getApplicationContext(), "Must select a payer to proceed!", Toast.LENGTH_LONG);
+                    toast.getView().setBackgroundColor(getResources().getColor(R.color.red));
+                    toast.setGravity(Gravity.FILL_HORIZONTAL | Gravity.BOTTOM, 0, 0);
+                    toast.show();
                     return;
                 }
 
@@ -317,30 +319,34 @@ public class NewExpenseActivity extends AppCompatActivity {
         }
 
         if (tag == null) {
-            Snackbar.make(getWindow().getDecorView().getRootView()
-                            , "Must choose a tag!", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
+            Toast toast = Toast.makeText(this, "Must choose a tag!", Toast.LENGTH_LONG);
+            toast.getView().setBackgroundColor(getResources().getColor(R.color.red));
+            toast.setGravity(Gravity.FILL_HORIZONTAL | Gravity.BOTTOM, 0, 0);
+            toast.show();
             return false;
         }
 
         if (finalParticipants.size() == 0) {
-            Snackbar.make(getWindow().getDecorView().getRootView()
-                            , "Must select participants!", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
+            Toast toast = Toast.makeText(this, "Must select participants!", Toast.LENGTH_LONG);
+            toast.getView().setBackgroundColor(getResources().getColor(R.color.red));
+            toast.setGravity(Gravity.FILL_HORIZONTAL | Gravity.BOTTOM, 0, 0);
+            toast.show();
             return false;
         }
 
         if (finalPayer == null) {
-            Snackbar.make(getWindow().getDecorView().getRootView()
-                            , "Must select a payer!", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
+            Toast toast = Toast.makeText(this, "Must select a payer!", Toast.LENGTH_LONG);
+            toast.getView().setBackgroundColor(getResources().getColor(R.color.red));
+            toast.setGravity(Gravity.FILL_HORIZONTAL | Gravity.BOTTOM, 0, 0);
+            toast.show();
             return false;
         }
 
         if (method == null) {
-            Snackbar.make(getWindow().getDecorView().getRootView()
-                            , "Must choose a split method!", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
+            Toast toast = Toast.makeText(this, "Must select a split method!", Toast.LENGTH_LONG);
+            toast.getView().setBackgroundColor(getResources().getColor(R.color.red));
+            toast.setGravity(Gravity.FILL_HORIZONTAL | Gravity.BOTTOM, 0, 0);
+            toast.show();
             return false;
         }
 
@@ -372,7 +378,6 @@ public class NewExpenseActivity extends AppCompatActivity {
                     }
                     // if I borrow, then friend is associated with a 'positive' amount
                     // if I am owed, then friend is associated with a 'negative' amount
-
                     String nonPayerId = participant.getUserId();
                     String payerId = finalPayer.getUserId();
 
