@@ -401,27 +401,65 @@ public class NewExpenseActivity extends AppCompatActivity {
 
         // add expense to expenseList of each participant
         for (User participant : finalParticipants) {
+            if (participant == finalPayer || participant.getUserId().equals(finalPayer.getUserId())) {
+                continue;
+            }
+
             Log.v("participant name", participant.getName());
 
             DatabaseReference userRef = mDatabase.child("users").child(participant.getUserId());
 
-            Expense participantExpense = new Expense(participant.getUserId(), description, date, amount,
-                    finalParticipants, finalPayer, tag, method, 0.0);
-            participantExpense.setExpenseId(newExpenseId);
+            userRef.child("tags").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    Log.v("add tag to participant", "here");
+                    Log.v("num children", "" + snapshot.getChildrenCount());
 
-            if (participant != finalPayer) {
-                participantExpense.setBorrowing(result.get(participant), false);
-            } else {
-                participantExpense.setBorrowing(Double.parseDouble(amount) - result.get(finalPayer), true);
-            }
+                    Tag participantTag = null;
+                    for (DataSnapshot ds : snapshot.getChildren()) {
+                        Tag existingTag = ds.getValue(Tag.class);
+                        if (existingTag.getName().equals(tag.getName())) {
+                            Log.v("add tag to participant", "found tag!");
+                            ds.getRef().child("numExpenses").setValue(existingTag.getNumExpenses() + 1);
+                            participantTag = existingTag;
+                            break;
+                        }
+                    }
 
-            String key = userRef.child("expenseList").push().getKey();
-            userRef.child("expenseList").child(key).updateChildren(participantExpense.toMap());
+                    if (participantTag == null) {
+                        Log.v("add tag to participant", "add new tag!");
+                        String newTagId = userRef.child("tags").push().getKey();
+                        Tag newTag = new Tag(tag.getName());
+                        newTag.addTaggedExpense();
+                        newTag.setTagId(newTagId);
+                        userRef.child("tags").child(newTagId).setValue(newTag);
+                        participantTag = newTag;
+                    }
+
+                    Expense participantExpense = new Expense(participant.getUserId(), description, date, amount,
+                            finalParticipants, finalPayer, participantTag, method, 0.0);
+                    participantExpense.setExpenseId(newExpenseId);
+
+                    if (participant != finalPayer) {
+                        participantExpense.setBorrowing(result.get(participant), false);
+                    } else {
+                        participantExpense.setBorrowing(Double.parseDouble(amount) - result.get(finalPayer), true);
+                    }
+
+                    String key = userRef.child("expenseList").push().getKey();
+                    userRef.child("expenseList").child(key).updateChildren(participantExpense.toMap());
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
         }
-
-
         return true;
     }
+
+
 
     @SuppressLint("RestrictedApi")
     @Override
