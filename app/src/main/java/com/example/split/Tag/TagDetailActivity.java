@@ -115,10 +115,17 @@ public class TagDetailActivity extends AppCompatActivity {
                 double total = getTotal(expensesWithThisTag);
                 DecimalFormat df = new DecimalFormat("0.00");
 
-                if (total > 0) {
+                if (expensesWithThisTag.size() == 0) {
+                    tagTotal.setText("No expenses yet");
+                    tagTotal.setTextColor(getResources().getColor(R.color.black));
+                }
+
+                 else if (total > 0) {
                     tagTotal.setText("You borrowed $" + df.format(total));
                     tagTotal.setTextColor(getResources().getColor(R.color.red));
-                } else {
+                }
+
+                 else if (total < 0) {
                     tagTotal.setText("You are owed $" + df.format(Math.abs(total)));
                     tagTotal.setTextColor(getResources().getColor(R.color.green));
                 }

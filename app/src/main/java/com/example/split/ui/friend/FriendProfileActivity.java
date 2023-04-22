@@ -72,6 +72,7 @@ public class FriendProfileActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (!snapshot.child(myFriend.getUserId()).exists()) {
                     binding.status.setText("Settled up with " + myFriend.getName());
+                    binding.status.setTextColor(getResources().getColor(R.color.black));
                     return;
                 }
 
@@ -86,6 +87,8 @@ public class FriendProfileActivity extends AppCompatActivity {
                     binding.status.setText("You owe " + myFriend.getName() + " $" + df.format(borrowing));
                 } else {
                     binding.status.setText("Settled up with " + myFriend.getName());
+                    binding.status.setTextColor(getResources().getColor(R.color.black));
+
                 }
             }
 
@@ -99,6 +102,12 @@ public class FriendProfileActivity extends AppCompatActivity {
         RecyclerView expensesListRecyclerView = binding.expenseListHome;
         friendProfileExpensesAdapt = new ExpenseListRecyclerViewAdapter(null, expensesWithThisFriend, false);
         expensesListRecyclerView.setAdapter(friendProfileExpensesAdapt);
+
+        if (expensesWithThisFriend.size() == 0) {
+            binding.expenseWithThemTitle.setText("No expenses with " + myFriend.getName());
+        } else {
+            binding.expenseWithThemTitle.setText("Expense with " + myFriend.getName());
+        }
     }
 
     private List<Expense> getExpensesWithFriend() {

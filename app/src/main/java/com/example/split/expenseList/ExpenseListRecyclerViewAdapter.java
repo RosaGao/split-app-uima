@@ -1,5 +1,6 @@
 package com.example.split.expenseList;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -41,7 +42,7 @@ public class ExpenseListRecyclerViewAdapter
 
 
     @Override
-    public void onBindViewHolder(@NonNull ExpenseViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ExpenseViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
         holder.description.setText(myExpenses.get(position).getDescription());
         holder.date.setText(myExpenses.get(position).getDate());
