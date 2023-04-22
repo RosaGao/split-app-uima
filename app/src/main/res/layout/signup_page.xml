@@ -8,10 +8,15 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="10dp"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         android:padding="16dp"
@@ -83,6 +88,8 @@
             android:text="Finish"
             android:textColor="@color/white" />
     </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
