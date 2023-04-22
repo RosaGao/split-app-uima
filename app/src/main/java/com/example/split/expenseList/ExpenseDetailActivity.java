@@ -68,9 +68,7 @@ public class ExpenseDetailActivity extends AppCompatActivity {
                 expense_tag.setText(snapshot.child("tag").child("name").getValue().toString());
                 expense_method.setText(snapshot.child("method").getValue().toString());
 
-                DataSnapshot ds = snapshot;
-                expense = ds.getValue(Expense.class);
-
+                expense = snapshot.getValue(Expense.class);
                 current_user = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 //expense_payer = snapshot.child("payer").child("userId").getValue().toString();
                 expense_payer = expense.getPayer().getUserId();
