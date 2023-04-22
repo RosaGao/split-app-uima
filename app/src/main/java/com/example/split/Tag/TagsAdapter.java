@@ -41,7 +41,7 @@ public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.ViewHolder> {
         holder.tagName.setText(mTags.get(position).getName());
 
         // Set the number of expenses
-        holder.tagExpenseCount.setText(mTags.get(position).getNumExpenses() + " of expenses");
+        holder.tagExpenseCount.setText("# expenses: " + mTags.get(position).getNumExpenses());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
