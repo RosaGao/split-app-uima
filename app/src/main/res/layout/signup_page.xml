@@ -29,7 +29,6 @@
             android:id="@+id/display_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:ems="10"
             android:gravity="center"
             android:hint="Display Name"
