@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -89,8 +90,10 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             onAuthSuccess(task.getResult().getUser());
                         } else {
-                            Toast.makeText(LoginActivity.this, "Sign In Failed",
-                                    Toast.LENGTH_SHORT).show();
+                            Toast toast = Toast.makeText(getApplicationContext(), "Login failed! Wrong email or password.", Toast.LENGTH_LONG);
+                            toast.getView().setBackgroundColor(getApplicationContext().getResources().getColor(R.color.red));
+                            toast.setGravity(Gravity.FILL_HORIZONTAL | Gravity.BOTTOM, 0, 0);
+                            toast.show();
                         }
                     }
                 });

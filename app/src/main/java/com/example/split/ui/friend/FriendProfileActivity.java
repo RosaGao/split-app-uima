@@ -85,8 +85,7 @@ public class FriendProfileActivity extends AppCompatActivity {
                     binding.status.setTextColor(getResources().getColor(R.color.red));
                     binding.status.setText("You owe " + myFriend.getName() + " $" + df.format(borrowing));
                 } else {
-                    binding.status.setText("Settled up " + myFriend.getName());
-                    binding.status.setTextColor(getResources().getColor(R.color.black));
+                    binding.status.setText("Settled up with " + myFriend.getName());
                 }
             }
 
