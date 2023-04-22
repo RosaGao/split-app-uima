@@ -120,6 +120,7 @@ public class ExpenseDetailRecyclerViewAdapter extends RecyclerView.Adapter<Expen
             holder.icon_right.setVisibility(View.VISIBLE);
             holder.payee_image.setAlpha(69);
             holder.payee_info.setTextColor(Color.GRAY);
+            holder.payee_info.setText(payee_list.get(position).getName() + " is settled.");
             holder.icon_left.setAlpha(69);
         } else if(payee_id.equals(current_user)){
             holder.icon_left.setImageResource(R.drawable.you_icon);
