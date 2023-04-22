@@ -3,6 +3,7 @@ package com.example.split.Tag;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,6 +49,7 @@ public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.ViewHolder> {
                 Context context = view.getContext();
                 Intent intent = new Intent(context, TagDetailActivity.class);
                 intent.putExtra("tag_id", mTags.get(position).getTagId());
+                Log.v("tag_id in adapter", mTags.get(position).getTagId());
                 context.startActivity(intent);
             }
         });

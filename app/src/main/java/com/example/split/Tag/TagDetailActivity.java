@@ -67,6 +67,7 @@ public class TagDetailActivity extends AppCompatActivity {
         tagId = intent.getStringExtra("tag_id");
         if (tagId == null) {
             finish();
+//            return;
         }
         Log.v("tag_id", tagId);
 
