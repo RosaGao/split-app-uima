@@ -350,10 +350,10 @@ public class NewExpenseActivity extends AppCompatActivity {
             return false;
         }
 
-        // increment numExpenses for tag
-        String tagId = tag.getTagId();
-        mDatabase.child("users").child(userId).child("tags")
-                .child(tagId).child("numExpenses").setValue(tag.getNumExpenses() + 1);
+//        // increment numExpenses for tag
+//        String tagId = tag.getTagId();
+//        mDatabase.child("users").child(userId).child("tags")
+//                .child(tagId).child("numExpenses").setValue(tag.getNumExpenses() + 1);
 
 
         // record expense for book-keeping
@@ -410,9 +410,9 @@ public class NewExpenseActivity extends AppCompatActivity {
 
         // add expense to expenseList of each participant
         for (User participant : finalParticipants) {
-            if (participant == finalPayer || participant.getUserId().equals(finalPayer.getUserId())) {
-                continue;
-            }
+//            if (participant == finalPayer || participant.getUserId().equals(finalPayer.getUserId())) {
+//                continue;
+//            }
 
             Log.v("participant name", participant.getName());
 

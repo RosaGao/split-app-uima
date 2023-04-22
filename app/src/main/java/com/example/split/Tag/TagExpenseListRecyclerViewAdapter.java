@@ -1,5 +1,6 @@
 package com.example.split.Tag;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -39,7 +40,7 @@ public class TagExpenseListRecyclerViewAdapter
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TagExpenseViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull TagExpenseViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
         holder.description.setText(myExpenses.get(position).getDescription());
         holder.date.setText(myExpenses.get(position).getDate());
@@ -60,7 +61,7 @@ public class TagExpenseListRecyclerViewAdapter
             @Override
             public void onClick(View view) {
                 Context context = view.getContext();
-                Intent intent = new Intent(context, TagDetailActivity.class);
+                Intent intent = new Intent(context, ExpenseDetailActivity.class);
                 intent.putExtra("expense_id", myExpenses.get(position).getExpenseId());
                 context.startActivity(intent);
             }
