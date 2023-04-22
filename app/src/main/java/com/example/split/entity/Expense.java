@@ -23,11 +23,11 @@ public class Expense {
 
     private String expenseId;
 
-    private Double borrowing;
+    private Map<String,Double> borrowing;
 
     public Expense() {}
 
-    public Expense(String userId, String description, String date, String amount, List<User> participants, User payer, Tag tag, SplitMethod method, Double borrowing) {
+    public Expense(String userId, String description, String date, String amount, List<User> participants, User payer, Tag tag, SplitMethod method, Map<String, Double> borrowing) {
         this.userId = userId;
         this.description = description;
         this.date = date;
@@ -82,14 +82,14 @@ public class Expense {
         // if i borrow, borrow 'positive' amount
         // if i am the payer (others borrow), 'negative' amount
         if (isPayer) {
-            borrowing = -amount;
+            borrowing.put(userId, -amount);
         } else {
-            borrowing = amount;
+            borrowing.put(userId, amount);
         }
     }
 
     public double getBorrowing () {
-        return borrowing;
+        return borrowing.getOrDefault(userId, 0.0);
     }
 
     public Map<String, Object> toMap() {

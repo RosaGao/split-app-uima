@@ -359,10 +359,14 @@ public class NewExpenseActivity extends AppCompatActivity {
         // record expense for book-keeping
         Expense newExpense = new Expense(userId, description, date, amount,
                 finalParticipants,
-                finalPayer, tag, method, 0.0);
+                finalPayer, tag, method, new HashMap<>());
         newExpenseId = mDatabase.child("expenses").push().getKey();
         newExpense.setExpenseId(newExpenseId);
         mDatabase.child("expenses").child(newExpenseId).updateChildren(newExpense.toMap());
+
+        for (User participant : finalParticipants) {
+            mDatabase.child("expenses").child(newExpenseId).child("borrowing").child(participant.getUserId()).setValue(result.get(participant));
+        }
 
 
         // update relations between non-payers and payer
@@ -442,7 +446,7 @@ public class NewExpenseActivity extends AppCompatActivity {
                     }
 
                     Expense participantExpense = new Expense(participant.getUserId(), description, date, amount,
-                            finalParticipants, finalPayer, participantTag, method, 0.0);
+                            finalParticipants, finalPayer, participantTag, method, new HashMap<>());
                     participantExpense.setExpenseId(newExpenseId);
 
                     if (participant != finalPayer) {
