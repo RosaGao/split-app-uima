@@ -72,10 +72,6 @@ public class Expense {
 
     public User getPayer() { return this.payer; }
 
-    public boolean isSettled(User user) {
-        return false;
-    }
-
     public List<User> getParticipants() {return this.participants;}
 
     public void setBorrowing(Double amount, boolean isPayer) {
@@ -88,8 +84,18 @@ public class Expense {
         }
     }
 
-    public double getBorrowing () {
+    public double getBorrowing() {
         return borrowing.getOrDefault(userId, 0.0);
+    }
+    public double getBorrowing(String user) {
+        return borrowing.getOrDefault(user, 0.0);
+    }
+
+    public void settle(String user) {
+        String original = this.userId;
+        this.userId = user;
+        setBorrowing(0.0, false);
+        this.userId = original;
     }
 
     public Map<String, Object> toMap() {

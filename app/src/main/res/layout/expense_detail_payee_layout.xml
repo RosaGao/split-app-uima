@@ -23,21 +23,24 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="15dp"
         android:layout_weight="1"
-        android:text="TextView" />
+        android:text="TextView"
+        android:textColor="@color/black" />
 
     <ImageView
         android:id="@+id/icon_slot_1"
-        android:layout_width="wrap_content"
+        android:layout_width="45dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:foregroundGravity="center"
         android:visibility="invisible"
         app:srcCompat="@drawable/baseline_check_24" />
 
     <ImageView
         android:id="@+id/icon_slot_2"
-        android:layout_width="wrap_content"
+        android:layout_width="45dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:foregroundGravity="center"
         android:visibility="invisible"
         app:srcCompat="@drawable/baseline_check_24" />
 
