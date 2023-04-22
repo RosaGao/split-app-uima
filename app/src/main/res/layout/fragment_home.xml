@@ -20,6 +20,15 @@
         android:textSize="16sp"
         android:visibility="invisible" />
 
+    <ImageView
+        android:id="@+id/loading_animation"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="20dp"
+        android:foregroundGravity="center"
+        android:visibility="invisible"
+        app:srcCompat="@drawable/loading_animation" />
+
     <FrameLayout
         android:id="@+id/friendFrameLayout"
         android:layout_width="match_parent"

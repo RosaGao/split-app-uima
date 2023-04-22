@@ -2,11 +2,13 @@ package com.example.split.ui.home;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -77,6 +79,12 @@ public class HomeFragment extends Fragment {
         myAdapt = new ExpenseListRecyclerViewAdapter(this, allExpenses, false);
         recyclerView.setAdapter(myAdapt);
 
+        ImageView loading = (ImageView) view.findViewById(R.id.loading_animation);
+        //loading.setBackgroundResource(R.drawable.loading_animation);
+        AnimationDrawable frameAnimation = (AnimationDrawable) loading.getDrawable();
+        loading.setVisibility(View.VISIBLE);
+        frameAnimation.start();
+
         userDataRef.child("expenseList").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
@@ -86,7 +94,7 @@ public class HomeFragment extends Fragment {
                     return;
                 } else {
                     view.findViewById(R.id.emptyHomeView).setVisibility(View.INVISIBLE);
-
+                    loading.setVisibility(View.INVISIBLE);
                     List<Expense> expenses = new ArrayList<>();
                     for(DataSnapshot ds : snapshot.getChildren()) {
                         Expense exp = ds.getValue(Expense.class);
