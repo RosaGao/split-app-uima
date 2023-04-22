@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_height="50dp"
     android:gravity="center"
     android:orientation="horizontal"
     android:padding="5dp">
@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="45dp"
-        android:layout_marginEnd="30dp"
+        android:layout_marginEnd="20dp"
         android:layout_weight="1"
         app:srcCompat="@drawable/darkangry_icon" />
 
@@ -21,14 +21,14 @@
         android:id="@+id/payee_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
         android:layout_weight="1"
         android:text="TextView" />
 
     <ImageView
         android:id="@+id/icon_slot_1"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         android:visibility="invisible"
         app:srcCompat="@drawable/baseline_check_24" />
@@ -36,8 +36,7 @@
     <ImageView
         android:id="@+id/icon_slot_2"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         android:visibility="invisible"
         app:srcCompat="@drawable/baseline_check_24" />

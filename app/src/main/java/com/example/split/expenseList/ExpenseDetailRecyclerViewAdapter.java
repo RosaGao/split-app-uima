@@ -43,6 +43,11 @@ public class ExpenseDetailRecyclerViewAdapter extends RecyclerView.Adapter<Expen
         }
         if(expense.getPayer().getUserId().equals(payee_list.get(position).getUserId())) {
             holder.icon_left.setImageResource(R.drawable.payer_icon);
+            holder.icon_left.setVisibility(View.VISIBLE);
+            //holder.desc_left.setText("Payer");
+        } else if(expense.isSettled(payee_list.get(position))) {
+            holder.icon_left.setImageResource(R.drawable.notify_icon);
+            holder.icon_left.setVisibility(View.VISIBLE);
         }
     }
 
