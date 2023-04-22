@@ -52,6 +52,7 @@
             android:ems="10"
             android:gravity="center"
             android:hint="Phone Number"
+            android:inputType="phone"
             android:paddingTop="40dp" />
 
         <EditText
