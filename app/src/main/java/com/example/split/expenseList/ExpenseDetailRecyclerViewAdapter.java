@@ -1,5 +1,6 @@
 package com.example.split.expenseList;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -52,7 +53,7 @@ public class ExpenseDetailRecyclerViewAdapter extends RecyclerView.Adapter<Expen
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ExpenseDetailViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ExpenseDetailViewHolder holder, @SuppressLint("RecyclerView") int position) {
         String payee_id = payee_list.get(position).getUserId();
         String current_user = FirebaseAuth.getInstance().getCurrentUser().getUid();
         String payer_id = expense.getPayer().getUserId();

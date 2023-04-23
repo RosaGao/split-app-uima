@@ -123,12 +123,7 @@ public class HomeFragment extends Fragment {
 
         if (requestCode == LAUNCH_NEW_EXPENSE_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
-
                 myAdapt.notifyDataSetChanged();
-
-//                Map<String, Object> childUpdates = new HashMap<>();
-//                childUpdates.put("/users/" + userId + "/expenseList", allExpenses);
-//                dbRef.updateChildren(childUpdates);
             }
         } else {
             Snackbar.make(getView(), "Failed to create new expense!", Snackbar.LENGTH_LONG)
