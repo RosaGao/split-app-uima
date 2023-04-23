@@ -80,7 +80,6 @@ public class HomeFragment extends Fragment {
         recyclerView.setAdapter(myAdapt);
 
         ImageView loading = (ImageView) view.findViewById(R.id.loading_animation);
-        //loading.setBackgroundResource(R.drawable.loading_animation);
         AnimationDrawable frameAnimation = (AnimationDrawable) loading.getDrawable();
         loading.setVisibility(View.VISIBLE);
         frameAnimation.start();
@@ -89,6 +88,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 if (snapshot.getChildrenCount() == 0) {
+                    loading.setVisibility(View.INVISIBLE);
                     view.findViewById(R.id.emptyHomeView).setVisibility(View.VISIBLE);
                     Log.v("user expenses", "no expenses yet");
                     return;

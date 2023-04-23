@@ -70,8 +70,8 @@ public class ExpenseDetailRecyclerViewAdapter extends RecyclerView.Adapter<Expen
             holder.icon_left.setImageResource(R.drawable.payer_icon);
             holder.icon_left.setVisibility(View.VISIBLE);
         } else if(current_user.equals(payer_id) && borrowing != 0.0) {
-            holder.icon_left.setImageResource(R.drawable.notify_icon);
-            holder.icon_left.setVisibility(View.VISIBLE);
+            //holder.icon_left.setImageResource(R.drawable.notify_icon);
+            //holder.icon_left.setVisibility(View.VISIBLE);
             holder.icon_right.setImageResource(R.drawable.settle_icon);
             holder.icon_right.setVisibility(View.VISIBLE);
             holder.icon_right.setClickable(true);
@@ -85,7 +85,7 @@ public class ExpenseDetailRecyclerViewAdapter extends RecyclerView.Adapter<Expen
                         public void onClick(DialogInterface dialog, int id) {
                             holder.icon_right.setImageResource(R.drawable.settled_icon);
                             expense.settle(payee_id);
-                            dbref.child("relations").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                            dbref.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                                 @Override
                                 public void onComplete(@NonNull Task<DataSnapshot> task) {
                                     if (!task.isSuccessful()) {
@@ -93,10 +93,11 @@ public class ExpenseDetailRecyclerViewAdapter extends RecyclerView.Adapter<Expen
                                     }
                                     else {
                                         Log.d("firebase", String.valueOf(task.getResult().getValue()));
-                                        double new_relation = task.getResult().child(payee_id).child(payer_id).getValue(Double.class);
+                                        double new_relation = task.getResult().child("relations").child(payee_id).child(payer_id).getValue(Double.class);
                                         new_relation -= Math.abs(borrowing);
                                         dbref.child("relations").child(payee_id).child(payer_id).setValue(new_relation);
                                         dbref.child("relations").child(payer_id).child(payee_id).setValue(new_relation * -1.0);
+                                        dbref.child("users").child(payee_id).child("expenseList").child(expense.getExpenseId()).child("borrowing").child(payee_id).setValue(0);
                                     }
                                 }
                             });
@@ -114,16 +115,19 @@ public class ExpenseDetailRecyclerViewAdapter extends RecyclerView.Adapter<Expen
                     dialog.show();
                 }
             });
-        } else if(current_user.equals(payer_id) && borrowing == 0.0) {
-            holder.icon_left.setImageResource(R.drawable.notify_icon);
-            holder.icon_left.setVisibility(View.VISIBLE);
+        }
+        if(borrowing == 0.0) {
+            //holder.icon_left.setImageResource(R.drawable.notify_icon);
+            //holder.icon_left.setVisibility(View.VISIBLE);
             holder.icon_right.setImageResource(R.drawable.settled_icon);
             holder.icon_right.setVisibility(View.VISIBLE);
             holder.payee_image.setAlpha(69);
             holder.payee_info.setTextColor(Color.GRAY);
-            holder.payee_info.setText(payee_list.get(position).getName() + " is settled.");
+            String two = payee_id.equals(current_user) ? "You are" : payee_list.get(position).getName() + " is";
+            holder.payee_info.setText(two + " settled.");
             holder.icon_left.setAlpha(69);
-        } else if(payee_id.equals(current_user)){
+        }
+        if(payee_id.equals(current_user)){
             holder.icon_left.setImageResource(R.drawable.you_icon);
             holder.icon_left.setVisibility(View.VISIBLE);
         }

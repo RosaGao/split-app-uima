@@ -1,6 +1,8 @@
 package com.example.split.loginSignup;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
@@ -8,6 +10,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -47,11 +50,15 @@ public class LoginActivity extends AppCompatActivity {
         signupButton = findViewById(R.id.signupButton);
         fieldEmail = findViewById(R.id.emailEditText);
         fieldPassword = findViewById(R.id.passwordEditText);
-        //loading_icon = findViewById(R.id.loading_icon);
+
+        loginButton.setElevation(5.0f);
+        signupButton.setElevation(5.0f);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 signIn();
             }
         });

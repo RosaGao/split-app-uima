@@ -4,13 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="50dp"
+    android:layout_alignParentEnd="true"
+    android:baselineAligned="false"
     android:gravity="center"
     android:orientation="horizontal"
     android:padding="5dp">
 
     <ImageView
         android:id="@+id/payee_image"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginStart="45dp"
         android:layout_marginEnd="20dp"

@@ -32,6 +32,7 @@ public class ExpenseDetailActivity extends AppCompatActivity {
     TextView expense_tag;
     TextView expense_method;
     TextView payer_info;
+    TextView expense_summary;
     String current_user;
     String expense_payer;
     //List<User> payee_list = new ArrayList<>();
@@ -59,6 +60,7 @@ public class ExpenseDetailActivity extends AppCompatActivity {
         expense_tag = (TextView) tag_view.findViewById(R.id.tag_layout);
         expense_method = (TextView) split_method_view.findViewById(R.id.split_method_chip);
         payer_info = findViewById(R.id.payer_info);
+        expense_summary = findViewById(R.id.expense_summary);
 
         database.addValueEventListener(new ValueEventListener() {
             @Override
@@ -72,6 +74,7 @@ public class ExpenseDetailActivity extends AppCompatActivity {
                 current_user = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 //expense_payer = snapshot.child("payer").child("userId").getValue().toString();
                 expense_payer = expense.getPayer().getUserId();
+                //double borrowing = expense.getBorrowing()
                 if (current_user.equals(expense_payer)) {
                     payer_info.setText("You paid $" + expense.getAmount());
                 } else {
