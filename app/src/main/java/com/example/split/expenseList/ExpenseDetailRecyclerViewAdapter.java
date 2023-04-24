@@ -97,7 +97,8 @@ public class ExpenseDetailRecyclerViewAdapter extends RecyclerView.Adapter<Expen
                                         new_relation -= Math.abs(borrowing);
                                         dbref.child("relations").child(payee_id).child(payer_id).setValue(new_relation);
                                         dbref.child("relations").child(payer_id).child(payee_id).setValue(new_relation * -1.0);
-                                        dbref.child("users").child(payee_id).child("expenseList").child(expense.getExpenseId()).child("borrowing").child(payee_id).setValue(0);
+                                        //dbref.child("users").child(payee_id).child("expenseList").child(expense.getExpenseId()).child("borrowing").child(payee_id).setValue(0);
+                                        setLocalBorrowing(expense.getExpenseId(), payee_id);
                                     }
                                 }
                             });
@@ -141,6 +142,7 @@ public class ExpenseDetailRecyclerViewAdapter extends RecyclerView.Adapter<Expen
                 for(DataSnapshot exp : task.getResult().getChildren()) {
                     if(exp.child("expenseId").getValue(String.class).equals(expense_id)) {
                         String alt_expense_id = exp.getKey();
+                        Log.v("alt_expense_id", alt_expense_id);
                         user_list.child(alt_expense_id).child("borrowing").child(user_id).setValue(0);
                     }
                 }
