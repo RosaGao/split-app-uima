@@ -112,6 +112,10 @@ public class LoginActivity extends AppCompatActivity {
                             toast.getView().setBackgroundColor(getApplicationContext().getResources().getColor(R.color.red));
                             toast.setGravity(Gravity.FILL_HORIZONTAL | Gravity.BOTTOM, 0, 0);
                             toast.show();
+
+                            loginButton.setVisibility(View.VISIBLE);
+                            loading.setVisibility(View.INVISIBLE);
+                            frameAnimation.stop();
                         }
                     }
                 });

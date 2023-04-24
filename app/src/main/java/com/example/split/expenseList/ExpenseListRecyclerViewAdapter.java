@@ -25,6 +25,7 @@ public class ExpenseListRecyclerViewAdapter
 
     private HomeFragment myParentActivity;
     private List<Expense> myExpenses = new ArrayList<>();
+
     public ExpenseListRecyclerViewAdapter(HomeFragment parent,
                                           List<Expense> allExpenses,
                                           boolean twoPane) {

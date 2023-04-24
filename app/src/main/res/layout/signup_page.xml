@@ -93,6 +93,14 @@
 
     </androidx.core.widget.NestedScrollView>
 
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/loading_animation"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="570dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
