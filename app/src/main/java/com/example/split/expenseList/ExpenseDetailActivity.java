@@ -4,10 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-<<<<<<< Updated upstream
 import android.util.Log;
-=======
->>>>>>> Stashed changes
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,7 +27,6 @@ public class ExpenseDetailActivity extends AppCompatActivity {
 
     TextView expense_name;
     TextView expense_date;
-<<<<<<< Updated upstream
     View tag_view;
     View split_method_view;
     TextView expense_tag;
@@ -43,9 +39,6 @@ public class ExpenseDetailActivity extends AppCompatActivity {
     Expense expense = new Expense();
     public ExpenseDetailRecyclerViewAdapter adapter;
     private DatabaseReference database;
-=======
-    //Chip tagChip;
->>>>>>> Stashed changes
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +51,6 @@ public class ExpenseDetailActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String expense_id = intent.getStringExtra("expense_id");
-<<<<<<< Updated upstream
         Log.v("expense id:", expense_id);
         database = FirebaseDatabase.getInstance().getReference().child("expenses").child(expense_id);
         expense_name = findViewById(R.id.expense_name);
@@ -102,12 +94,6 @@ public class ExpenseDetailActivity extends AppCompatActivity {
             }
         });
 
-=======
-        expense_name = findViewById(R.id.expense_name);
-        expense_date = findViewById(R.id.expense_timestamp);
-
-        expense_date.setText(expense_id);
->>>>>>> Stashed changes
         toolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
