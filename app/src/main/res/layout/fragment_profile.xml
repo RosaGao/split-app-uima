@@ -6,10 +6,10 @@
     android:fillViewport="true">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
+        android:orientation="vertical"
         android:padding="16dp">
 
         <!-- Title and save button -->
@@ -24,32 +24,19 @@
             android:textColor="@color/black"
             android:textSize="24sp" />
 
-        <android.widget.Button
-            android:id="@+id/save_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="25dp"
-            android:background="@drawable/signup_finish"
-            android:backgroundTint="@color/green"
-            android:padding="5dp"
-            android:text="Save"
-            android:textColor="@color/white" />
-
         <TextView
             android:id="@+id/name_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Name:"
-            android:textSize="16sp"
-            />
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/name_field"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter your name"
-            android:gravity="center_horizontal"/>
+            android:gravity="center_horizontal"
+            android:hint="Enter your name" />
 
         <!-- Phone number field -->
         <TextView
@@ -57,15 +44,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Phone number:"
-            android:textSize="16sp"/>
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/phone_field"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="phone"
+            android:gravity="center_horizontal"
             android:hint="Enter your phone number"
-            android:gravity="center_horizontal"/>
+            android:inputType="phone" />
 
         <!-- Email field -->
         <TextView
@@ -73,40 +60,44 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Email address:"
-            android:textSize="16sp"/>
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/email_field"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"
+            android:gravity="center_horizontal"
             android:hint="Enter your email address"
-            android:gravity="center_horizontal"/>
+            android:inputType="textEmailAddress" />
 
         <!-- Password field -->
+
         <TextView
             android:id="@+id/password_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Password:"
-            android:textSize="16sp"/>
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/password_field"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
+            android:gravity="center_horizontal"
             android:hint="Enter your password"
-            android:gravity="center_horizontal"/>
+            android:inputType="textPassword" />
 
-        <TextView
-            android:id="@+id/placeholder"
+        <android.widget.Button
+            android:id="@+id/save_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center_horizontal"
-            android:text="Save at the top."
-            android:textSize="30sp" />
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="50dp"
+            android:background="@drawable/signup_finish"
+            android:backgroundTint="@color/green"
+            android:padding="5dp"
+            android:text="Save"
+            android:textColor="@color/white" />
 
     </LinearLayout>
 </ScrollView>
