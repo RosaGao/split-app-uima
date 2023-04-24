@@ -94,12 +94,15 @@
     </androidx.core.widget.NestedScrollView>
 
     <ImageView
-        android:id="@+id/imageView6"
+        android:id="@+id/signup_animation"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/loading_animation"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="570dp" />
+        android:layout_height="30dp"
+        android:layout_marginBottom="50dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@id/nestedScrollView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/loading_animation" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

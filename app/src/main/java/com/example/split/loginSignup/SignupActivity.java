@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ActionBar;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -41,7 +43,7 @@ public class SignupActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
-
+    private ImageView loading;
     private EditText emailEditText, phoneNumberEditText, passwordEditText, confirmPasswordEditText, displayNameEditText;
     private Button finishedButton;
 
@@ -60,6 +62,7 @@ public class SignupActivity extends AppCompatActivity {
         confirmPasswordEditText = findViewById(R.id.confirm_password);
         displayNameEditText = findViewById(R.id.display_name);
         finishedButton = findViewById(R.id.finish_button);
+        loading = findViewById(R.id.signup_animation);
 
         finishedButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,6 +79,11 @@ public class SignupActivity extends AppCompatActivity {
 
         String email = emailEditText.getText().toString();
         String password = passwordEditText.getText().toString();
+
+        AnimationDrawable frameAnimation = (AnimationDrawable) loading.getDrawable();
+        finishedButton.setVisibility(View.INVISIBLE);
+        loading.setVisibility(View.VISIBLE);
+        frameAnimation.start();
 
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -94,6 +102,9 @@ public class SignupActivity extends AppCompatActivity {
                             finish();
                         } else {
                             // If sign in fails, display a message to the user.
+                            finishedButton.setVisibility(View.VISIBLE);
+                            loading.setVisibility(View.INVISIBLE);
+                            frameAnimation.stop();
                             Exception exception = task.getException();
                             String message = "Sign Up Failed!";
                             if (exception != null && exception.getMessage() != null) {
