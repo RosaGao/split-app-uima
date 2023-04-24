@@ -90,7 +90,7 @@ public class ExpenseDetailRecyclerViewAdapter extends RecyclerView.Adapter<Expen
                                     new_relation -= Math.abs(borrowing);
                                     dbref.child("relations").child(payee_id).child(payer_id).setValue(new_relation);
                                     dbref.child("relations").child(payer_id).child(payee_id).setValue(new_relation * -1.0);
-                                    setLocalBorrowing(expense.getExpenseId(), payee_id);
+                                    setLocalBorrowing(expense.getExpenseId(), payee_id, payer_id, borrowing);
 
                                     dbref.child("expenses").child(expense.getExpenseId()).child("borrowing").child(payee_id).setValue(0);
                                     holder.payee_image.setAlpha(69);
@@ -129,7 +129,7 @@ public class ExpenseDetailRecyclerViewAdapter extends RecyclerView.Adapter<Expen
         }
     }
 
-    private void setLocalBorrowing(String expense_id, String user_id) {
+    private void setLocalBorrowing(String expense_id, String user_id, String payer_id, double borrowing) {
         DatabaseReference user_list = dbref.child("users").child(user_id).child("expenseList");
         user_list.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
@@ -141,6 +141,22 @@ public class ExpenseDetailRecyclerViewAdapter extends RecyclerView.Adapter<Expen
                         user_list.child(alt_expense_id).child("borrowing").child(user_id).setValue(0);
                     }
                 }
+
+            }
+        });
+        DatabaseReference payer_list = dbref.child("users").child(payer_id).child("expenseList");
+        payer_list.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                for(DataSnapshot exp : task.getResult().getChildren()) {
+                    if(exp.child("expenseId").getValue(String.class).equals(expense_id)) {
+                        String alt_expense_id = exp.getKey();
+                        Log.v("alt_expense_id", alt_expense_id);
+                        double from = exp.child("borrowing").child(expense_id).getValue(Double.class);
+                        payer_list.child(alt_expense_id).child("borrowing").child(user_id).setValue(from + borrowing);
+                    }
+                }
+
             }
         });
     }
