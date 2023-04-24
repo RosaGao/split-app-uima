@@ -92,7 +92,7 @@ public class ExpenseDetailRecyclerViewAdapter extends RecyclerView.Adapter<Expen
                                     dbref.child("relations").child(payer_id).child(payee_id).setValue(new_relation * -1.0);
                                     setLocalBorrowing(expense.getExpenseId(), payee_id);
 
-                                    dbref.child("expenses").child(expense.getExpenseId()).updateChildren(expense.toMap());
+                                    dbref.child("expenses").child(expense.getExpenseId()).child("borrowing").child(payee_id).setValue(0);
                                     holder.payee_image.setAlpha(69);
                                     holder.payee_info.setTextColor(Color.GRAY);
                                     holder.icon_left.setAlpha(69);
