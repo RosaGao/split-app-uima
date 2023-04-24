@@ -13,13 +13,13 @@ public class ExpenseDetailViewHolder extends RecyclerView.ViewHolder{
 
     TextView payee_info;
     ImageView icon_left;
-    ImageView icon_right;
+    //ImageView icon_right;
     ImageView payee_image;
     public ExpenseDetailViewHolder(@NonNull View itemView) {
         super(itemView);
         payee_info = (TextView) itemView.findViewById(R.id.payee_info);
         payee_image = (ImageView) itemView.findViewById(R.id.payee_image);
         icon_left = (ImageView) itemView.findViewById(R.id.icon_slot_1);
-        icon_right = (ImageView) itemView.findViewById(R.id.icon_slot_2);
+        //icon_right = (ImageView) itemView.findViewById(R.id.icon_slot_2);
     }
 }

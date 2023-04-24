@@ -54,13 +54,15 @@ public class ExpenseDetailRecyclerViewAdapter extends RecyclerView.Adapter<Expen
 
     @Override
     public void onBindViewHolder(@NonNull ExpenseDetailViewHolder holder, @SuppressLint("RecyclerView") int position) {
+
         String payee_id = payee_list.get(position).getUserId();
         String current_user = FirebaseAuth.getInstance().getCurrentUser().getUid();
         String payer_id = expense.getPayer().getUserId();
         borrowing = expense.getBorrowing(payee_id);
         String display_amount = String.format("%.2f", Math.abs(borrowing));
         holder.icon_left.setVisibility(View.INVISIBLE);
-        holder.icon_right.setVisibility(View.INVISIBLE);
+        //holder.icon_right.setVisibility(View.INVISIBLE);
+
         if(payee_list.get(position).getUserId().equals(current_user)) {
             holder.payee_info.setText("You share $" + display_amount);
         } else {
@@ -85,7 +87,7 @@ public class ExpenseDetailRecyclerViewAdapter extends RecyclerView.Adapter<Expen
                         public void onClick(DialogInterface dialog, int id) {
                             holder.icon_left.setImageResource(R.drawable.settled_icon);
                             expense.settle(payee_id);
-                            dbref.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                            /*dbref.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                                 @Override
                                 public void onComplete(@NonNull Task<DataSnapshot> task) {
                                     if (!task.isSuccessful()) {
@@ -101,12 +103,29 @@ public class ExpenseDetailRecyclerViewAdapter extends RecyclerView.Adapter<Expen
                                         setLocalBorrowing(expense.getExpenseId(), payee_id);
                                     }
                                 }
+                            });*/
+                            dbref.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    Log.d("firebase", String.valueOf(snapshot.getValue()));
+                                    double new_relation = snapshot.child("relations").child(payee_id).child(payer_id).getValue(Double.class);
+                                    new_relation -= Math.abs(borrowing);
+                                    dbref.child("relations").child(payee_id).child(payer_id).setValue(new_relation);
+                                    dbref.child("relations").child(payer_id).child(payee_id).setValue(new_relation * -1.0);
+                                    setLocalBorrowing(expense.getExpenseId(), payee_id);
+
+                                    dbref.child("expenses").child(expense.getExpenseId()).updateChildren(expense.toMap());
+                                    holder.payee_image.setAlpha(69);
+                                    holder.payee_info.setTextColor(Color.GRAY);
+                                    holder.icon_left.setAlpha(69);
+                                    holder.icon_left.setClickable(false);
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
                             });
-                            dbref.child("expenses").child(expense.getExpenseId()).updateChildren(expense.toMap());
-                            holder.payee_image.setAlpha(69);
-                            holder.payee_info.setTextColor(Color.GRAY);
-                            holder.icon_left.setAlpha(69);
-                            holder.icon_left.setClickable(false);
                         }
                     });
                     builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

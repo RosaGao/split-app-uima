@@ -37,13 +37,4 @@
         android:visibility="invisible"
         app:srcCompat="@drawable/baseline_check_24" />
 
-    <ImageView
-        android:id="@+id/icon_slot_2"
-        android:layout_width="45dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:foregroundGravity="center"
-        android:visibility="invisible"
-        app:srcCompat="@drawable/baseline_check_24" />
-
 </LinearLayout>
