@@ -72,10 +72,10 @@ public class ExpenseDetailRecyclerViewAdapter extends RecyclerView.Adapter<Expen
         } else if(current_user.equals(payer_id) && borrowing != 0.0) {
             //holder.icon_left.setImageResource(R.drawable.notify_icon);
             //holder.icon_left.setVisibility(View.VISIBLE);
-            holder.icon_right.setImageResource(R.drawable.settle_icon);
-            holder.icon_right.setVisibility(View.VISIBLE);
-            holder.icon_right.setClickable(true);
-            holder.icon_right.setOnClickListener(new View.OnClickListener() {
+            holder.icon_left.setImageResource(R.drawable.settle_icon);
+            holder.icon_left.setVisibility(View.VISIBLE);
+            holder.icon_left.setClickable(true);
+            holder.icon_left.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     // ADD CONFIRMATION DIALOGUE
@@ -83,7 +83,7 @@ public class ExpenseDetailRecyclerViewAdapter extends RecyclerView.Adapter<Expen
                     builder.setTitle("Are you sure you want to settle with " + payee_list.get(position).getName() + "?");
                     builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            holder.icon_right.setImageResource(R.drawable.settled_icon);
+                            holder.icon_left.setImageResource(R.drawable.settled_icon);
                             expense.settle(payee_id);
                             dbref.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                                 @Override
@@ -105,7 +105,7 @@ public class ExpenseDetailRecyclerViewAdapter extends RecyclerView.Adapter<Expen
                             holder.payee_image.setAlpha(69);
                             holder.payee_info.setTextColor(Color.GRAY);
                             holder.icon_left.setAlpha(69);
-                            holder.icon_right.setClickable(false);
+                            holder.icon_left.setClickable(false);
                         }
                     });
                     builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -116,21 +116,36 @@ public class ExpenseDetailRecyclerViewAdapter extends RecyclerView.Adapter<Expen
                 }
             });
         }
-        if(borrowing == 0.0) {
+        if(!payee_id.equals(payer_id) && borrowing == 0.0) {
             //holder.icon_left.setImageResource(R.drawable.notify_icon);
             //holder.icon_left.setVisibility(View.VISIBLE);
-            holder.icon_right.setImageResource(R.drawable.settled_icon);
-            holder.icon_right.setVisibility(View.VISIBLE);
+            holder.icon_left.setImageResource(R.drawable.settled_icon);
+            holder.icon_left.setVisibility(View.VISIBLE);
             holder.payee_image.setAlpha(69);
             holder.payee_info.setTextColor(Color.GRAY);
             String two = payee_id.equals(current_user) ? "You are" : payee_list.get(position).getName() + " is";
             holder.payee_info.setText(two + " settled.");
             holder.icon_left.setAlpha(69);
         }
-        if(payee_id.equals(current_user)){
+        if(payee_id.equals(current_user) && !payer_id.equals(current_user)){
             holder.icon_left.setImageResource(R.drawable.you_icon);
             holder.icon_left.setVisibility(View.VISIBLE);
         }
+    }
+
+    private void setLocalBorrowing(String expense_id, String user_id) {
+        DatabaseReference user_list = dbref.child("users").child(user_id).child("expenseList");
+        user_list.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                for(DataSnapshot exp : task.getResult().getChildren()) {
+                    if(exp.child("expenseId").getValue(String.class).equals(expense_id)) {
+                        String alt_expense_id = exp.getKey();
+                        user_list.child(alt_expense_id).child("borrowing").child(user_id).setValue(0);
+                    }
+                }
+            }
+        });
     }
 
     @Override
