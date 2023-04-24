@@ -153,7 +153,7 @@ public class ExpenseDetailRecyclerViewAdapter extends RecyclerView.Adapter<Expen
                         String alt_expense_id = exp.getKey();
                         Log.v("alt_expense_id", alt_expense_id);
                         double from = exp.child("borrowing").child(payer_id).getValue(Double.class);
-                        payer_list.child(alt_expense_id).child("borrowing").child(user_id).setValue(from + borrowing);
+                        payer_list.child(alt_expense_id).child("borrowing").child(payer_id).setValue(from + borrowing);
                     }
                 }
 

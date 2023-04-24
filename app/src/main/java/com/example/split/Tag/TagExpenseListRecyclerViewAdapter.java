@@ -52,9 +52,13 @@ public class TagExpenseListRecyclerViewAdapter
         if (borrowing > 0) {
             holder.status.setText("You borrowed $" + df.format(borrowing));
             holder.status.setTextColor(holder.status.getResources().getColor(R.color.red));
-        } else {
+        } else if (borrowing < 0) {
             holder.status.setText("You are owed $" + df.format(Math.abs(borrowing)));
             holder.status.setTextColor(holder.status.getResources().getColor(R.color.green));
+        } else {
+            holder.status.setText("You are settled.");
+            holder.status.setTextColor(holder.status.getResources().getColor(R.color.black));
+
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

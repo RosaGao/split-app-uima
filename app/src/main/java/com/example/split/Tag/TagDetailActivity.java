@@ -128,6 +128,9 @@ public class TagDetailActivity extends AppCompatActivity {
                  else if (total < 0) {
                     tagTotal.setText("You are owed $" + df.format(Math.abs(total)));
                     tagTotal.setTextColor(getResources().getColor(R.color.green));
+                } else if (total == 0) {
+                    tagTotal.setText("You are settled" );
+                    tagTotal.setTextColor(getResources().getColor(R.color.black));
                 }
 
             }
