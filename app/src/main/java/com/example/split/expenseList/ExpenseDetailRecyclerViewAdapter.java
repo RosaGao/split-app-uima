@@ -1,24 +1,19 @@
 package com.example.split.expenseList;
 
 import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.split.R;
-import com.example.split.Tag.TagDetailActivity;
 import com.example.split.entity.Expense;
 import com.example.split.entity.User;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -87,23 +82,6 @@ public class ExpenseDetailRecyclerViewAdapter extends RecyclerView.Adapter<Expen
                         public void onClick(DialogInterface dialog, int id) {
                             holder.icon_left.setImageResource(R.drawable.settled_icon);
                             expense.settle(payee_id);
-                            /*dbref.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<DataSnapshot> task) {
-                                    if (!task.isSuccessful()) {
-                                        Log.e("firebase", "Error getting data", task.getException());
-                                    }
-                                    else {
-                                        Log.d("firebase", String.valueOf(task.getResult().getValue()));
-                                        double new_relation = task.getResult().child("relations").child(payee_id).child(payer_id).getValue(Double.class);
-                                        new_relation -= Math.abs(borrowing);
-                                        dbref.child("relations").child(payee_id).child(payer_id).setValue(new_relation);
-                                        dbref.child("relations").child(payer_id).child(payee_id).setValue(new_relation * -1.0);
-                                        //dbref.child("users").child(payee_id).child("expenseList").child(expense.getExpenseId()).child("borrowing").child(payee_id).setValue(0);
-                                        setLocalBorrowing(expense.getExpenseId(), payee_id);
-                                    }
-                                }
-                            });*/
                             dbref.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -137,8 +115,6 @@ public class ExpenseDetailRecyclerViewAdapter extends RecyclerView.Adapter<Expen
             });
         }
         if(!payee_id.equals(payer_id) && borrowing == 0.0) {
-            //holder.icon_left.setImageResource(R.drawable.notify_icon);
-            //holder.icon_left.setVisibility(View.VISIBLE);
             holder.icon_left.setImageResource(R.drawable.settled_icon);
             holder.icon_left.setVisibility(View.VISIBLE);
             holder.payee_image.setAlpha(69);

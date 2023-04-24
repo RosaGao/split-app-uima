@@ -1,5 +1,6 @@
 package com.example.split.ui.friend;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 
@@ -88,7 +89,6 @@ public class FriendProfileActivity extends AppCompatActivity {
                 } else {
                     binding.status.setText("Settled up with " + myFriend.getName());
                     binding.status.setTextColor(getResources().getColor(R.color.black));
-
                 }
             }
 
