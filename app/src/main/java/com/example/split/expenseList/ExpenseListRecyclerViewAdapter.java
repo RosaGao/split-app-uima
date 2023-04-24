@@ -25,6 +25,23 @@ public class ExpenseListRecyclerViewAdapter
 
     private HomeFragment myParentActivity;
     private List<Expense> myExpenses = new ArrayList<>();
+<<<<<<< Updated upstream
+=======
+
+    /*private final View.OnClickListener myOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+
+            Context context = view.getContext();
+            Intent intent = new Intent(context, ExpenseDetailActivity.class);
+            //intent.putExtra("expense_id", myExpenses.get(1).getExpenseId());
+            //intent.putExtra("expense_id", item.getExpenseId());
+            //intent.putExtra("expense_id", context.getText());
+            context.startActivity(intent);
+        }
+    };*/
+
+>>>>>>> Stashed changes
     public ExpenseListRecyclerViewAdapter(HomeFragment parent,
                                           List<Expense> allExpenses,
                                           boolean twoPane) {
@@ -42,7 +59,11 @@ public class ExpenseListRecyclerViewAdapter
 
 
     @Override
+<<<<<<< Updated upstream
     public void onBindViewHolder(@NonNull ExpenseViewHolder holder, @SuppressLint("RecyclerView") int position) {
+=======
+    public void onBindViewHolder(@NonNull ExpenseViewHolder holder, int position) {
+>>>>>>> Stashed changes
 
         holder.description.setText(myExpenses.get(position).getDescription());
         holder.date.setText(myExpenses.get(position).getDate());
