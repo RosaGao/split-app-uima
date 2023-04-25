@@ -15,12 +15,21 @@ No more arguing! Hassle-free experience! Enjoy your time out! Feel like a boss! 
 ------
 
 Test Users
-- email: ygao112@jhu.edu
+- email: rosa@email.com
   password: 123123
-- email: kyang53@jhu.edu
+- email: frank@email.com
+  password: 123123
+- email: brandon@email.com
+  password: 123123
+- email: alice@email.com
+  password: 123123
+- email: jj@email.com
   password: 123123
 
 ------
 Meeting notes for sprint 1:
 https://docs.google.com/document/d/1dDc5tnYbgK_LDFnB96u57W2_MpmGEie-mlZZSlWrsj4/edit?usp=sharing
+
+Meeting notes for sprint 2:
+https://docs.google.com/document/d/1i_VGPDn-rXmh4wMF1kS_crcr17CMGXtyS278NVk9DW0/edit?usp=sharing
 
