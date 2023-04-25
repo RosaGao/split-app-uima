@@ -38,17 +38,6 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <SearchView
-        android:id="@+id/searchParticipants"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:defaultQueryHint="Search by name or phone number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/app_bar"
-        app:queryHint="Search by name or phone number" />
-
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
@@ -57,7 +46,7 @@
         android:layout_marginTop="16dp"
         android:text="Participants"
         app:layout_constraintStart_toEndOf="@+id/imageView5"
-        app:layout_constraintTop_toBottomOf="@+id/searchParticipants" />
+        app:layout_constraintTop_toBottomOf="@id/app_bar" />
 
     <ImageView
         android:id="@+id/imageView5"
@@ -68,7 +57,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.04"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchParticipants" />
+        app:layout_constraintTop_toBottomOf="@id/app_bar" />
 
     <ListView
         android:id="@+id/participantlist"
