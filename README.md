@@ -1,7 +1,10 @@
 # $plit
 
-Developers: Rosa Gao, JJ Yang, Brandon Tang, Frank Sun
-Link to app demo: https://drive.google.com/file/d/1yaiGVAr10wlhkzJ400vwVkZC6tV49iiU/view?usp=sharing
+**Developers**: Rosa Gao, JJ Yang, Brandon Tang, Frank Sun
+
+**Link to app demo**: https://drive.google.com/file/d/1yaiGVAr10wlhkzJ400vwVkZC6tV49iiU/view?usp=sharing
+
+**Pitch**: Expense splitting made simple!
 
 Nearly everyone is familiar with the pain of splitting a check.
 
@@ -13,25 +16,16 @@ Say goodbye to your confusion and frustration with our new, feature-filled bill-
 
 No more arguing! Hassle-free experience! Enjoy your time out! Feel like a boss! Our app has you covered!
 
-
 ------
+User Research:
+- [User survey](https://forms.gle/HJdwWHae4JuX9aLz9)
+- [User Survey results](https://docs.google.com/spreadsheets/d/184mwDGF53it2Fm5P-8ZMOfZQULpLhCZD7mU96SFvDIc/edit?usp=sharing)
+- [Interview Results](https://docs.google.com/document/d/1PZjPUB12zCBaD3Atw_x1wQx-wROFaSNTNdT6FSP4D2w/edit#)
+- [Persona & User Stories & Functional Req](https://docs.google.com/document/d/1V3TOhDbczDQSu_9ln1epakrnhIQuIlA9JXcxklRp2Os/edit)
 
-Test Users
-- email: rosa@email.com
-  password: 123123
-- email: frank@email.com
-  password: 123123
-- email: brandon@email.com
-  password: 123123
-- email: alice@email.com
-  password: 123123
-- email: jj@email.com
-  password: 123123
-
-------
-Meeting notes for sprint 1:
+Meeting notes for sprint 4:
 https://docs.google.com/document/d/1dDc5tnYbgK_LDFnB96u57W2_MpmGEie-mlZZSlWrsj4/edit?usp=sharing
 
-Meeting notes for sprint 2:
+Meeting notes for sprint 5:
 https://docs.google.com/document/d/1i_VGPDn-rXmh4wMF1kS_crcr17CMGXtyS278NVk9DW0/edit?usp=sharing
 
