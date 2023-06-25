@@ -1,5 +1,7 @@
 # $plit
 
+Developers: Rosa Gao, JJ Yang, Brandon Tang, Frank Sun
+Link to app demo: https://drive.google.com/file/d/1yaiGVAr10wlhkzJ400vwVkZC6tV49iiU/view?usp=sharing
 
 Nearly everyone is familiar with the pain of splitting a check.
 
